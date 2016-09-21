@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F81ED391D92979E00949793 /* BankClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81ED381D92979E00949793 /* BankClass.swift */; };
+		7F81ED3B1D92AD1200949793 /* MyBankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81ED3A1D92AD1200949793 /* MyBankViewController.swift */; };
+		7F81ED3E1D92B5EB00949793 /* BankStatementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81ED3C1D92B5EB00949793 /* BankStatementCell.swift */; };
+		7F81ED3F1D92B5EB00949793 /* BankStatementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F81ED3D1D92B5EB00949793 /* BankStatementCell.xib */; };
+		7F81ED411D92CF9300949793 /* BankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81ED401D92CF9300949793 /* BankingViewController.swift */; };
 		7FF8036D1D916039001ACB83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8036C1D916039001ACB83 /* AppDelegate.swift */; };
 		7FF8036F1D916039001ACB83 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8036E1D916039001ACB83 /* ViewController.swift */; };
 		7FF803721D916039001ACB83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FF803701D916039001ACB83 /* Main.storyboard */; };
@@ -34,6 +39,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F81ED381D92979E00949793 /* BankClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BankClass.swift; path = ../BankClass.swift; sourceTree = "<group>"; };
+		7F81ED3A1D92AD1200949793 /* MyBankViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyBankViewController.swift; path = ../MyBankViewController.swift; sourceTree = "<group>"; };
+		7F81ED3C1D92B5EB00949793 /* BankStatementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankStatementCell.swift; sourceTree = "<group>"; };
+		7F81ED3D1D92B5EB00949793 /* BankStatementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BankStatementCell.xib; sourceTree = "<group>"; };
+		7F81ED401D92CF9300949793 /* BankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankingViewController.swift; sourceTree = "<group>"; };
 		7FF803691D916039001ACB83 /* MyBalanceInquiry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBalanceInquiry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF8036C1D916039001ACB83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FF8036E1D916039001ACB83 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,7 +109,12 @@
 			children = (
 				7FF8036C1D916039001ACB83 /* AppDelegate.swift */,
 				7FF8036E1D916039001ACB83 /* ViewController.swift */,
+				7F81ED3A1D92AD1200949793 /* MyBankViewController.swift */,
+				7F81ED401D92CF9300949793 /* BankingViewController.swift */,
 				7FF803701D916039001ACB83 /* Main.storyboard */,
+				7F81ED381D92979E00949793 /* BankClass.swift */,
+				7F81ED3C1D92B5EB00949793 /* BankStatementCell.swift */,
+				7F81ED3D1D92B5EB00949793 /* BankStatementCell.xib */,
 				7FF803731D916039001ACB83 /* Assets.xcassets */,
 				7FF803751D916039001ACB83 /* LaunchScreen.storyboard */,
 				7FF803781D916039001ACB83 /* Info.plist */,
@@ -238,6 +253,7 @@
 				7FF803771D916039001ACB83 /* LaunchScreen.storyboard in Resources */,
 				7FF803741D916039001ACB83 /* Assets.xcassets in Resources */,
 				7FF803721D916039001ACB83 /* Main.storyboard in Resources */,
+				7F81ED3F1D92B5EB00949793 /* BankStatementCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,7 +279,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FF8036F1D916039001ACB83 /* ViewController.swift in Sources */,
+				7F81ED411D92CF9300949793 /* BankingViewController.swift in Sources */,
+				7F81ED3E1D92B5EB00949793 /* BankStatementCell.swift in Sources */,
 				7FF8036D1D916039001ACB83 /* AppDelegate.swift in Sources */,
+				7F81ED3B1D92AD1200949793 /* MyBankViewController.swift in Sources */,
+				7F81ED391D92979E00949793 /* BankClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +532,7 @@
 				7FF803931D916039001ACB83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7FF803941D916039001ACB83 /* Build configuration list for PBXNativeTarget "MyBalanceInquiryTests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +541,7 @@
 				7FF803961D916039001ACB83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7FF803971D916039001ACB83 /* Build configuration list for PBXNativeTarget "MyBalanceInquiryUITests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +550,7 @@
 				7FF803991D916039001ACB83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
