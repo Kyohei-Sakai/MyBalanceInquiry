@@ -12,19 +12,38 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var myBanktableView: UITableView!
     
+    var superBank: BankManager!
     
-    // 銀行を追加
-    let myBank1 = Bank(name: "みずほ銀行", firstBalance: 0)
-    let myBank2 = Bank(name: "三菱東京UFJ銀行", firstBalance: 0)
-    let myBank3 = Bank(name: "多摩信用金庫", firstBalance: 0)
-    let specialBank = Bank(name: "Swift銀行", firstBalance: 10000)
+    var selectedBank: Bank!
     
-    var superBank: BankManager = BankManager()
+    var isFirstLoad: Bool!
     
-    var selectedBank: Bank?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 初めてのロードであれば、初期設定を行う
+        if isFirstLoad != false {
+            setBanking()
+        }
+        
+        myBanktableView.delegate = self
+        myBanktableView.dataSource = self
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // 初期データを設定
+    func setBanking() {
+        
+        // 銀行を追加
+        let myBank1 = Bank(name: "みずほ銀行", firstBalance: 0)
+        let myBank2 = Bank(name: "三菱東京UFJ銀行", firstBalance: 0)
+        let myBank3 = Bank(name: "多摩信用金庫", firstBalance: 0)
         
         // StringをDateに変換するためのFormatterを用意
         let dateFormatter = DateFormatter()
@@ -58,31 +77,14 @@ class ViewController: UIViewController {
         print("8月の収支：\(superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: "2016/08/01"), toDate: dateFormatter.date(from: "2016/09/01")))")
         print("9月の収支：\(superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: "2016/09/01"), toDate: dateFormatter.date(from: "2016/10/01")))")
         
-        myBanktableView.delegate = self
-        myBanktableView.dataSource = self
+    }
+    
+    // My銀行を追加登録するボタンが押された時
+    @IBAction func tapAddNewBankButton(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: "toAddNewBank", sender: nil)
         
     }
-    
-    // Segue 準備
-    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        if (segue.identifier == "toMyBankViewController") {
-            let myBankVC: MyBankViewController = (segue.destination as? MyBankViewController)!
-            // 遷移先のViewControllerに設定したBankを渡す
-            myBankVC.selectedBank = self.selectedBank
-        }
-    }
-    
-    // 戻るボタンにより前画面へ遷移
-    @IBAction func back(segue:UIStoryboardSegue) {
-        print("back")
-    }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
 }
 
@@ -104,7 +106,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セルが選択された時の処理
     func tableView(_ table: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 遷移先のViewControllerに渡すBankを設定
         self.selectedBank = superBank.bank[indexPath.row]
         performSegue(withIdentifier: "toMyBankViewController", sender: nil)
     }
@@ -112,6 +113,31 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
+// MARK: - 画面遷移に関する処理
+
+extension ViewController {
+    // Segue 準備
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        
+        if (segue.identifier == "toMyBankViewController") {
+            let myBankVC: MyBankViewController = (segue.destination as? MyBankViewController)!
+            // 遷移先にBankの参照先を渡す
+            myBankVC.selectedBank = self.selectedBank
+        }
+        else if (segue.identifier == "toAddNewBank") {
+            let newBankVC: AddNewBankViewController = (segue.destination as? AddNewBankViewController)!
+            // 遷移先にBankManagerの参照先を渡す
+            newBankVC.superBank = self.superBank
+        }
+        
+    }
+    
+    // 戻るボタンにより前画面へ遷移
+    @IBAction func back(segue: UIStoryboardSegue) {
+        print("back")
+    }
+    
+}
 
 
 

@@ -16,10 +16,11 @@ class BankingViewController: UIViewController {
     
     var selectedBank: Bank!
     
-    var date: Date!
-    var banking: Banking!
-    var amount: Int!
-
+    // PickerViewに設定されている値を格納
+    var pickDate: String!
+    var pickBanking: String!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,7 +32,6 @@ class BankingViewController: UIViewController {
         bankingPicker.dataSource = self
         bankingPicker.tag = 2
         
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,23 +39,36 @@ class BankingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // 必要事項を入力した後Addボタンで確定
     @IBAction func tapAddButton(_ sender: UIButton) {
-//        selectedBank.addBanking(date: <#T##Date!#>, banking: <#T##Banking#>, amount: <#T##Int#>)
         
+        // String -> Date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        let date = dateFormatter.date(from: self.pickDate)
         
-        performSegue(withIdentifier: "fromBankingToVC", sender: nil)
-        
-    }
-    
-    // Segue 準備
-    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        if (segue.identifier == "fromBankingToVC") {
-            let homeVC: ViewController = (segue.destination as? ViewController)!
-            // 遷移先のViewControllerに設定したBankを渡す
-            homeVC.selectedBank = self.selectedBank
+        // String -> Banking
+        var banking: Banking! = nil
+        if self.pickBanking == "入金" {
+            banking = Banking.Payment
+        } else if self.pickBanking == "出金" {
+            banking = Banking.Withdrawal
         }
+        
+        // String -> Int
+        let amount = Int(textField.text!)
+        
+        if date != nil && banking != nil && amount != nil {
+            // 入力されたデータより取引明細を追加
+            self.selectedBank.addBanking(date: date, banking: banking, amount: amount!)
+            // 更新後、明細画面に戻る
+            performSegue(withIdentifier: "fromBankingToBank", sender: nil)
+            
+        } else {
+            print("未入力の項目があります。")
+        }
+        
     }
-    
     
 }
 
@@ -80,17 +93,19 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView.tag == 1 {
             switch component {
             case 0:
-                // 2012~2016
-                return 5
+                // 2012~2016 + 「年」
+                return 6
             case 1:
-                return 12
+                // 1~12 + 「月」
+                return 13
             case 2:
-                return 31
+                // 1~31 + 「日」
+                return 32
             default:
                 return 0
             }
         } else {
-            return 2
+            return 3
         }
         
     }
@@ -100,19 +115,31 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView.tag == 1 {
             switch component {
             case 0:
-                let year: String = "20" + "\(16 - row)"
-                return year
+                if row == 0 {
+                    return String("年")
+                } else {
+                    let year: String = "20" + "\(17 - row)"
+                    return year
+                }
             case 1:
-                let mounth: String = "\(row + 1)"
-                return mounth
+                if row == 0 {
+                    return String("月")
+                } else {
+                    let mounth: String = "\(row)"
+                    return mounth
+                }
             case 2:
-                let day: String = "\(row + 1)"
-                return day
+                if row == 0 {
+                    return String("日")
+                } else {
+                    let day: String = "\(row)"
+                    return day
+                }
             default:
                 return "error"
             }
         } else {
-            let banking: [String] = ["入金", "出金"]
+            let banking: [String] = ["ー", "入金", "出金"]
             return banking[row]
         }
         
@@ -121,22 +148,42 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     //データ選択時の呼び出しメソッド
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //コンポーネントごとに現在選択されているデータを取得する。
+        if pickerView.tag == 1 {
+            //コンポーネントごとに現在選択されているデータを取得する
+            let year = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 0), forComponent: 0)
+            
+            let month = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 1), forComponent: 1)
+            
+            let day = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 2), forComponent: 2)
+            
+            self.pickDate = "\(year!)/\(month!)/\(day!)"
+            print(self.pickDate)
+            
+        } else {
+            let banking = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 0), forComponent: 0)
+            self.pickBanking = banking
+            print(self.pickBanking)
+        }
         
-//        self.date = self.datePicker(pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 0), forComponent: 0))
-        
-        
-//        let data1 = self.pickerView(pickerView, titleForRow: pickerView.selectedRowInComponent(0), forComponent: 0)
-//        let data2 = self.pickerView(pickerView, titleForRow: pickerView.selectedRowInComponent(1), forComponent: 1)
-//        let data3 = self.pickerView(pickerView, titleForRow: pickerView.selectedRowInComponent(2), forComponent: 2)
-//        
-//        testLabel.text = "選択　\(data1!)　\(data2!)　\(data3!)"
     }
-    
-    
     
 }
 
+
+// MARK: - 画面遷移に関する処理
+
+extension BankingViewController {
+    // Segue 準備
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        
+        if (segue.identifier == "fromBankingToBank") {
+            let bankVC: MyBankViewController = (segue.destination as? MyBankViewController)!
+            // 遷移先にBankの参照先を渡す
+            bankVC.selectedBank = self.selectedBank
+        }
+    }
+    
+}
 
 
 

@@ -12,6 +12,7 @@
 		7F81ED3E1D92B5EB00949793 /* BankStatementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81ED3C1D92B5EB00949793 /* BankStatementCell.swift */; };
 		7F81ED3F1D92B5EB00949793 /* BankStatementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F81ED3D1D92B5EB00949793 /* BankStatementCell.xib */; };
 		7F81ED411D92CF9300949793 /* BankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81ED401D92CF9300949793 /* BankingViewController.swift */; };
+		7F9BDC8D1D93DCBF00EFC40F /* AddNewBankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9BDC8C1D93DCBF00EFC40F /* AddNewBankViewController.swift */; };
 		7FF8036D1D916039001ACB83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8036C1D916039001ACB83 /* AppDelegate.swift */; };
 		7FF8036F1D916039001ACB83 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8036E1D916039001ACB83 /* ViewController.swift */; };
 		7FF803721D916039001ACB83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FF803701D916039001ACB83 /* Main.storyboard */; };
@@ -44,6 +45,7 @@
 		7F81ED3C1D92B5EB00949793 /* BankStatementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankStatementCell.swift; sourceTree = "<group>"; };
 		7F81ED3D1D92B5EB00949793 /* BankStatementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BankStatementCell.xib; sourceTree = "<group>"; };
 		7F81ED401D92CF9300949793 /* BankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankingViewController.swift; sourceTree = "<group>"; };
+		7F9BDC8C1D93DCBF00EFC40F /* AddNewBankViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddNewBankViewController.swift; path = ../AddNewBankViewController.swift; sourceTree = "<group>"; };
 		7FF803691D916039001ACB83 /* MyBalanceInquiry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBalanceInquiry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF8036C1D916039001ACB83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FF8036E1D916039001ACB83 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				7FF8036E1D916039001ACB83 /* ViewController.swift */,
 				7F81ED3A1D92AD1200949793 /* MyBankViewController.swift */,
 				7F81ED401D92CF9300949793 /* BankingViewController.swift */,
+				7F9BDC8C1D93DCBF00EFC40F /* AddNewBankViewController.swift */,
 				7FF803701D916039001ACB83 /* Main.storyboard */,
 				7F81ED381D92979E00949793 /* BankClass.swift */,
 				7F81ED3C1D92B5EB00949793 /* BankStatementCell.swift */,
@@ -280,6 +283,7 @@
 			files = (
 				7FF8036F1D916039001ACB83 /* ViewController.swift in Sources */,
 				7F81ED411D92CF9300949793 /* BankingViewController.swift in Sources */,
+				7F9BDC8D1D93DCBF00EFC40F /* AddNewBankViewController.swift in Sources */,
 				7F81ED3E1D92B5EB00949793 /* BankStatementCell.swift in Sources */,
 				7FF8036D1D916039001ACB83 /* AppDelegate.swift in Sources */,
 				7F81ED3B1D92AD1200949793 /* MyBankViewController.swift in Sources */,

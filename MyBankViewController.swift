@@ -18,7 +18,7 @@ class MyBankViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         bankNameLabel.text = selectedBank.bankName
         balanceLabel.text = "残高　¥ \(selectedBank.balance)"
         
@@ -29,23 +29,15 @@ class MyBankViewController: UIViewController {
         
     }
     
-    // Segue 準備
-    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        if (segue.identifier == "toBankingViewController") {
-            let BankingVC: BankingViewController = (segue.destination as? BankingViewController)!
-            // 遷移先のViewControllerに設定したBankを渡す
-            BankingVC.selectedBank = self.selectedBank
-        }
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    // 戻るボタンにより前画面へ遷移
-    @IBAction func cancel(segue:UIStoryboardSegue) {
-        print("cancel")
+    // 取引を追加するためのボタンが押された時
+    @IBAction func tapAddButton(_ sender: UIButton) {
+        // 遷移先のViewControllerに渡すBankを設定
+        performSegue(withIdentifier: "toBankingViewController", sender: nil)
     }
     
 }
@@ -61,13 +53,11 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {
         // カスタムセルを定義
-        // xibのセルにIDを設定しておく必要がある
         let statementCell = tableView.dequeueReusableCell(withIdentifier: "StatementCell", for: indexPath) as! BankStatementCell
         
         let i = indexPath.row
         let bank = selectedBank.bankStatement
         
-//        statementCell.setCell(date: (bank?[i].date)!, banking: (bank?[i].banking)!, amount: (bank?[i].amount)!)
         statementCell.setCell(date: bank[i].date, banking: bank[i].banking, amount: bank[i].amount)
         
         return statementCell
@@ -75,14 +65,32 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セルが選択された時の処理
     func tableView(_ table: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 遷移先のViewControllerに渡すBankを設定
-        performSegue(withIdentifier: "toBankingViewController", sender: nil)
+        // 今のところ処理はなし
     }
     
 }
 
 
+// MARK: - 画面遷移に関する処理
 
+extension MyBankViewController {
+    // Segue 準備
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        
+        if (segue.identifier == "toBankingViewController") {
+            let BankingVC: BankingViewController = (segue.destination as? BankingViewController)!
+            // 遷移先にBankの参照先を渡す
+            BankingVC.selectedBank = self.selectedBank
+        }
+        
+    }
+    
+    // 戻るボタンにより前画面へ遷移
+    @IBAction func cancel(segue: UIStoryboardSegue) {
+        print("cancel")
+    }
+    
+}
 
 
 
