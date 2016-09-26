@@ -45,6 +45,18 @@
                                     <segue destination="own-ol-SFH" kind="presentation" identifier="toAddNewBank" id="Veo-OP-QR1"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUb-ws-OSq">
+                                <frame key="frameInset" minX="16" minY="405" width="343" height="246"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.22125456979999999" blue="0.14860198569999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="View Gragh">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="jkh-o8-amz" kind="show" identifier="toGraghView" id="dnY-76-6Mm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -72,7 +84,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My 銀行" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iJn-qg-SA7">
                                 <frame key="frameInset" minY="28" width="375" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.72379202509999996" blue="0.36235675820000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.41888874510000002" blue="0.39035230630000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -201,6 +213,42 @@
                 <exit id="4yh-CA-ucp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="24.800000000000001" y="723.68815592203907"/>
+        </scene>
+        <!--Gragh View Controller-->
+        <scene sceneID="T0X-cw-0w1">
+            <objects>
+                <viewController id="jkh-o8-amz" customClass="GraghViewController" customModule="MyBalanceInquiry" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7Mo-ku-cPp"/>
+                        <viewControllerLayoutGuide type="bottom" id="6eb-vX-z78"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FFP-6w-oKa" customClass="BarGragh" customModule="MyBalanceInquiry" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3k-JE-Ljw">
+                                <frame key="frameInset" minX="8" minY="20" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <segue destination="EkG-on-nX8" kind="unwind" unwindAction="backWithSegue:" id="jZ8-a5-HyF"/>
+                                </connections>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FYO-qg-UQg">
+                                <frame key="frameInset" minY="97" width="375" height="339"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="graghScrollView" destination="FYO-qg-UQg" id="gDQ-wU-d7Q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vb0-FX-a4q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="EkG-on-nX8" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1069.5999999999999" y="723.68815592203907"/>
         </scene>
         <!--Banking View Controller-->
         <scene sceneID="xO7-7O-rIo">

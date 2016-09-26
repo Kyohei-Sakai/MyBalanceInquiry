@@ -50,20 +50,30 @@ class ViewController: UIViewController {
         dateFormatter.dateFormat = "yyyy/MM/dd"
         
         // 取引を追加
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/22"), banking: .Payment, amount: 3000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/02"), banking: .Payment, amount: 12000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/10"), banking: .Withdrawal, amount: 500)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/12"), banking: .Payment, amount: 2100)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/13"), banking: .Withdrawal, amount: 3800)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/06"), banking: .Withdrawal, amount: 8990)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/04"), banking: .Withdrawal, amount: 24000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/10"), banking: .Payment, amount: 30000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/20"), banking: .Withdrawal, amount: 15000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/25"), banking: .Withdrawal, amount: 10000)
         
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/02"), banking: .Payment, amount: 10000)
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/09"), banking: .Withdrawal, amount: 3300)
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/21"), banking: .Withdrawal, amount: 2100)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/04"), banking: .Withdrawal, amount: 27000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/10"), banking: .Payment, amount: 30000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/23"), banking: .Withdrawal, amount: 5000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/30"), banking: .Withdrawal, amount: 10000)
         
-        myBank3.addBanking(date: dateFormatter.date(from: "2016/08/02"), banking: .Withdrawal, amount: 1400)
-        myBank3.addBanking(date: dateFormatter.date(from: "2016/09/09"), banking: .Withdrawal, amount: 1300)
-        myBank3.addBanking(date: dateFormatter.date(from: "2016/09/21"), banking: .Withdrawal, amount: 1900)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/04"), banking: .Payment, amount: 80000)  // 外部からの収入
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/10"), banking: .Withdrawal, amount: 50000)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/13"), banking: .Withdrawal, amount: 20000)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/17"), banking: .Withdrawal, amount: 10000)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/22"), banking: .Withdrawal, amount: 20000)
+        
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/04"), banking: .Payment, amount: 80000)  // 外部からの収入
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/11"), banking: .Withdrawal, amount: 30000)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/21"), banking: .Withdrawal, amount: 20000)
+        
+        //myBank3.addBanking(date: dateFormatter.date(from: "2016/08/05"), banking: .Withdrawal, amount: 10000)
+        
+        //myBank3.addBanking(date: dateFormatter.date(from: "2016/09/09"), banking: .Withdrawal, amount: 13000)
+        //myBank3.addBanking(date: dateFormatter.date(from: "2016/09/21"), banking: .Withdrawal, amount: 29000)
         
         print(myBank1.balance)
         print(myBank2.balance)
@@ -128,6 +138,11 @@ extension ViewController {
             let newBankVC: AddNewBankViewController = (segue.destination as? AddNewBankViewController)!
             // 遷移先にBankManagerの参照先を渡す
             newBankVC.superBank = self.superBank
+        }
+        else if (segue.identifier == "toGraghView") {
+            let graghVC: GraghViewController = (segue.destination as? GraghViewController)!
+            // 遷移先にBankManagerの参照先を渡す
+            graghVC.superBank = self.superBank
         }
         
     }
