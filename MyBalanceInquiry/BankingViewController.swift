@@ -50,9 +50,9 @@ class BankingViewController: UIViewController {
         // String -> Banking
         var banking: Banking! = nil
         if self.pickBanking == "入金" {
-            banking = Banking.Payment
+            banking = Banking.payment
         } else if self.pickBanking == "出金" {
-            banking = Banking.Withdrawal
+            banking = Banking.withdrawal
         }
         
         // String -> Int
@@ -139,7 +139,7 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
                 return "error"
             }
         } else {
-            let banking: [String] = ["ー", "入金", "出金"]
+            let banking: [String] = ["未入力", "入金", "出金"]
             return banking[row]
         }
         

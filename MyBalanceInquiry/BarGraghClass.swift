@@ -11,23 +11,32 @@ import UIKit
 // MARK: - BarGragh Class
 
 class BarGragh: UIView {
-
+    
     // データ配列
     var dataArray: [Int]
     var maxSpending: Int
     // 生成するBarの幅
     var barAreaWidth: CGFloat
     
+    var month: Int
+    var average: Int
+    var averageX: CGFloat = 0
+    var averageY: CGFloat = 0
+    var averageLabel: UILabel = UILabel()
     
-    init(dataArray: [Int], barAreaWidth: CGFloat, height: CGFloat) {
+    
+    init(dataArray: [Int], month: Int, barAreaWidth: CGFloat, height: CGFloat, average: Int) {
         self.dataArray = dataArray
         self.maxSpending = dataArray.max()!
         self.barAreaWidth = barAreaWidth
+        self.month = month
+        self.average = average
         
         let width: CGFloat = barAreaWidth * CGFloat(dataArray.count)
         
         let rect = CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height))
         super.init(frame: rect)
+        self.backgroundColor = UIColor.white
     }
     
     // UIViewの継承時はこれがないとエラーになる
@@ -35,6 +44,8 @@ class BarGragh: UIView {
         self.dataArray = []
         self.maxSpending = 0
         self.barAreaWidth = 0
+        self.month = 0
+        self.average = 0
         super.init(coder: aDecoder)
         
 //        fatalError("init(coder:) has not been implemented")
@@ -50,11 +61,25 @@ class BarGragh: UIView {
             let x = CGFloat(i) * self.barAreaWidth
             
             let rect = CGRect(origin: CGPoint(x: x, y: 0), size: CGSize(width: self.barAreaWidth, height: height))
-            let bar = Bar(rect, spending: self.dataArray[i], maxSpendig: self.maxSpending, month: 6 + i)
+            let bar = Bar(rect, spending: self.dataArray[i], maxSpendig: self.maxSpending, month: self.month + i, average: self.average)
             self.addSubview(bar)
             
+            self.averageY = bar.averageY
         }
         
+        drawLabel(x: averageX, y: self.averageY, width: 50, height: 20, text: String(average))
+        
+    }
+    
+    private func drawLabel(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, text: String) {
+        let label: UILabel = UILabel()
+        self.averageLabel = label
+        label.frame = CGRect(x: x, y: y, width: width, height: height)
+        label.text = text
+        label.textAlignment = .center
+        label.font = label.font.withSize(10)
+        label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+        self.addSubview(label)
     }
 
 }
@@ -68,13 +93,16 @@ class Bar: UIView {
     var maxSpendig: Int
     
     var month: Int
+    var average: Int = 100000
+    var averageY: CGFloat = 0
     
-    
-    init(_ rect: CGRect, spending: Int, maxSpendig: Int, month: Int) {
+    init(_ rect: CGRect, spending: Int, maxSpendig: Int, month: Int, average: Int) {
         self.spending = spending
         self.maxSpendig = maxSpendig
         self.month = month
+        self.average = average
         super.init(frame: rect)
+        self.backgroundColor = UIColor.orange.withAlphaComponent(0.5)
     }
     
     // UIViewの継承時はこれがないとエラーになる
@@ -115,6 +143,12 @@ class Bar: UIView {
         // 下部に月を表示
         drawLabel(centerX: x, centerY: rect.height - labelHeight / 2, width: rect.width, height: labelHeight, text: String("\(self.month)月"))
         
+        let averageHeight = barAreaHeight * CGFloat(self.average) / CGFloat(self.maxSpendig)
+        let averageY = y - averageHeight
+        self.averageY = averageY
+        // 基準線を表示
+        drawLine(from: CGPoint(x: 0, y: averageY), to: CGPoint(x: rect.width, y: averageY), width: 1)
+        
     }
     
     private func drawBar(from: CGPoint, to: CGPoint, width: CGFloat) {
@@ -133,7 +167,23 @@ class Bar: UIView {
         label.text = text
         label.textAlignment = .center
         label.font = label.font.withSize(10)
-        label.backgroundColor = UIColor.lightGray
+        label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
         self.addSubview(label)
     }
+    
+    private func drawLine(from: CGPoint, to: CGPoint, width: CGFloat) {
+        let LinePath = UIBezierPath()
+        LinePath.lineCapStyle = .round
+        LinePath.move(to: from)
+        LinePath.addLine(to: to)
+        LinePath.lineWidth = width
+        UIColor.red.withAlphaComponent(0.6).setStroke()
+        LinePath.stroke()
+    }
 }
+
+
+
+
+
+
