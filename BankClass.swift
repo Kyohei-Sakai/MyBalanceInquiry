@@ -36,28 +36,34 @@ class Bank {
     // 取引を追加し、入出金データに格納
     func addBanking(date: Date!, banking: Banking, amount: Int) {
         let data:(Date, Banking, Int) = (date, banking, amount)
-        self.bankStatement.append(data)
         
-        // 日付順にデータを並び替えて格納する -> insertがうまく機能せず…
-        //        let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
-        //        // 配列が空でなければ
-        //        if bankStatement.isEmpty == false {
-        //            let count = bankStatement.count
-        //            var i = 1
-        //
-        //            while (calendar.compare(date, to: bankStatement[count - i].date, toUnitGranularity: .day) == .orderedAscending) || count < i {
-        //
-        //                i += 1
-        //            }
-        //
-        //            self.bankStatement.insert((date, banking, amount), at: count - i + 1)
-        //        } else {
-        //            self.bankStatement.append(data)
-        //        }
+        // 日付順にデータを並び替えて格納する
+        let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
         
+        // 配列が空でなければ
+        if bankStatement.isEmpty {
+            self.bankStatement.append(data)
+            
+        } else {
+            let count = bankStatement.count
+            var i = 1
+            
+            while (calendar.compare(date, to: bankStatement[count - i].date, toUnitGranularity: .day) == .orderedAscending) {
+                
+                i += 1
+                
+                if count < i{
+                    break
+                }
+            }
+            
+            // Elementにdataを入れるとエラーになる（謎）
+            self.bankStatement.insert((date, banking, amount), at: count - i + 1)
+            
+        }
         
         // 残高を求める
-        if banking == Banking.Payment {
+        if banking == Banking.payment {
             self.balance += amount
         } else {
             self.balance -= amount
@@ -69,7 +75,7 @@ class Bank {
         var totalBalance: Int = self.firstBalance
         
         for i in bankStatement {
-            if i.banking == Banking.Payment {
+            if i.banking == Banking.payment {
                 totalBalance += i.amount
             } else {
                 totalBalance -= i.amount
@@ -98,7 +104,7 @@ class Bank {
                 let result2 = calendar.compare(i.date, to: toDate, toUnitGranularity: .day)
                 // i.data < toDateであれば
                 if result2 == .orderedAscending {
-                    if i.banking == Banking.Payment {
+                    if i.banking == Banking.payment {
                         totalBalance += i.amount
                     } else {
                         totalBalance -= i.amount
@@ -158,9 +164,9 @@ class Bank {
 // 銀行取引の種類
 enum Banking {
     // 入金
-    case Payment
+    case payment
     // 出金
-    case Withdrawal
+    case withdrawal
 }
 
 
