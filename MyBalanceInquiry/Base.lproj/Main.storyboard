@@ -324,7 +324,7 @@
                                 </state>
                                 <connections>
                                     <action selector="tapAddButton:" destination="9kx-rE-zWN" eventType="touchUpInside" id="hZd-eY-RtQ"/>
-                                    <segue destination="X6p-Xq-umI" kind="show" identifier="fromBankingToBank" id="fpb-ka-tIL"/>
+                                    <segue destination="X6p-Xq-umI" kind="show" identifier="fromBankingToBank" id="1kI-ks-1Pf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tiS-fM-Age">
@@ -355,6 +355,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aTS-cW-AJx"/>
+        <segue reference="1kI-ks-1Pf"/>
     </inferredMetricsTieBreakers>
 </document>

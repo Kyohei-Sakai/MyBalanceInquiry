@@ -101,6 +101,7 @@ extension GraghViewController: UITextFieldDelegate {
 extension GraghViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 設定額のラベルをスクロールとともに追従させる
         barGragh.averageLabel.frame.origin.x = scrollView.contentOffset.x
         
     }

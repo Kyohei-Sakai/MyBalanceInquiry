@@ -159,6 +159,16 @@ class Bank {
         }
     }
     
+    // 取引日の最新を得る
+    var newDate: Date {
+        return bankStatement[bankStatement.endIndex - 1].date
+    }
+    
+    // 取引日の最古を得る
+    var oldDate: Date {
+        return bankStatement[0].date
+    }
+    
 }
 
 // 銀行取引の種類
@@ -176,6 +186,10 @@ class BankManager {
     var bank: [Bank]
     var totalBalance: Int = 0
     
+    // 取引期間の最新と最古
+    var mostNewDate: Date!
+    var mostOldDate: Date!
+    
     init() {
         self.bank = []
     }
@@ -183,12 +197,14 @@ class BankManager {
     init(bank: [Bank]) {
         self.bank = bank
         self.totalBalance = getSumTotalBalance()
+        datePeriod()
     }
     
     // 銀行を追加
     func addBank(bank: Bank) {
         self.bank.append(bank)
         self.totalBalance = self.getSumTotalBalance()
+        datePeriod()
     }
     
     // 合計残高を算出
@@ -209,6 +225,44 @@ class BankManager {
             total += i.getTotalBalance(fromDate: fromDate, toDate: toDate)
         }
         return total
+    }
+    
+    // 全ての取引期間の最新と最古を求める
+    private func datePeriod() {
+        let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
+        var datePeriod: [Date] = []
+        
+        for bank in self.bank {
+            let period: [Date] = [bank.oldDate, bank.newDate]
+            
+            for data in period {
+                // 配列が空でなければ
+                if datePeriod.isEmpty {
+                    datePeriod.append(data)
+                    
+                } else {
+                    let count = datePeriod.count
+                    var i = 1
+                    
+                    while (calendar.compare(data, to: datePeriod[count - i], toUnitGranularity: .day) == .orderedAscending) {
+                        
+                        i += 1
+                        
+                        if count < i{
+                            break
+                        }
+                    }
+                    
+                    // Elementにdataを入れるとエラーになる（謎）
+                    datePeriod.insert(data, at: count - i + 1)
+                    
+                }
+            }
+        }
+        
+        self.mostNewDate = datePeriod[datePeriod.endIndex - 1]
+        self.mostOldDate = datePeriod[0]
+        
     }
     
 }

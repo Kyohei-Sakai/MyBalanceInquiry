@@ -19,13 +19,15 @@ class MyBankViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bankNameLabel.text = selectedBank.bankName
-        balanceLabel.text = "残高　¥ \(selectedBank.balance)"
+        bankStatementTableView.register(UINib(nibName: "BankStatementCell", bundle: nil), forCellReuseIdentifier: "StatementCell")
         
         bankStatementTableView.delegate = self
         bankStatementTableView.dataSource = self
         
-        bankStatementTableView.register(UINib(nibName: "BankStatementCell", bundle: nil), forCellReuseIdentifier: "StatementCell")
+        bankNameLabel.text = selectedBank.bankName
+        balanceLabel.text = "残高　¥ \(selectedBank.balance)"
+        print("残高を更新しました。")
+        
         
     }
     

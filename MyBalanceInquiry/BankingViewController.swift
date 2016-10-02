@@ -63,8 +63,10 @@ class BankingViewController: UIViewController {
         if date != nil && banking != nil && amount != nil {
             // 入力されたデータより取引明細を追加
             self.selectedBank.addBanking(date: date, banking: banking, amount: amount!)
+            print("入力されたデータより取引明細を追加")
             // 更新後、明細画面に戻る
             self.performSegue(withIdentifier: "fromBankingToBank", sender: nil)
+            print("セグエを呼ぶ")
             
         } else {
             print("未入力の項目があります。")
@@ -213,6 +215,7 @@ extension BankingViewController {
             let bankVC: MyBankViewController = (segue.destination as? MyBankViewController)!
             // 遷移先にBankの参照先を渡す
             bankVC.selectedBank = self.selectedBank
+            print("遷移先にBankの参照先を渡す")
         }
     }
     
