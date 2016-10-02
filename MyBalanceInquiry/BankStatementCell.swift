@@ -26,6 +26,7 @@ class BankStatementCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    // 取引日、入金か出金、金額を表示する
     func setCell(date: Date, banking: Banking, amount: Int) {
         // DateをStringに変換するためのFormatterを用意
         let dateFormatter = DateFormatter()

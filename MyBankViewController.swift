@@ -56,10 +56,11 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
         let statementCell = tableView.dequeueReusableCell(withIdentifier: "StatementCell", for: indexPath) as! BankStatementCell
         
         let i = indexPath.row
-        let bank = selectedBank.bankStatement
+        let count = selectedBank.bankStatement.count
+        // 最後の要素から順に呼び出す
+        let statement = selectedBank.bankStatement[count - (1 + i)]
         
-        statementCell.setCell(date: bank[i].date, banking: bank[i].banking, amount: bank[i].amount)
-        
+        statementCell.setCell(date: statement.date, banking: statement.banking, amount: statement.amount)
         return statementCell
     }
     

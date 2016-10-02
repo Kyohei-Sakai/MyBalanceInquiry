@@ -48,11 +48,13 @@ class BankingViewController: UIViewController {
         let date = dateFormatter.date(from: self.pickDate)
         
         // String -> Banking
-        var banking: Banking! = nil
+        var banking: Banking!
         if self.pickBanking == "入金" {
-            banking = Banking.payment
+            banking = .payment
         } else if self.pickBanking == "出金" {
-            banking = Banking.withdrawal
+            banking = .withdrawal
+        } else {
+            banking = nil
         }
         
         // String -> Int
@@ -62,12 +64,38 @@ class BankingViewController: UIViewController {
             // 入力されたデータより取引明細を追加
             self.selectedBank.addBanking(date: date, banking: banking, amount: amount!)
             // 更新後、明細画面に戻る
-            performSegue(withIdentifier: "fromBankingToBank", sender: nil)
+            self.performSegue(withIdentifier: "fromBankingToBank", sender: nil)
             
         } else {
             print("未入力の項目があります。")
+//            alerError()
         }
         
+    }
+    
+    // 入力事項に誤りがあることをユーザに通知する
+    func alerError() {
+        
+        let alertController = UIAlertController(
+            title: "エラー",
+            message: "入力事項に誤りがあります。",
+            preferredStyle: .actionSheet)
+        
+        let otherAction = UIAlertAction(title: "やり直す", style: .default, handler: { action in
+            print("\(action.title)が押されました")
+            
+        })
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: { action in
+            print("\(action.title)が押されました")
+//            self.performSegue(withIdentifier: "fromBankingToBank", sender: nil)
+        })
+        
+        // Cancelは追加する順序に関わらず左側に表示される
+        alertController.addAction(otherAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
 }
@@ -138,9 +166,13 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             default:
                 return "error"
             }
-        } else {
+        }
+        else if pickerView.tag == 2 {
             let banking: [String] = ["未入力", "入金", "出金"]
             return banking[row]
+        }
+        else {
+            return "error"
         }
         
     }
@@ -159,7 +191,8 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             self.pickDate = "\(year!)/\(month!)/\(day!)"
             print(self.pickDate)
             
-        } else {
+        }
+        else if pickerView.tag == 2 {
             let banking = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 0), forComponent: 0)
             self.pickBanking = banking
             print(self.pickBanking)
