@@ -160,13 +160,21 @@ class Bank {
     }
     
     // 取引日の最新を得る
-    var newDate: Date {
-        return bankStatement[bankStatement.endIndex - 1].date
+    var newDate: Date! {
+        if bankStatement.isEmpty {
+            return nil
+        } else {
+            return bankStatement[bankStatement.endIndex - 1].date
+        }
     }
     
     // 取引日の最古を得る
-    var oldDate: Date {
-        return bankStatement[0].date
+    var oldDate: Date! {
+        if bankStatement.isEmpty {
+            return nil
+        } else {
+            return bankStatement[0].date
+        }
     }
     
 }

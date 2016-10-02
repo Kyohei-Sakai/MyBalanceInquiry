@@ -32,34 +32,66 @@ class GraghViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func dateFormat(date: Date, stringFormat: String) -> String {
+        // StringをDateに変換するためのFormatterを用意
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = stringFormat
+        
+        return dateFormatter.string(from: date)
+    }
+    
     
     func drawGraghIntoScrollView() {
+        
+        var year = Int(dateFormat(date: superBank.mostOldDate, stringFormat: "yyyy"))
+        var month = Int(dateFormat(date: superBank.mostOldDate, stringFormat: "MM"))
+        
+        let finalYear = Int(dateFormat(date: superBank.mostNewDate, stringFormat: "yyyy"))
+        let finalMonth = Int(dateFormat(date: superBank.mostNewDate, stringFormat: "MM"))
+        
         // StringをDateに変換するためのFormatterを用意
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd"
         
-        let firstMonth = 1
-        
-        // １２ヶ月間の合計支出額を配列に格納
-        for month in 1..<12 {
+        while year! <= finalYear! {
             
-            let from = "2016/\(month)/01"
-            let to = "2016/\(month + 1)/01"
+            var overMonth: Int
             
-            // 収支金額
-            let totalBalance = superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: from), toDate: dateFormatter.date(from: to))
-            // 月々の収入
-            let income = 80000
+            if year == finalYear {
+                overMonth = 12
+            } else {
+                overMonth = finalMonth!
+            }
             
-            myData.append(income - totalBalance)
-            
+            while month! <= overMonth {
+                
+                let from = "\(year!)/\(month!)/01"
+                let to: String
+                
+                if month! == 12 {
+                    to = "\(year! + 1)/01/01"
+                } else {
+                    to = "\(year!)/\(month! + 1)/01"
+                }
+                
+                // 収支金額
+                let totalBalance = superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: from), toDate: dateFormatter.date(from: to))
+                // 月々の収入
+                let income = 80000
+                
+                myData.append(income - totalBalance)
+                
+                month! += 1
+            }
+            year! += 1
+            month = 1
         }
         
         
         let screenSize = UIScreen.main.bounds.size
         let height = graghScrollView.frame.size.height
         
-        let spendingGragh = BarGragh(dataArray: myData, month: firstMonth, barAreaWidth: screenSize.width / 4, height: height, average: Int(textField.text!)!)
+        let spendingGragh = BarGragh(dataArray: myData, date: superBank.mostOldDate, barAreaWidth: screenSize.width / 4, height: height, average: Int(textField.text!)!)
         self.barGragh = spendingGragh
         
         graghScrollView.addSubview(spendingGragh)
