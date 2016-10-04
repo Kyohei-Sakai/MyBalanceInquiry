@@ -42,7 +42,6 @@
                                 <connections>
                                     <action selector="tapAddButton:" destination="X6p-Xq-umI" eventType="touchUpInside" id="6QJ-D6-rf5"/>
                                     <action selector="tapAddNewBankButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ciY-UE-BRS"/>
-                                    <segue destination="own-ol-SFH" kind="presentation" identifier="toAddNewBank" id="Veo-OP-QR1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUb-ws-OSq">
@@ -54,7 +53,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="jkh-o8-amz" kind="show" identifier="toGraghView" id="dnY-76-6Mm"/>
+                                    <action selector="tapGraghViewButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F6u-DW-5b7"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -62,7 +61,9 @@
                     </view>
                     <connections>
                         <outlet property="myBanktableView" destination="mvI-bM-fwc" id="EtI-hu-rtI"/>
-                        <segue destination="X6p-Xq-umI" kind="showDetail" identifier="toMyBankViewController" id="aTS-cW-AJx"/>
+                        <segue destination="X6p-Xq-umI" kind="showDetail" identifier="toMyBank" id="aTS-cW-AJx"/>
+                        <segue destination="jkh-o8-amz" kind="show" identifier="toGraghView" id="2DD-hi-AOz"/>
+                        <segue destination="own-ol-SFH" kind="presentation" identifier="toAddNewBank" id="sIl-P9-uOC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -158,7 +159,6 @@
                                 </state>
                                 <connections>
                                     <action selector="tapAddBank:" destination="own-ol-SFH" eventType="touchUpInside" id="LIs-4O-YJf"/>
-                                    <segue destination="BYZ-38-t0r" kind="show" identifier="toViewController" id="2mj-N1-74c"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ycg-8I-yXE">
@@ -207,12 +207,13 @@
                     <connections>
                         <outlet property="balanceTextField" destination="3rC-8n-QQy" id="UvT-ob-Rda"/>
                         <outlet property="bankTextField" destination="YqV-Ka-gpv" id="6r6-m8-A1f"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="toViewController" id="gSf-WD-ppS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hti-p2-dSx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="4yh-CA-ucp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="24.800000000000001" y="723.68815592203907"/>
+            <point key="canvasLocation" x="-164" y="865"/>
         </scene>
         <!--Gragh View Controller-->
         <scene sceneID="T0X-cw-0w1">
@@ -271,7 +272,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vb0-FX-a4q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="EkG-on-nX8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1069.5999999999999" y="723.68815592203907"/>
+            <point key="canvasLocation" x="854" y="865"/>
         </scene>
         <!--Banking View Controller-->
         <scene sceneID="xO7-7O-rIo">
@@ -324,7 +325,6 @@
                                 </state>
                                 <connections>
                                     <action selector="tapAddButton:" destination="9kx-rE-zWN" eventType="touchUpInside" id="hZd-eY-RtQ"/>
-                                    <segue destination="X6p-Xq-umI" kind="show" identifier="fromBankingToBank" id="1kI-ks-1Pf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tiS-fM-Age">
@@ -346,6 +346,7 @@
                         <outlet property="bankingPicker" destination="6qN-Z9-XH7" id="KcY-kQ-NfF"/>
                         <outlet property="datePicker" destination="PEu-Wg-VDT" id="7Qa-6N-Zc5"/>
                         <outlet property="textField" destination="yD8-UE-JGT" id="Pg2-SO-Rhh"/>
+                        <segue destination="X6p-Xq-umI" kind="show" identifier="fromBankingToBank" id="zLZ-UY-k2h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ad2-jH-zAR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -355,6 +356,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="1kI-ks-1Pf"/>
+        <segue reference="aTS-cW-AJx"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -70,7 +70,7 @@ class BankingViewController: UIViewController {
             
         } else {
             print("未入力の項目があります。")
-//            alerError()
+            alerError()
         }
         
     }
@@ -212,6 +212,7 @@ extension BankingViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
         if (segue.identifier == "fromBankingToBank") {
+//            cal_money()
             let bankVC: MyBankViewController = (segue.destination as? MyBankViewController)!
             // 遷移先にBankの参照先を渡す
             bankVC.selectedBank = self.selectedBank

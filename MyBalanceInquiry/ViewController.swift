@@ -16,14 +16,14 @@ class ViewController: UIViewController {
     
     var selectedBank: Bank!
     
-    var isFirstLoad: Bool!
+    var isFirstLoad: Bool = true
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 初めてのロードであれば、初期設定を行う
-        if isFirstLoad != false {
+        if isFirstLoad == true {
             setBanking()
         }
         
@@ -93,10 +93,13 @@ class ViewController: UIViewController {
     
     // My銀行を追加登録するボタンが押された時
     @IBAction func tapAddNewBankButton(_ sender: UIButton) {
-        
         performSegue(withIdentifier: "toAddNewBank", sender: nil)
-        
     }
+    
+    @IBAction func tapGraghViewButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "toGraghView", sender: nil)
+    }
+    
     
 }
 
@@ -119,7 +122,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // セルが選択された時の処理
     func tableView(_ table: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedBank = superBank.bank[indexPath.row]
-        performSegue(withIdentifier: "toMyBankViewController", sender: nil)
+        performSegue(withIdentifier: "toMyBank", sender: nil)
     }
     
 }
@@ -131,7 +134,7 @@ extension ViewController {
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
-        if (segue.identifier == "toMyBankViewController") {
+        if (segue.identifier == "toMyBank") {
             let myBankVC: MyBankViewController = (segue.destination as? MyBankViewController)!
             // 遷移先にBankの参照先を渡す
             myBankVC.selectedBank = self.selectedBank

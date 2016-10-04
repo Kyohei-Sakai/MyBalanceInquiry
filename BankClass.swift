@@ -65,6 +65,7 @@ class Bank {
         // 残高を求める
         if banking == Banking.payment {
             self.balance += amount
+            print("2.bankclass: \(self.balance)")
         } else {
             self.balance -= amount
         }
@@ -237,7 +238,7 @@ class BankManager {
     
     // 全ての取引期間の最新と最古を求める
     private func datePeriod() {
-        let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
+        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         var datePeriod: [Date] = []
         
         for bank in self.bank {
@@ -252,7 +253,7 @@ class BankManager {
                     let count = datePeriod.count
                     var i = 1
                     
-                    while (calendar.compare(data, to: datePeriod[count - i], toUnitGranularity: .day) == .orderedAscending) {
+                    while (calendar.compare(data, to: datePeriod[count - i], toGranularity: .day) == .orderedAscending) {
                         
                         i += 1
                         
