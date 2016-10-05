@@ -210,35 +210,36 @@ enum Banking {
 // MARK: - Bankクラスをまとめて扱うクラス
 
 class BankManager {
-    var bank: [Bank]
+    var banks: [Bank]
     var totalBalance: Int = 0
     
     // 取引期間の最新と最古
-    var mostNewDate: Date!
-    var mostOldDate: Date!
+    var mostNewDate: Date {
+        let period = datePeriod()
+        return period.last!
+    }
     
-    init() {
-        self.bank = []
+    var mostOldDate: Date {
+        let period = datePeriod()
+        return period.first!
     }
     
     init(bank: [Bank]) {
-        self.bank = bank
+        self.banks = bank
         self.totalBalance = getSumTotalBalance()
-        datePeriod()
     }
     
     // 銀行を追加
     func addBank(bank: Bank) {
-        self.bank.append(bank)
+        self.banks.append(bank)
         self.totalBalance = self.getSumTotalBalance()
-        datePeriod()
     }
     
     // 合計残高を算出
     func getSumTotalBalance() -> Int {
         var total = 0
         
-        for i in self.bank {
+        for i in self.banks {
             total += i.getTotalBalance()
         }
         return total
@@ -248,48 +249,32 @@ class BankManager {
     func getSumTotalBalance(fromDate: Date!, toDate: Date!) -> Int {
         var total = 0
         
-        for i in self.bank {
+        for i in self.banks {
             total += i.getTotalBalance(fromDate: fromDate, toDate: toDate)
         }
         return total
     }
     
-    // 全ての取引期間の最新と最古を求める
-    private func datePeriod() {
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        var datePeriod: [Date] = []
+    // 全ての取引期間の最新値と最古値の候補を返す
+    private func datePeriod() -> [Date] {
         
-        for bank in self.bank {
-            let period: [Date] = [bank.oldDate, bank.newDate]
-            
-            for data in period {
-                // 配列が空でなければ
-                if datePeriod.isEmpty {
-                    datePeriod.append(data)
-                    
-                } else {
-                    let count = datePeriod.count
-                    var i = 1
-                    
-                    while (calendar.compare(data, to: datePeriod[count - i], toGranularity: .day) == .orderedAscending) {
-                        
-                        i += 1
-                        
-                        if count < i{
-                            break
-                        }
-                    }
-                    
-                    // Elementにdataを入れるとエラーになる（謎）
-                    datePeriod.insert(data, at: count - i + 1)
-                    
-                }
-            }
+        var period: [Date?] = []
+        
+        for bank in banks {
+            period.append(bank.oldDate)
+            period.append(bank.newDate)
         }
         
-        self.mostNewDate = datePeriod[datePeriod.endIndex - 1]
-        self.mostOldDate = datePeriod[0]
+        // nilを除いたDate配列を作る
+        let datePeriod: [Date] = period.flatMap { $0 }
         
+        // 日付順に並び替える
+        let sortPeriod = datePeriod.sorted(by: { (date1: Date, date2: Date) -> Bool in
+            let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+            return calendar.compare(date1, to: date2, toGranularity: .day) == .orderedAscending
+        })
+        
+        return sortPeriod
     }
     
 }

@@ -37,7 +37,7 @@ class AddNewBankViewController: UIViewController {
         // BankManagerにBankを追加
         superBank.addBank(bank: newBank)
         
-        for i in superBank.bank {
+        for i in superBank.banks {
             print(i.bankName)
         }
         

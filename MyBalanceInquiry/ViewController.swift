@@ -108,20 +108,20 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return superBank.bank.count
+        return superBank.banks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {
         // セルを定義（ここではデフォルトのセル）
         let cell: UITableViewCell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
-        cell.textLabel?.text = superBank.bank[indexPath.row].bankName
+        cell.textLabel?.text = superBank.banks[indexPath.row].bankName
         
         return cell
     }
     
     // セルが選択された時の処理
     func tableView(_ table: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectedBank = superBank.bank[indexPath.row]
+        self.selectedBank = superBank.banks[indexPath.row]
         performSegue(withIdentifier: "toMyBank", sender: nil)
     }
     
