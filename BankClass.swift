@@ -19,7 +19,7 @@ class Bank {
     // 残高
     var balance: Int
     // 入出金データ
-    var bankStatement:[(date: Date, banking: Banking, amount: Int)] = []
+    var bankStatement: [BankingData] = []
     
     init() {
         self.bankName = ""
@@ -35,7 +35,7 @@ class Bank {
     
     // 取引を追加し、入出金データに格納
     func addBanking(date: Date!, banking: Banking, amount: Int) {
-        let data:(Date, Banking, Int) = (date, banking, amount)
+        let data = BankingData(date: date, banking: banking, amount: amount)
         
         // 日付順にデータを並び替えて格納する
         let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
@@ -58,14 +58,13 @@ class Bank {
             }
             
             // Elementにdataを入れるとエラーになる（謎）
-            self.bankStatement.insert((date, banking, amount), at: count - i + 1)
+            self.bankStatement.insert(data, at: count - i + 1)
             
         }
         
         // 残高を求める
         if banking == Banking.payment {
             self.balance += amount
-            print("2.bankclass: \(self.balance)")
         } else {
             self.balance -= amount
         }
@@ -179,6 +178,30 @@ class Bank {
     }
     
 }
+
+
+// 銀行取引の詳細をまとめたデータ
+struct BankingData {
+    let date: Date
+    let banking: Banking
+    let amount: Int
+    // 外部からの入金かどうか
+    var isIncome: Bool = false
+    
+    init(date: Date, banking: Banking, amount: Int) {
+        self.date = date
+        self.banking = banking
+        self.amount = amount
+    }
+    
+    mutating func setIncome() {
+        if banking == .payment {
+            isIncome = true
+        }
+    }
+    
+}
+
 
 // 銀行取引の種類
 enum Banking {
