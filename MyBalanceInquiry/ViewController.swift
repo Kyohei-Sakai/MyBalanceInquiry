@@ -82,7 +82,7 @@ class ViewController: UIViewController {
         print(myBank3.balance)
         
         // 全ての銀行を管理
-        let superBank = BankManager(bank: [myBank1, myBank2, myBank3])
+        let superBank = BankManager(banks: [myBank1, myBank2, myBank3])
         self.superBank = superBank
         print("合計残高：\(superBank.totalBalance)")
         

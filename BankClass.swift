@@ -211,7 +211,7 @@ enum Banking {
 
 class BankManager {
     var banks: [Bank]
-    var totalBalance: Int = 0
+    var totalBalance = 0
     
     // 取引期間の最新と最古
     var mostNewDate: Date {
@@ -224,34 +224,29 @@ class BankManager {
         return period.first!
     }
     
-    init(bank: [Bank]) {
-        self.banks = bank
-        self.totalBalance = getSumTotalBalance()
+    
+    init(banks: [Bank]) {
+        self.banks = banks
+        totalBalance = getSumTotalBalance()
     }
     
     // 銀行を追加
     func addBank(bank: Bank) {
-        self.banks.append(bank)
-        self.totalBalance = self.getSumTotalBalance()
+        banks.append(bank)
+        totalBalance = getSumTotalBalance()
     }
     
     // 合計残高を算出
     func getSumTotalBalance() -> Int {
         var total = 0
-        
-        for i in self.banks {
-            total += i.getTotalBalance()
-        }
+        banks.forEach { total += $0.getTotalBalance() }
         return total
     }
     
     // 指定期間の収支バランスを求める
     func getSumTotalBalance(fromDate: Date!, toDate: Date!) -> Int {
         var total = 0
-        
-        for i in self.banks {
-            total += i.getTotalBalance(fromDate: fromDate, toDate: toDate)
-        }
+        banks.forEach { total += $0.getTotalBalance(fromDate: fromDate, toDate: toDate) }
         return total
     }
     
