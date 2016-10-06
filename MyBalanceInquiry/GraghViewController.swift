@@ -17,7 +17,6 @@ class GraghViewController: UIViewController {
     
     var barGragh: BarGragh!
     
-//    var myData: [Int] = [80000, 87000, 105000, 72000, 50000, 123973, 33023, 23244, 97564, 122333]
     var myData: [Int] = []
     
     override func viewDidLoad() {
@@ -32,7 +31,7 @@ class GraghViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func dateFormat(date: Date, stringFormat: String) -> String {
+    private func dateFormat(date: Date, stringFormat: String) -> String {
         // StringをDateに変換するためのFormatterを用意
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = stringFormat
@@ -43,50 +42,31 @@ class GraghViewController: UIViewController {
     
     func drawGraghIntoScrollView() {
         
-        var year = Int(dateFormat(date: superBank.mostOldDate, stringFormat: "yyyy"))
-        var month = Int(dateFormat(date: superBank.mostOldDate, stringFormat: "MM"))
+        let calendar = Calendar(identifier: .gregorian)
         
-        let finalYear = Int(dateFormat(date: superBank.mostNewDate, stringFormat: "yyyy"))
-        let finalMonth = Int(dateFormat(date: superBank.mostNewDate, stringFormat: "MM"))
+        let oldDate = superBank.mostOldDate
+        let newDate = superBank.mostNewDate
         
-        // StringをDateに変換するためのFormatterを用意
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd"
+        // 年と月だけのコンポーネントを作り
+        let oldComps = DateComponents(calendar: calendar, year: calendar.component(.year, from: oldDate), month: calendar.component(.month, from: oldDate))
         
-        while year! <= finalYear! {
+        let newComps = DateComponents(calendar: calendar, year: calendar.component(.year, from: newDate), month: calendar.component(.month, from: newDate))
+        // Dataに戻すことでその月の1日が返る
+        var date: Date = calendar.date(from: oldComps)!
+        let finalDate: Date = calendar.date(from: newComps)!
+        
+        while date <= finalDate {
             
-            var overMonth: Int
+            let nextDate = calendar.date(byAdding: DateComponents(month: 1), to: date)
+            // 収支金額
+            let totalBalance = superBank.getSumTotalBalance(fromDate: date, toDate: nextDate)
+            // 月々の収入
+            let income = 80000
             
-            if year == finalYear {
-                overMonth = 12
-            } else {
-                overMonth = finalMonth!
-            }
+            myData.append(income - totalBalance)
             
-            while month! <= overMonth {
-                
-                let from = "\(year!)/\(month!)/01"
-                let to: String
-                
-                if month! == 12 {
-                    to = "\(year! + 1)/01/01"
-                } else {
-                    to = "\(year!)/\(month! + 1)/01"
-                }
-                
-                // 収支金額
-                let totalBalance = superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: from), toDate: dateFormatter.date(from: to))
-                // 月々の収入
-                let income = 80000
-                
-                myData.append(income - totalBalance)
-                
-                month! += 1
-            }
-            year! += 1
-            month = 1
+            date = nextDate!
         }
-        
         
         let screenSize = UIScreen.main.bounds.size
         let height = graghScrollView.frame.size.height

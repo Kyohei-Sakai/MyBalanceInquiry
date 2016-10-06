@@ -18,7 +18,7 @@ class BarGragh: UIView {
     // 生成するBarの幅
     var barAreaWidth: CGFloat
     
-    var date: Date!
+    var oldDate: Date!
     var average: Int
     var averageX: CGFloat = 0
     var averageY: CGFloat = 0
@@ -27,7 +27,7 @@ class BarGragh: UIView {
     
     init(dataArray: [Int], date: Date, barAreaWidth: CGFloat, height: CGFloat, average: Int) {
         self.dataArray = dataArray
-        self.date = date
+        self.oldDate = date
         self.maxSpending = dataArray.max()!
         self.barAreaWidth = barAreaWidth
         self.average = average
@@ -52,6 +52,8 @@ class BarGragh: UIView {
     
     override func draw(_ rect: CGRect) {
         
+        let calendar = Calendar(identifier: .gregorian)
+        
         for i in 0..<dataArray.count {
             
             // 任意のデータ数が収まる幅
@@ -59,8 +61,10 @@ class BarGragh: UIView {
             // barの表示をずらしていく
             let x = CGFloat(i) * self.barAreaWidth
             
+            let date = calendar.date(byAdding: DateComponents(month: i), to: self.oldDate)
+            
             let rect = CGRect(origin: CGPoint(x: x, y: 0), size: CGSize(width: self.barAreaWidth, height: height))
-            let bar = Bar(rect, spending: self.dataArray[i], maxSpendig: self.maxSpending, date: self.date, average: self.average)
+            let bar = Bar(rect, spending: self.dataArray[i], maxSpendig: self.maxSpending, date: date!, average: self.average)
             self.addSubview(bar)
             
             self.averageY = bar.averageY
