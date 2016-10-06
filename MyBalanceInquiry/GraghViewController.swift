@@ -61,7 +61,7 @@ class GraghViewController: UIViewController {
             // 収支金額
             let totalBalance = superBank.getSumTotalBalance(fromDate: date, toDate: nextDate)
             // 月々の収入
-            let income = 80000
+            let income = superBank.getTotalIncome(fromDate: date, toDate: nextDate)
             
             myData.append(income - totalBalance)
             
@@ -79,8 +79,6 @@ class GraghViewController: UIViewController {
         
         textField.delegate = self
         graghScrollView.delegate = self
-        
-        print("drawGraghIntoScrollView")
         
     }
     

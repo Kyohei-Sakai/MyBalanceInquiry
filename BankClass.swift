@@ -172,11 +172,43 @@ class Bank {
         }
     }
     
+    // 指定した期間内での外部からの収入を得る
+    func getIncome(fromDate: Date!, toDate: Date!) -> Int {
+        
+        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        
+        var income = 0
+        
+        // fromData < toDateでなかった場合は強制終了
+        if calendar.compare(fromDate, to: toDate, toGranularity: .day) != .orderedAscending {
+            print("期間設定に誤りがあります。")
+            return income
+        }
+        
+        bankStatement.forEach { data in
+            
+            let result1 = calendar.compare(data.date, to: fromDate, toGranularity: .day)
+            // data.date > fromDateであれば
+            if result1 == .orderedDescending {
+                
+                let result2 = calendar.compare(data.date, to: toDate, toGranularity: .day)
+                // data.data < toDateであれば
+                if result2 == .orderedAscending {
+                    if data.isIncome {
+                        income += data.amount
+                    }
+                }
+            }
+        }
+        
+        return income
+    }
+    
 }
 
 
 // 銀行取引の詳細をまとめたデータ
-struct BankingData {
+class BankingData {
     let date: Date
     let banking: Banking
     let amount: Int
@@ -189,9 +221,10 @@ struct BankingData {
         self.amount = amount
     }
     
-    mutating func setIncome() {
+    func setIncome() {
         if banking == .payment {
             isIncome = true
+            print("\(date),\(amount)を\(isIncome)")
         }
     }
     
@@ -270,6 +303,13 @@ class BankManager {
         })
         
         return sortPeriod
+    }
+    
+    // 指定した期間内での外部からの収入を得る
+    func getTotalIncome(fromDate: Date!, toDate: Date!) -> Int {
+        var income = 0
+        banks.forEach { income += $0.getIncome(fromDate: fromDate, toDate: toDate) }
+        return income
     }
     
 }

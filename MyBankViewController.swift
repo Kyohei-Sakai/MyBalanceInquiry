@@ -15,7 +15,7 @@ class MyBankViewController: UIViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     
     var selectedBank: Bank!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,13 +62,45 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
         // 最後の要素から順に呼び出す
         let statement = selectedBank.bankStatement[count - (1 + i)]
         
-        statementCell.setCell(date: statement.date, banking: statement.banking, amount: statement.amount)
+        statementCell.setCell(data: statement)
         return statementCell
     }
     
     // セルが選択された時の処理
     func tableView(_ table: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 今のところ処理はなし
+        print("セル\(indexPath.row)を選択")
+        let i = indexPath.row
+        let count = selectedBank.bankStatement.count
+        // 最後の要素から順にセルに格納されている
+        let statement = selectedBank.bankStatement[count - (1 + i)]
+        // 入金データであるかどうか
+        if statement.banking == .payment {
+            alerIsIncome(data: statement)
+        }
+        
+    }
+    
+    func alerIsIncome(data: BankingData) {
+        
+        let alertController = UIAlertController(
+            title: "取引の設定",
+            message: "この取引を外部からの収入として扱いますか？",
+            preferredStyle: .actionSheet)
+        
+        let otherAction = UIAlertAction(title: "はい", style: .default, handler: { action in
+            print("\(action.title)が押されました")
+            print("\(data.date),\(data.banking),\(data.amount)")
+            data.setIncome()
+        })
+        
+        let cancelAction = UIAlertAction(title: "いいえ", style: .cancel, handler: { action in
+            print("\(action.title)が押されました")
+        })
+        
+        alertController.addAction(otherAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
 }

@@ -27,17 +27,17 @@ class BankStatementCell: UITableViewCell {
     }
     
     // 取引日、入金か出金、金額を表示する
-    func setCell(date: Date, banking: Banking, amount: Int) {
+    func setCell(data: BankingData) {
         // DateをStringに変換するためのFormatterを用意
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd"
         
         // 日付を表示
-        let dateText = dateFormatter.string(from: date)
+        let dateText = dateFormatter.string(from: data.date)
         dateLabel.text = dateText
         
         // 入金 or 出金を表示
-        switch banking {
+        switch data.banking {
         case .payment:
             bankingLabel.text = "入"
             bankingLabel.textColor = UIColor.blue
@@ -47,7 +47,11 @@ class BankStatementCell: UITableViewCell {
         }
         
         // 金額を表示
-        amountLabel.text = "¥ \(amount)"
+        amountLabel.text = "¥ \(data.amount)"
+        
+        if data.isIncome == true {
+            self.backgroundColor = UIColor.cyan
+        }
         
     }
     
