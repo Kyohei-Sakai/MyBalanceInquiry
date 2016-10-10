@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     }
     
     // 初期データを設定
-    func setBanking() {
+    private func setBanking() {
         
         // 銀行を追加
         let myBank1 = Bank(name: "みずほ銀行", firstBalance: 100000)
