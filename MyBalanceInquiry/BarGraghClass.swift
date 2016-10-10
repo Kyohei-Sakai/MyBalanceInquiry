@@ -13,15 +13,18 @@ import UIKit
 class BarGragh: UIView {
     
     // データ配列
-    var dataArray: [Int]
-    var maxSpending: Int
+    private var dataArray: [Int]
+    // データの中の最大支出 -> これをもとにBar表示エリアの高さを決める
+    private var maxSpending: Int
     // 生成するBarの幅
-    var barAreaWidth: CGFloat
+    private var barAreaWidth: CGFloat
+    //
+    private var oldDate: Date!
     
-    var oldDate: Date!
-    var average: Int
-    var averageX: CGFloat = 0
-    var averageY: CGFloat = 0
+    private var average: Int
+    private var averageX: CGFloat = 0
+    private var averageY: CGFloat = 0
+    // 比較するための設定値を表示
     var averageLabel: UILabel = UILabel()
     
     
@@ -92,12 +95,12 @@ class BarGragh: UIView {
 
 class Bar: UIView {
     // 各月の支出
-    var spending: Int
-    var maxSpendig: Int
+    private var spending: Int
+    private var maxSpendig: Int
     
-    var date: Date!
-    var average: Int = 100000
-    var averageY: CGFloat = 0
+    private var date: Date!
+    private var average = 100000
+    fileprivate var averageY: CGFloat = 0
     
     init(_ rect: CGRect, spending: Int, maxSpendig: Int, date: Date, average: Int) {
         self.spending = spending
