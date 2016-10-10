@@ -31,15 +31,6 @@ class GraghViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func dateFormat(date: Date, stringFormat: String) -> String {
-        // StringをDateに変換するためのFormatterを用意
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = stringFormat
-        
-        return dateFormatter.string(from: date)
-    }
-    
-    
     func drawGraghIntoScrollView() {
         
         let calendar = Calendar(identifier: .gregorian)
