@@ -80,7 +80,7 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    func alertIsIncome(data: BankingData) {
+    private func alertIsIncome(data: BankingData) {
         
         let alertController = UIAlertController(
             title: "取引の設定",
