@@ -15,7 +15,7 @@ class Bank {
     // 銀行名
     let bankName: String
     // 初期残高を記録
-    let firstBalance: Int
+    private let firstBalance: Int
     // 残高
     var balance: Int
     // 入出金データ
@@ -66,7 +66,7 @@ class Bank {
     }
     
     // 過去全ての取引を計算する
-    func getTotalBalance() -> Int {
+    fileprivate func getTotalBalance() -> Int {
         var totalBalance = firstBalance
         
         bankStatement.forEach { data in
@@ -80,7 +80,7 @@ class Bank {
     }
     
     // 指定した期間の取引を計算する
-    func getTotalBalance(fromDate: Date!, toDate: Date!) -> Int {
+    fileprivate func getTotalBalance(fromDate: Date!, toDate: Date!) -> Int {
         var totalBalance = 0
         let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
         
@@ -113,14 +113,14 @@ class Bank {
     
     
     // 取引明細を一覧で表示
-    func printBankStatement() {
+    fileprivate func printBankStatement() {
         bankStatement.forEach { data in
             print("\(data.date), \(data.banking), \(data.amount)")
         }
     }
     
     // 指定した日にちの取引のみを表示
-    func printBankStatement(fromDate: Date!) {
+    fileprivate func printBankStatement(fromDate: Date!) {
         bankStatement.forEach { data in
             if data.date == fromDate {
                 print("\(data.date), \(data.banking), \(data.amount)")
@@ -129,7 +129,7 @@ class Bank {
     }
     
     // 指定した期間の取引のみを表示
-    func printBankStatement(fromDate: Date!, toDate: Date!) {
+    fileprivate func printBankStatement(fromDate: Date!, toDate: Date!) {
         
         let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
         
@@ -155,7 +155,7 @@ class Bank {
     }
     
     // 取引日の最新を得る
-    var newDate: Date! {
+    fileprivate var newDate: Date! {
         if bankStatement.isEmpty {
             return nil
         } else {
@@ -164,7 +164,7 @@ class Bank {
     }
     
     // 取引日の最古を得る
-    var oldDate: Date! {
+    fileprivate var oldDate: Date! {
         if bankStatement.isEmpty {
             return nil
         } else {
@@ -173,7 +173,7 @@ class Bank {
     }
     
     // 指定した期間内での外部からの収入を得る
-    func getIncome(fromDate: Date!, toDate: Date!) -> Int {
+    fileprivate func getIncome(fromDate: Date!, toDate: Date!) -> Int {
         
         let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         
@@ -244,7 +244,7 @@ enum Banking {
 
 class BankManager {
     var banks: [Bank]
-    var totalBalance = 0
+    fileprivate var totalBalance = 0
     
     // 取引期間の最新と最古
     var mostNewDate: Date {
@@ -270,7 +270,7 @@ class BankManager {
     }
     
     // 合計残高を算出
-    func getSumTotalBalance() -> Int {
+    fileprivate func getSumTotalBalance() -> Int {
         var total = 0
         banks.forEach { total += $0.getTotalBalance() }
         return total
