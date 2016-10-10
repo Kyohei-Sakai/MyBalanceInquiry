@@ -17,8 +17,8 @@ class BankingViewController: UIViewController {
     var selectedBank: Bank!
     
     // PickerViewに設定されている値を格納
-    var pickDate: String!
-    var pickBanking: String!
+    fileprivate var pickDate: String!
+    fileprivate var pickBanking: String!
     
     
     override func viewDidLoad() {
@@ -76,7 +76,7 @@ class BankingViewController: UIViewController {
     }
     
     // 入力事項に誤りがあることをユーザに通知する
-    func alertError() {
+    private func alertError() {
         
         let alertController = UIAlertController(
             title: "エラー",
