@@ -75,12 +75,12 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
         let statement = selectedBank.bankStatement[count - (1 + i)]
         // 入金データであるかどうか
         if statement.banking == .payment {
-            alerIsIncome(data: statement)
+            alertIsIncome(data: statement)
         }
         
     }
     
-    func alerIsIncome(data: BankingData) {
+    func alertIsIncome(data: BankingData) {
         
         let alertController = UIAlertController(
             title: "取引の設定",

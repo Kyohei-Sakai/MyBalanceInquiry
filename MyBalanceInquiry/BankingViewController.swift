@@ -70,13 +70,13 @@ class BankingViewController: UIViewController {
             
         } else {
             print("未入力の項目があります。")
-            alerError()
+            alertError()
         }
         
     }
     
     // 入力事項に誤りがあることをユーザに通知する
-    func alerError() {
+    func alertError() {
         
         let alertController = UIAlertController(
             title: "エラー",
