@@ -31,11 +31,6 @@ class MyBankViewController: UIViewController {
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     // 取引を追加するためのボタンが押された時
     @IBAction func tapAddButton(_ sender: UIButton) {
         // 遷移先のViewControllerに渡すBankを設定

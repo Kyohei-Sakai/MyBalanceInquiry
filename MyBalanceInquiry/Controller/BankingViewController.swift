@@ -33,11 +33,6 @@ class BankingViewController: UIViewController {
         bankingPicker.tag = 2
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // 必要事項を入力した後Addボタンで確定
     @IBAction func tapAddButton(_ sender: UIButton) {
