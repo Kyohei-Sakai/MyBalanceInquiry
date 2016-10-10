@@ -51,7 +51,8 @@ class GraghViewController: UIViewController {
         let oldComps = DateComponents(calendar: calendar, year: calendar.component(.year, from: oldDate), month: calendar.component(.month, from: oldDate))
         
         let newComps = DateComponents(calendar: calendar, year: calendar.component(.year, from: newDate), month: calendar.component(.month, from: newDate))
-        // Dataに戻すことでその月の1日が返る
+        
+        // Dateに戻すことでその月の1日(ついたち)が返る
         var date: Date = calendar.date(from: oldComps)!
         let finalDate: Date = calendar.date(from: newComps)!
         
@@ -71,7 +72,7 @@ class GraghViewController: UIViewController {
         let screenSize = UIScreen.main.bounds.size
         let height = graghScrollView.frame.size.height
         
-        let spendingGragh = BarGragh(dataArray: myData, date: superBank.mostOldDate, barAreaWidth: screenSize.width / 4, height: height, average: Int(textField.text!)!)
+        let spendingGragh = BarGragh(dataArray: myData, oldDate: superBank.mostOldDate, barAreaWidth: screenSize.width / 4, height: height, average: Int(textField.text!)!)
         self.barGragh = spendingGragh
         
         graghScrollView.addSubview(spendingGragh)
