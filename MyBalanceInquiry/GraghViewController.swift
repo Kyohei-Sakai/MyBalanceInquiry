@@ -15,9 +15,9 @@ class GraghViewController: UIViewController {
     
     var superBank: BankManager!
     
-    var barGragh: BarGragh!
+    fileprivate var barGragh: BarGragh!
     
-    var myData: [Int] = []
+    fileprivate var myData: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +31,14 @@ class GraghViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func drawGraghIntoScrollView() {
+    fileprivate func drawGraghIntoScrollView() {
         
         let calendar = Calendar(identifier: .gregorian)
         
         let oldDate = superBank.mostOldDate
         let newDate = superBank.mostNewDate
         
-        // 年と月だけのコンポーネントを作り
+        // 年と月だけのコンポーネントを作る
         let oldComps = DateComponents(calendar: calendar, year: calendar.component(.year, from: oldDate), month: calendar.component(.month, from: oldDate))
         
         let newComps = DateComponents(calendar: calendar, year: calendar.component(.year, from: newDate), month: calendar.component(.month, from: newDate))
