@@ -45,13 +45,13 @@ class BankingViewController: UIViewController {
         // String -> Date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd"
-        let date = dateFormatter.date(from: self.pickDate)
+        let date = dateFormatter.date(from: pickDate)
         
         // String -> Banking
         var banking: Banking!
-        if self.pickBanking == "入金" {
+        if pickBanking == "入金" {
             banking = .payment
-        } else if self.pickBanking == "出金" {
+        } else if pickBanking == "出金" {
             banking = .withdrawal
         } else {
             banking = nil
@@ -190,14 +190,14 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             
             let day = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 2), forComponent: 2)
             
-            self.pickDate = "\(year!)/\(month!)/\(day!)"
-            print(self.pickDate)
+            pickDate = "\(year!)/\(month!)/\(day!)"
+            print(pickDate)
             
         }
         else if pickerView.tag == 2 {
             let banking = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 0), forComponent: 0)
-            self.pickBanking = banking
-            print(self.pickBanking)
+            pickBanking = banking
+            print(pickBanking)
         }
         
     }
