@@ -60,7 +60,7 @@ class ViewController: UIViewController {
             myBank2.addBanking(date: dateFormatter.date(from: "2016/\(month)/04"), banking: .payment, amount: 80000)
         }
         
-        for data in myBank2.bankStatement {
+        for data in myBank2.bankStatement! {
             data.setIncome()
         }
         

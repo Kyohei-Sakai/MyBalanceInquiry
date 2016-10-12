@@ -19,7 +19,7 @@ class Bank {
     // 残高
     var balance: Int
     // 入出金データ
-    var bankStatement: [BankingData] = []
+    var bankStatement: [BankingData]?
     
     
     init(name: String, firstBalance: Int) {
@@ -28,32 +28,35 @@ class Bank {
         balance = self.firstBalance
     }
     
-    // 取引を追加し、入出金データに格納
-    func addBanking(date: Date!, banking: Banking, amount: Int) {
+    func addBanking(date: Date?, banking: Banking, amount: Int?) {
+        // 引数のnilチェック
+        guard let date = date, let amount = amount else {
+            print("取引データが正しくありません。")
+            return
+        }
+        
         let data = BankingData(date: date, banking: banking, amount: amount)
+        
+        // プロパティのnilチェック
+        guard var bankStatement = self.bankStatement else {
+            // nilだったら最初の要素として初期化
+            self.bankStatement = [data]
+            return
+        }
         
         // 日付順にデータを並び替えて格納する
         let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
         
-        // 配列が空でなければ
-        if bankStatement.isEmpty {
-            bankStatement.append(data)
+        let count = bankStatement.count
+        var i = 1
+        
+        while (calendar.compare(date, to: bankStatement[count - i].date, toUnitGranularity: .day) == .orderedAscending) {
             
-        } else {
-            let count = bankStatement.count
-            var i = 1
+            i += 1
             
-            while (calendar.compare(date, to: bankStatement[count - i].date, toUnitGranularity: .day) == .orderedAscending) {
-                
-                i += 1
-                
-                if count < i{
-                    break
-                }
+            if count < i{
+                break
             }
-            
-            bankStatement.insert(data, at: count - i + 1)
-            
         }
         
         
@@ -67,6 +70,11 @@ class Bank {
     
     // 過去全ての取引を計算する
     fileprivate func getTotalBalance() -> Int {
+        // プロパティのnilチェック
+        guard let bankStatement = self.bankStatement else {
+            return 0
+        }
+        
         var totalBalance = firstBalance
         
         bankStatement.forEach { data in
@@ -81,6 +89,11 @@ class Bank {
     
     // 指定した期間の取引を計算する
     fileprivate func getTotalBalance(fromDate: Date!, toDate: Date!) -> Int {
+        // プロパティのnilチェック
+        guard let bankStatement = self.bankStatement else {
+            return 0
+        }
+        
         var totalBalance = 0
         let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
         
@@ -114,6 +127,11 @@ class Bank {
     
     // 取引明細を一覧で表示
     fileprivate func printBankStatement() {
+        // プロパティのnilチェック
+        guard let bankStatement = self.bankStatement else {
+            return
+        }
+        
         bankStatement.forEach { data in
             print("\(data.date), \(data.banking), \(data.amount)")
         }
@@ -121,6 +139,11 @@ class Bank {
     
     // 指定した日にちの取引のみを表示
     fileprivate func printBankStatement(fromDate: Date!) {
+        // プロパティのnilチェック
+        guard let bankStatement = self.bankStatement else {
+            return
+        }
+        
         bankStatement.forEach { data in
             if data.date == fromDate {
                 print("\(data.date), \(data.banking), \(data.amount)")
@@ -130,6 +153,10 @@ class Bank {
     
     // 指定した期間の取引のみを表示
     fileprivate func printBankStatement(fromDate: Date!, toDate: Date!) {
+        // プロパティのnilチェック
+        guard let bankStatement = self.bankStatement else {
+            return
+        }
         
         let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
         
@@ -156,24 +183,27 @@ class Bank {
     
     // 取引日の最新を得る
     fileprivate var newDate: Date! {
-        if bankStatement.isEmpty {
+        // プロパティのnilチェック
+        guard let bankStatement = self.bankStatement else {
             return nil
-        } else {
-            return bankStatement.last!.date
         }
-    }
+        return bankStatement.last!.date    }
     
     // 取引日の最古を得る
     fileprivate var oldDate: Date! {
-        if bankStatement.isEmpty {
+        // プロパティのnilチェック
+        guard let bankStatement = self.bankStatement else {
             return nil
-        } else {
-            return bankStatement.first!.date
         }
+        return bankStatement.first!.date
     }
     
     // 指定した期間内での外部からの収入を得る
     fileprivate func getIncome(fromDate: Date!, toDate: Date!) -> Int {
+        // プロパティのnilチェック
+        guard let bankStatement = self.bankStatement else {
+            return 0
+        }
         
         let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         
