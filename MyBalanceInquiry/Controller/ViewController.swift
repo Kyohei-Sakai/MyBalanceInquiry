@@ -109,10 +109,11 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let superBank = superBank else {
-            return 0
-        }
-        return superBank.banks.count 
+//        guard let superBank = superBank else {
+//            return 0
+//        }
+//        return superBank.banks.count
+        return superBank?.banks.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {
