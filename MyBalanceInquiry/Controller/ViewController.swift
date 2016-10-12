@@ -12,9 +12,9 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var myBanktableView: UITableView!
     
-    var superBank: BankManager!
+    var superBank: BankManager?
     
-    var selectedBank: Bank!
+    var selectedBank: Bank?
     
     var isFirstLoad: Bool = true
     
@@ -109,10 +109,18 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return superBank.banks.count
+        guard let superBank = superBank else {
+            return 0
+        }
+        return superBank.banks.count 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {
+        guard let superBank = superBank else {
+            let cell: UITableViewCell = UITableViewCell()
+            return cell
+        }
+        
         // セルを定義（ここではデフォルトのセル）
         let cell: UITableViewCell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
         cell.textLabel?.text = superBank.banks[indexPath.row].bankName
@@ -122,8 +130,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セルが選択された時の処理
     func tableView(_ table: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedBank = superBank.banks[indexPath.row]
-        performSegue(withIdentifier: "toMyBank", sender: nil)
+//        guard let superBank = superBank else {
+//            return
+//        }
+//        selectedBank = superBank.banks[indexPath.row]
+//        performSegue(withIdentifier: "toMyBank", sender: nil)
+        
+        guard let selectedBank = superBank?.banks[indexPath.row] else {
+            return
+        }
+        performSegue(withIdentifier: "toMyBank", sender: selectedBank)
+        
     }
     
 }
@@ -138,7 +155,9 @@ extension ViewController {
         if (segue.identifier == "toMyBank") {
             let myBankVC: MyBankViewController = (segue.destination as? MyBankViewController)!
             // 遷移先にBankの参照先を渡す
-            myBankVC.selectedBank = self.selectedBank
+//            myBankVC.selectedBank = self.selectedBank
+            myBankVC.selectedBank = sender as? Bank
+            
         }
         else if (segue.identifier == "toAddNewBank") {
             let newBankVC: AddNewBankViewController = (segue.destination as? AddNewBankViewController)!
