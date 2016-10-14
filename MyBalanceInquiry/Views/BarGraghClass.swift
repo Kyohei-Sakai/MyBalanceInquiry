@@ -13,13 +13,13 @@ import UIKit
 class BarGragh: UIView {
     
     // データ配列
-    private var dataArray: [Int]
+    private var dataArray: [Int] = []
     // データの中の最大支出 -> これをもとにBar表示エリアの高さを決める
-    private var maxSpending: Int
+    private var maxSpending: Int?
     // 生成するBarの幅
     private var barAreaWidth: CGFloat
     //
-    private var oldDate: Date!
+    private var oldDate: Date?
     
     private var average: Int
     private var averageX: CGFloat = 0
@@ -31,7 +31,7 @@ class BarGragh: UIView {
     init(dataArray: [Int], oldDate: Date, barAreaWidth: CGFloat, height: CGFloat, average: Int) {
         self.dataArray = dataArray
         self.oldDate = oldDate
-        maxSpending = dataArray.max()!
+        maxSpending = dataArray.max()
         self.barAreaWidth = barAreaWidth
         self.average = average
         
@@ -64,13 +64,16 @@ class BarGragh: UIView {
             // barの表示をずらしていく
             let x = CGFloat(i) * barAreaWidth
             
-            let date = calendar.date(byAdding: DateComponents(month: i), to: oldDate)
+            if let oldDate = oldDate, let date = calendar.date(byAdding: DateComponents(month: i), to: oldDate), let maxSpending = maxSpending {
+                let rect = CGRect(origin: CGPoint(x: x, y: 0), size: CGSize(width: barAreaWidth, height: height))
+                
+                let bar = Bar(rect, spending: dataArray[i], maxSpendig: maxSpending, date: date, average: average)
+                self.addSubview(bar)
+                
+                self.averageY = bar.averageY
+                
+            }
             
-            let rect = CGRect(origin: CGPoint(x: x, y: 0), size: CGSize(width: barAreaWidth, height: height))
-            let bar = Bar(rect, spending: dataArray[i], maxSpendig: maxSpending, date: date!, average: average)
-            self.addSubview(bar)
-            
-            self.averageY = bar.averageY
         }
         
         drawLabel(x: averageX, y: averageY, width: 50, height: 20, text: String(average))
@@ -98,7 +101,7 @@ class Bar: UIView {
     private var spending: Int
     private var maxSpendig: Int
     
-    private var date: Date!
+    private var date: Date?
     private var average = 100000
     fileprivate var averageY: CGFloat = 0
     
@@ -149,8 +152,10 @@ class Bar: UIView {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM"
         
-        // 下部に月を表示
-        drawLabel(centerX: x, centerY: rect.height - labelHeight / 2, width: rect.width, height: labelHeight, text: dateFormatter.string(from: date))
+        if let date = date {
+            // 下部に月を表示
+            drawLabel(centerX: x, centerY: rect.height - labelHeight / 2, width: rect.width, height: labelHeight, text: dateFormatter.string(from: date))
+        }
         
         let averageHeight = barAreaHeight * CGFloat(average) / CGFloat(maxSpendig)
         let averageY = y - averageHeight

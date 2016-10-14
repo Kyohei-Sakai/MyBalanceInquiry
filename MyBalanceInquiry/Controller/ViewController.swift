@@ -16,14 +16,14 @@ class ViewController: UIViewController {
     
     var selectedBank: Bank?
     
-    var isFirstLoad: Bool = true
+    var isFirstLoad = true
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 初めてのロードであれば、初期設定を行う
-        if isFirstLoad == true {
+        if isFirstLoad {
             setBanking()
         }
         
@@ -109,10 +109,6 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        guard let superBank = superBank else {
-//            return 0
-//        }
-//        return superBank.banks.count
         return superBank?.banks.count ?? 0
     }
     
@@ -131,17 +127,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セルが選択された時の処理
     func tableView(_ table: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let superBank = superBank else {
-//            return
-//        }
-//        selectedBank = superBank.banks[indexPath.row]
-//        performSegue(withIdentifier: "toMyBank", sender: nil)
-        
         guard let selectedBank = superBank?.banks[indexPath.row] else {
             return
         }
         performSegue(withIdentifier: "toMyBank", sender: selectedBank)
-        
     }
     
 }
@@ -153,20 +142,14 @@ extension ViewController {
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
-        if (segue.identifier == "toMyBank") {
-            let myBankVC: MyBankViewController = (segue.destination as? MyBankViewController)!
+        if let myBankVC = segue.destination as? MyBankViewController, segue.identifier == "toMyBank" {
             // 遷移先にBankの参照先を渡す
-//            myBankVC.selectedBank = self.selectedBank
             myBankVC.selectedBank = sender as? Bank
             
-        }
-        else if (segue.identifier == "toAddNewBank") {
-            let newBankVC: AddNewBankViewController = (segue.destination as? AddNewBankViewController)!
+        } else if let newBankVC = segue.destination as? AddNewBankViewController, segue.identifier == "toAddNewBank" {
             // 遷移先にBankManagerの参照先を渡す
             newBankVC.superBank = self.superBank
-        }
-        else if (segue.identifier == "toGraghView") {
-            let graghVC: GraghViewController = (segue.destination as? GraghViewController)!
+        } else if let graghVC = segue.destination as? GraghViewController, segue.identifier == "toGraghView" {
             // 遷移先にBankManagerの参照先を渡す
             graghVC.superBank = self.superBank
         }

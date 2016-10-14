@@ -14,11 +14,11 @@ class BankingViewController: UIViewController {
     @IBOutlet weak var bankingPicker: UIPickerView!
     @IBOutlet weak var textField: UITextField!
     
-    var selectedBank: Bank!
+    var selectedBank: Bank?
     
     // PickerViewに設定されている値を格納
-    fileprivate var pickDate: String!
-    fileprivate var pickBanking: String!
+    fileprivate var pickDate: String?
+    fileprivate var pickBanking: String?
     
     
     override func viewDidLoad() {
@@ -36,6 +36,11 @@ class BankingViewController: UIViewController {
     
     // 必要事項を入力した後Addボタンで確定
     @IBAction func tapAddButton(_ sender: UIButton) {
+        guard let pickDate = pickDate, let pickBanking = pickBanking, let text = textField.text else {
+            print("未入力の項目があります。")
+            alertError()
+            return
+        }
         
         // String -> Date
         let dateFormatter = DateFormatter()
@@ -43,29 +48,24 @@ class BankingViewController: UIViewController {
         let date = dateFormatter.date(from: pickDate)
         
         // String -> Banking
-        var banking: Banking!
+        var banking: BankingData.Banking?
         if pickBanking == "入金" {
             banking = .payment
         } else if pickBanking == "出金" {
             banking = .withdrawal
-        } else {
-            banking = nil
         }
         
         // String -> Int
-        let amount = Int(textField.text!)
+        let amount = Int(text)
         
-        if date != nil && banking != nil && amount != nil {
+        if let date = date, let banking = banking, let amount = amount {
             // 入力されたデータより取引明細を追加
-            self.selectedBank.addBanking(date: date, banking: banking, amount: amount!)
+            selectedBank?.addBanking(date: date, banking: banking, amount: amount)
             print("入力されたデータより取引明細を追加")
             // 更新後、明細画面に戻る
-            self.performSegue(withIdentifier: "fromBankingToBank", sender: nil)
+            performSegue(withIdentifier: "fromBankingToBank", sender: selectedBank)
             print("セグエを呼ぶ")
             
-        } else {
-            print("未入力の項目があります。")
-            alertError()
         }
         
     }
@@ -206,11 +206,9 @@ extension BankingViewController {
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
-        if (segue.identifier == "fromBankingToBank") {
-//            cal_money()
-            let bankVC: MyBankViewController = (segue.destination as? MyBankViewController)!
+        if let bankVC = segue.destination as? MyBankViewController, segue.identifier == "fromBankingToBank" {
             // 遷移先にBankの参照先を渡す
-            bankVC.selectedBank = self.selectedBank
+            bankVC.selectedBank = sender as? Bank
             print("遷移先にBankの参照先を渡す")
         }
     }

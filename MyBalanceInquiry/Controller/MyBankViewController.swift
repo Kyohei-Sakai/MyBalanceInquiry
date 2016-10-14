@@ -14,7 +14,7 @@ class MyBankViewController: UIViewController {
     @IBOutlet weak var bankStatementTableView: UITableView!
     @IBOutlet weak var balanceLabel: UILabel!
     
-    var selectedBank: Bank!
+    var selectedBank: Bank?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,11 +24,11 @@ class MyBankViewController: UIViewController {
         bankStatementTableView.delegate = self
         bankStatementTableView.dataSource = self
         
-        bankNameLabel.text = selectedBank.bankName
-        balanceLabel.text = "残高　¥ \(selectedBank.balance)"
-        print("残高を更新しました。")
-        
-        
+        bankNameLabel.text = selectedBank?.bankName
+        if let balance = selectedBank?.balance {
+            balanceLabel.text = "残高　¥ \(balance)"
+            print("残高を更新しました。")
+        }
     }
     
     // 取引を追加するためのボタンが押された時
@@ -50,26 +50,24 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {
         // カスタムセルを定義
-        let statementCell = tableView.dequeueReusableCell(withIdentifier: "StatementCell", for: indexPath) as! BankStatementCell
+        guard let statementCell = tableView.dequeueReusableCell(withIdentifier: "StatementCell", for: indexPath) as? BankStatementCell else {
+            return UITableViewCell()
+        }
         
-        let i = indexPath.row
-        let count = selectedBank.bankStatement.count
-        // 最後の要素から順に呼び出す
-        let statement = selectedBank.bankStatement[count - (1 + i)]
+        if let count = selectedBank?.bankStatement.count, let statement = selectedBank?.bankStatement[count - (1 + indexPath.row)] {
+            // 最後の要素から順に呼び出す
+            statementCell.setCell(data: statement)
+        }
         
-        statementCell.setCell(data: statement)
         return statementCell
     }
     
     // セルが選択された時の処理
     func tableView(_ table: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("セル\(indexPath.row)を選択")
-        let i = indexPath.row
-        let count = selectedBank.bankStatement.count
-        // 最後の要素から順にセルに格納されている
-        let statement = selectedBank.bankStatement[count - (1 + i)]
-        // 入金データであるかどうか
-        if statement.banking == .payment {
+        if let count = selectedBank?.bankStatement.count, let statement = selectedBank?.bankStatement[count - (1 + indexPath.row)], statement.banking == .payment {
+            // 最後の要素から順にセルに格納されている
+            // 入金データであるかどうか
             alertIsIncome(data: statement)
         }
         
@@ -107,8 +105,7 @@ extension MyBankViewController {
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
-        if (segue.identifier == "toBankingViewController") {
-            let BankingVC: BankingViewController = (segue.destination as? BankingViewController)!
+        if let BankingVC = segue.destination as? BankingViewController, segue.identifier == "toBankingViewController" {
             // 遷移先にBankの参照先を渡す
             BankingVC.selectedBank = self.selectedBank
         }
