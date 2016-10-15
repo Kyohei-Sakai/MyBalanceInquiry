@@ -28,6 +28,7 @@ class GraghViewController: UIViewController {
     
     fileprivate func drawGraghIntoScrollView() {
         
+
         let calendar = Calendar(identifier: .gregorian)
         
         if let oldDate = superBank?.mostOldDate, let newDate = superBank?.mostNewDate {
@@ -37,17 +38,20 @@ class GraghViewController: UIViewController {
             let newComps = DateComponents(calendar: calendar, year: calendar.component(.year, from: newDate), month: calendar.component(.month, from: newDate))
             
             // Dateに戻すことでその月の1日(ついたち)が返る
-            if var date = calendar.date(from: oldComps), let finalDate = calendar.date(from: newComps),
-                let nextDate = calendar.date(byAdding: DateComponents(month: 1), to: date),
-                // 月々の合計変動額の差
-                let totalBalance = superBank?.getSumTotalBalance(fromDate: date, toDate: nextDate),
-                // 月々の収入
-                let income = superBank?.getTotalIncome(fromDate: date, toDate: nextDate) {
+            if var date = calendar.date(from: oldComps), let finalDate = calendar.date(from: newComps) {
                 
                 while date <= finalDate {
-                    myData.append(income - totalBalance)
-                    
-                    date = nextDate
+                    // dateの１ヶ月後
+                    if let nextDate = calendar.date(byAdding: DateComponents(month: 1), to: date) {
+                        // 月々の合計変動額の差
+                        let totalBalance = superBank?.getSumTotalBalance(fromDate: date, toDate: nextDate) ?? 0
+                        // 月々の収入
+                        let income = superBank?.getTotalIncome(fromDate: date, toDate: nextDate) ?? 0
+                        
+                        myData.append(income - totalBalance)
+                        
+                        date = nextDate
+                    }
                 }
             }
             

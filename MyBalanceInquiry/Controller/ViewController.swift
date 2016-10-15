@@ -98,6 +98,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func tapGraghViewButton(_ sender: UIButton) {
+        print("DitapGraghViewButton")
         performSegue(withIdentifier: "toGraghView", sender: nil)
     }
     
@@ -145,7 +146,6 @@ extension ViewController {
         if let myBankVC = segue.destination as? MyBankViewController, segue.identifier == "toMyBank" {
             // 遷移先にBankの参照先を渡す
             myBankVC.selectedBank = sender as? Bank
-            
         } else if let newBankVC = segue.destination as? AddNewBankViewController, segue.identifier == "toAddNewBank" {
             // 遷移先にBankManagerの参照先を渡す
             newBankVC.superBank = self.superBank
