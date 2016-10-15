@@ -93,11 +93,11 @@ class ViewController: UIViewController {
     }
     
     // My銀行を追加登録するボタンが押された時
-    @IBAction func tapAddNewBankButton(_ sender: UIButton) {
+    @IBAction private func tapAddNewBankButton(_ sender: UIButton) {
         performSegue(withIdentifier: "toAddNewBank", sender: nil)
     }
     
-    @IBAction func tapGraghViewButton(_ sender: UIButton) {
+    @IBAction private func tapGraghViewButton(_ sender: UIButton) {
         performSegue(withIdentifier: "toGraghView", sender: nil)
     }
     

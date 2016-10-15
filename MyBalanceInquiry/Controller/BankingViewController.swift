@@ -163,12 +163,10 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             default:
                 return "error"
             }
-        }
-        else if pickerView.tag == 2 {
+        } else if pickerView.tag == 2 {
             let banking: [String] = ["未入力", "入金", "出金"]
             return banking[row]
-        }
-        else {
+        } else {
             return "error"
         }
         
@@ -188,8 +186,7 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             pickDate = "\(year!)/\(month!)/\(day!)"
             print(pickDate)
             
-        }
-        else if pickerView.tag == 2 {
+        } else if pickerView.tag == 2 {
             let banking = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 0), forComponent: 0)
             pickBanking = banking
             print(pickBanking)
