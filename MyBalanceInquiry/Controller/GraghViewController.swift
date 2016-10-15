@@ -10,8 +10,8 @@ import UIKit
 
 class GraghViewController: UIViewController {
     
-    @IBOutlet weak var graghScrollView: UIScrollView!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet fileprivate weak var graghScrollView: UIScrollView!
+    @IBOutlet fileprivate weak var textField: UITextField!
     
     var superBank: BankManager?
     
@@ -79,10 +79,8 @@ extension GraghViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("textFieldShouldReturn")
         // 初期化
-        for sub in graghScrollView.subviews {
-            sub.removeFromSuperview()
-        }
-        self.myData.removeAll()
+        graghScrollView.subviews.forEach { $0.removeFromSuperview() }
+        myData.removeAll()
         // 再描画
         drawGraghIntoScrollView()
         return true

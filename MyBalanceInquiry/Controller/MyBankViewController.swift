@@ -10,11 +10,12 @@ import UIKit
 
 class MyBankViewController: UIViewController {
     
-    @IBOutlet weak var bankNameLabel: UILabel!
-    @IBOutlet weak var bankStatementTableView: UITableView!
-    @IBOutlet weak var balanceLabel: UILabel!
+    @IBOutlet fileprivate weak var bankNameLabel: UILabel!
+    @IBOutlet fileprivate weak var bankStatementTableView: UITableView!
+    @IBOutlet fileprivate weak var balanceLabel: UILabel!
     
     var selectedBank: Bank?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,7 @@ class MyBankViewController: UIViewController {
     }
     
     // 取引を追加するためのボタンが押された時
-    @IBAction func tapAddButton(_ sender: UIButton) {
+    @IBAction private func tapAddButton(_ sender: UIButton) {
         // 遷移先のViewControllerに渡すBankを設定
         performSegue(withIdentifier: "toBankingViewController", sender: nil)
     }
@@ -113,7 +114,7 @@ extension MyBankViewController {
     }
     
     // 戻るボタンにより前画面へ遷移
-    @IBAction func cancel(segue: UIStoryboardSegue) {
+    @IBAction private func cancel(segue: UIStoryboardSegue) {
         print("cancel")
     }
     

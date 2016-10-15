@@ -10,19 +10,18 @@ import UIKit
 
 class AddNewBankViewController: UIViewController {
     
-    @IBOutlet weak var bankTextField: UITextField!
-    @IBOutlet weak var balanceTextField: UITextField!
+    @IBOutlet fileprivate weak var bankTextField: UITextField!
+    @IBOutlet fileprivate weak var balanceTextField: UITextField!
     
     var superBank: BankManager?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     // Addボタンが押された時
-    @IBAction func tapAddBank(_ sender: AnyObject) {
+    @IBAction private func tapAddBank(_ sender: AnyObject) {
         guard let superBank = superBank, let name = bankTextField.text, let balanceText = balanceTextField.text else {
             return
         }

@@ -10,9 +10,9 @@ import UIKit
 
 class BankingViewController: UIViewController {
     
-    @IBOutlet weak var datePicker: UIPickerView!
-    @IBOutlet weak var bankingPicker: UIPickerView!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet fileprivate weak var datePicker: UIPickerView!
+    @IBOutlet fileprivate weak var bankingPicker: UIPickerView!
+    @IBOutlet fileprivate weak var textField: UITextField!
     
     var selectedBank: Bank?
     
@@ -35,7 +35,7 @@ class BankingViewController: UIViewController {
     }
     
     // 必要事項を入力した後Addボタンで確定
-    @IBAction func tapAddButton(_ sender: UIButton) {
+    @IBAction private func tapAddButton(_ sender: UIButton) {
         guard let pickDate = pickDate, let pickBanking = pickBanking, let text = textField.text else {
             print("未入力の項目があります。")
             alertError()

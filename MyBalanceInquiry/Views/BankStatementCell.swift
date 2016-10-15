@@ -10,9 +10,9 @@ import UIKit
 
 class BankStatementCell: UITableViewCell {
     
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var bankingLabel: UILabel!
-    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet fileprivate weak var dateLabel: UILabel!
+    @IBOutlet fileprivate weak var bankingLabel: UILabel!
+    @IBOutlet fileprivate weak var amountLabel: UILabel!
     
 
     override func awakeFromNib() {
@@ -22,7 +22,6 @@ class BankStatementCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
