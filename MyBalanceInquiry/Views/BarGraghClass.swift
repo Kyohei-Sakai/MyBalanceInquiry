@@ -57,17 +57,17 @@ class BarGragh: UIView {
         
         let calendar = Calendar(identifier: .gregorian)
         
-        for i in 0..<dataArray.count {
+        for index in 0..<dataArray.count {
             
             // 任意のデータ数が収まる幅
             let height = rect.height
             // barの表示をずらしていく
-            let x = CGFloat(i) * barAreaWidth
+            let x = CGFloat(index) * barAreaWidth
             
-            if let oldDate = oldDate, let date = calendar.date(byAdding: DateComponents(month: i), to: oldDate), let maxSpending = maxSpending {
+            if let oldDate = oldDate, let date = calendar.date(byAdding: DateComponents(month: index), to: oldDate), let maxSpending = maxSpending {
                 let rect = CGRect(origin: CGPoint(x: x, y: 0), size: CGSize(width: barAreaWidth, height: height))
                 
-                let bar = Bar(rect, spending: dataArray[i], maxSpendig: maxSpending, date: date, average: average)
+                let bar = Bar(rect, spending: dataArray[index], maxSpendig: maxSpending, date: date, average: average)
                 self.addSubview(bar)
                 
                 self.averageY = bar.averageY
