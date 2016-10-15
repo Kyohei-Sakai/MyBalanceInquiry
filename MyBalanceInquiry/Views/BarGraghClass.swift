@@ -102,7 +102,7 @@ class Bar: UIView {
     private var maxSpendig: Int
     
     private var date: Date?
-    private var average = 100000
+    private var average = 0
     fileprivate var averageY: CGFloat = 0
     
     init(_ rect: CGRect, spending: Int, maxSpendig: Int, date: Date, average: Int) {
