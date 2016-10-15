@@ -46,18 +46,18 @@ class Bank {
             
         } else {
             let count = bankStatement.count
-            var i = 1
+            var loop = 1
             
-            while (calendar.compare(date, to: bankStatement[count - i].date, toGranularity: .day) == .orderedAscending) {
+            while (calendar.compare(date, to: bankStatement[count - loop].date, toGranularity: .day) == .orderedAscending) {
                 
-                i += 1
+                loop += 1
                 
-                if count < i{
+                if count < loop {
                     break
                 }
             }
             
-            bankStatement.insert(data, at: count - i + 1)
+            bankStatement.insert(data, at: count - loop + 1)
             
         }
         
