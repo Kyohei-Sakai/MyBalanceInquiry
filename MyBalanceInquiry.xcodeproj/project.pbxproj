@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F9E85B71DB3C17F009E9BA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E85B61DB3C17F009E9BA3 /* AppDelegate.swift */; };
 		7FE339B11DAB906200E4B9C8 /* BankStatementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FE339AF1DAB906200E4B9C8 /* BankStatementCell.xib */; };
 		7FE339B21DAB906200E4B9C8 /* BarGraghView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B01DAB906200E4B9C8 /* BarGraghView.swift */; };
 		7FE339B91DAB926C00E4B9C8 /* AddNewBankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B41DAB926C00E4B9C8 /* AddNewBankViewController.swift */; };
@@ -16,7 +17,6 @@
 		7FE339BD1DAB926C00E4B9C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B81DAB926C00E4B9C8 /* ViewController.swift */; };
 		7FE339BF1DAB933000E4B9C8 /* BankStatementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339BE1DAB933000E4B9C8 /* BankStatementCell.swift */; };
 		7FE339C21DAB948A00E4B9C8 /* BankModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339C11DAB948A00E4B9C8 /* BankModel.swift */; };
-		7FF8036D1D916039001ACB83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8036C1D916039001ACB83 /* AppDelegate.swift */; };
 		7FF803721D916039001ACB83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FF803701D916039001ACB83 /* Main.storyboard */; };
 		7FF803741D916039001ACB83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FF803731D916039001ACB83 /* Assets.xcassets */; };
 		7FF803771D916039001ACB83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FF803751D916039001ACB83 /* LaunchScreen.storyboard */; };
@@ -42,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F9E85B61DB3C17F009E9BA3 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FE339AF1DAB906200E4B9C8 /* BankStatementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BankStatementCell.xib; sourceTree = "<group>"; };
 		7FE339B01DAB906200E4B9C8 /* BarGraghView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarGraghView.swift; sourceTree = "<group>"; };
 		7FE339B41DAB926C00E4B9C8 /* AddNewBankViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewBankViewController.swift; sourceTree = "<group>"; };
@@ -52,7 +53,6 @@
 		7FE339BE1DAB933000E4B9C8 /* BankStatementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankStatementCell.swift; sourceTree = "<group>"; };
 		7FE339C11DAB948A00E4B9C8 /* BankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankModel.swift; sourceTree = "<group>"; };
 		7FF803691D916039001ACB83 /* MyBalanceInquiry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBalanceInquiry.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FF8036C1D916039001ACB83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FF803711D916039001ACB83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7FF803731D916039001ACB83 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7FF803761D916039001ACB83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -90,6 +90,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F9E85B51DB3C17F009E9BA3 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				7F9E85B61DB3C17F009E9BA3 /* AppDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		7FE339AE1DAB8F6A00E4B9C8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,12 +120,12 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		7FE339C01DAB946500E4B9C8 /* model */ = {
+		7FE339C01DAB946500E4B9C8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				7FE339C11DAB948A00E4B9C8 /* BankModel.swift */,
 			);
-			path = model;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		7FF803601D916039001ACB83 = {
@@ -143,10 +151,10 @@
 		7FF8036B1D916039001ACB83 /* MyBalanceInquiry */ = {
 			isa = PBXGroup;
 			children = (
+				7F9E85B51DB3C17F009E9BA3 /* Application */,
 				7FE339AE1DAB8F6A00E4B9C8 /* Views */,
 				7FE339B31DAB91F300E4B9C8 /* Controller */,
-				7FE339C01DAB946500E4B9C8 /* model */,
-				7FF8036C1D916039001ACB83 /* AppDelegate.swift */,
+				7FE339C01DAB946500E4B9C8 /* Model */,
 				7FF803701D916039001ACB83 /* Main.storyboard */,
 				7FF803731D916039001ACB83 /* Assets.xcassets */,
 				7FF803751D916039001ACB83 /* LaunchScreen.storyboard */,
@@ -314,9 +322,9 @@
 				7FE339BD1DAB926C00E4B9C8 /* ViewController.swift in Sources */,
 				7FE339BF1DAB933000E4B9C8 /* BankStatementCell.swift in Sources */,
 				7FE339BB1DAB926C00E4B9C8 /* GraghViewController.swift in Sources */,
+				7F9E85B71DB3C17F009E9BA3 /* AppDelegate.swift in Sources */,
 				7FE339BC1DAB926C00E4B9C8 /* MyBankViewController.swift in Sources */,
-				7FE339B21DAB906200E4B9C8 /* BarGraghView.swift in Sources */,
-				7FF8036D1D916039001ACB83 /* AppDelegate.swift in Sources */,
+				7FE339B21DAB906200E4B9C8 /* BarGraghClass.swift in Sources */,
 				7FE339B91DAB926C00E4B9C8 /* AddNewBankViewController.swift in Sources */,
 				7FE339C21DAB948A00E4B9C8 /* BankModel.swift in Sources */,
 				7FE339BA1DAB926C00E4B9C8 /* BankingViewController.swift in Sources */,
