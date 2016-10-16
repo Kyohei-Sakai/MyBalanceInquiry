@@ -10,20 +10,20 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var myBanktableView: UITableView!
+    @IBOutlet fileprivate weak var myBanktableView: UITableView!
     
-    var superBank: BankManager!
+    var superBank: BankManager?
     
-    var selectedBank: Bank!
+    var selectedBank: Bank?
     
-    var isFirstLoad: Bool = true
+    var isFirstLoad = true
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 初めてのロードであれば、初期設定を行う
-        if isFirstLoad == true {
+        if isFirstLoad {
             setBanking()
         }
         
@@ -32,13 +32,8 @@ class ViewController: UIViewController {
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     // 初期データを設定
-    func setBanking() {
+    private func setBanking() {
         
         // 銀行を追加
         let myBank1 = Bank(name: "みずほ銀行", firstBalance: 100000)
@@ -82,26 +77,28 @@ class ViewController: UIViewController {
         myBank3.addBanking(date: dateFormatter.date(from: "2016/09/09"), banking: .withdrawal, amount: 13000)
         myBank3.addBanking(date: dateFormatter.date(from: "2016/09/21"), banking: .withdrawal, amount: 29000)
         
-        print(myBank1.balance)
-        print(myBank2.balance)
-        print(myBank3.balance)
+//        print(myBank1.balance)
+//        print(myBank2.balance)
+//        print(myBank3.balance)
         
         // 全ての銀行を管理
         let superBank = BankManager(banks: [myBank1, myBank2, myBank3])
         self.superBank = superBank
-        print("合計残高：\(superBank.totalBalance)")
         
-        print("8月の収支：\(superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: "2016/08/01"), toDate: dateFormatter.date(from: "2016/09/01")))")
-        print("9月の収支：\(superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: "2016/09/01"), toDate: dateFormatter.date(from: "2016/10/01")))")
+//        print("合計残高：\(superBank.totalBalance)")
+//        
+//        print("8月の収支：\(superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: "2016/08/01"), toDate: dateFormatter.date(from: "2016/09/01")))")
+//        print("9月の収支：\(superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: "2016/09/01"), toDate: dateFormatter.date(from: "2016/10/01")))")
         
     }
     
     // My銀行を追加登録するボタンが押された時
-    @IBAction func tapAddNewBankButton(_ sender: UIButton) {
+    @IBAction private func tapAddNewBankButton(_ sender: UIButton) {
         performSegue(withIdentifier: "toAddNewBank", sender: nil)
     }
     
-    @IBAction func tapGraghViewButton(_ sender: UIButton) {
+    @IBAction private func tapGraghViewButton(_ sender: UIButton) {
+        print("DitapGraghViewButton")
         performSegue(withIdentifier: "toGraghView", sender: nil)
     }
     
@@ -113,10 +110,15 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return superBank.banks.count
+        return superBank?.banks.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {
+        guard let superBank = superBank else {
+            let cell: UITableViewCell = UITableViewCell()
+            return cell
+        }
+        
         // セルを定義（ここではデフォルトのセル）
         let cell: UITableViewCell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
         cell.textLabel?.text = superBank.banks[indexPath.row].bankName
@@ -126,8 +128,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セルが選択された時の処理
     func tableView(_ table: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectedBank = superBank.banks[indexPath.row]
-        performSegue(withIdentifier: "toMyBank", sender: nil)
+        guard let selectedBank = superBank?.banks[indexPath.row] else {
+            return
+        }
+        performSegue(withIdentifier: "toMyBank", sender: selectedBank)
     }
     
 }
@@ -139,18 +143,13 @@ extension ViewController {
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
-        if (segue.identifier == "toMyBank") {
-            let myBankVC: MyBankViewController = (segue.destination as? MyBankViewController)!
+        if let myBankVC = segue.destination as? MyBankViewController, segue.identifier == "toMyBank" {
             // 遷移先にBankの参照先を渡す
-            myBankVC.selectedBank = self.selectedBank
-        }
-        else if (segue.identifier == "toAddNewBank") {
-            let newBankVC: AddNewBankViewController = (segue.destination as? AddNewBankViewController)!
+            myBankVC.selectedBank = sender as? Bank
+        } else if let newBankVC = segue.destination as? AddNewBankViewController, segue.identifier == "toAddNewBank" {
             // 遷移先にBankManagerの参照先を渡す
             newBankVC.superBank = self.superBank
-        }
-        else if (segue.identifier == "toGraghView") {
-            let graghVC: GraghViewController = (segue.destination as? GraghViewController)!
+        } else if let graghVC = segue.destination as? GraghViewController, segue.identifier == "toGraghView" {
             // 遷移先にBankManagerの参照先を渡す
             graghVC.superBank = self.superBank
         }
