@@ -61,9 +61,8 @@ class Bank {
             
         }
         
-        
         // 残高を求める
-        if banking == .payment {
+        if case .payment = banking {
             balance += amount
         } else {
             balance -= amount
@@ -75,7 +74,7 @@ class Bank {
         var totalBalance = firstBalance
         
         bankStatement.forEach { data in
-            if data.banking == .payment {
+            if case .payment = data.banking {
                 totalBalance += data.amount
             } else {
                 totalBalance -= data.amount
@@ -104,7 +103,7 @@ class Bank {
                 let result2 = calendar.compare(data.date, to: toDate, toGranularity: .day)
                 // data.date < toDateであれば
                 if result2 == .orderedAscending {
-                    if data.banking == .payment {
+                    if case .payment = data.banking {
                         totalBalance += data.amount
                     } else {
                         totalBalance -= data.amount
@@ -227,7 +226,7 @@ class BankingData {
     }
     
     func setIncome() {
-        if banking == .payment {
+        if case .payment = banking {
             isIncome = true
             print("\(date),\(amount)を\(isIncome)")
         }
