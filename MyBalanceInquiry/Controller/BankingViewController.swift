@@ -102,6 +102,12 @@ class BankingViewController: UIViewController {
 
 extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
+    private struct DateCount {
+        static let year = 6     // 2012~2016年
+        static let month = 13   // 1~12年
+        static let day = 32     // 1~31日
+    }
+    
     //コンポーネントの個数を返すメソッド
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView.tag == 1 {
@@ -118,14 +124,11 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView.tag == 1 {
             switch component {
             case 0:
-                // 2012~2016 + 「年」
-                return 6
+                return DateCount.year
             case 1:
-                // 1~12 + 「月」
-                return 13
+                return DateCount.month
             case 2:
-                // 1~31 + 「日」
-                return 32
+                return DateCount.day
             default:
                 return 0
             }
