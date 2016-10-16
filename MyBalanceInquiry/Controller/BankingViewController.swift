@@ -20,7 +20,7 @@ class BankingViewController: UIViewController {
     fileprivate var pickDate: String?
     fileprivate var pickBanking: String?
     
-    fileprivate let bankingString = ["未入力", "入金", "出金"]
+    fileprivate let bankingTitle = ["未入力", "入金", "出金"]
     
     
     override func viewDidLoad() {
@@ -51,9 +51,9 @@ class BankingViewController: UIViewController {
         
         // String -> Banking
         var banking: BankingData.Banking?
-        if pickBanking == bankingString[1] {
+        if pickBanking == bankingTitle[1] {
             banking = .payment
-        } else if pickBanking == bankingString[2] {
+        } else if pickBanking == bankingTitle[2] {
             banking = .withdrawal
         }
         
@@ -166,7 +166,7 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
                 return "error"
             }
         } else if pickerView.tag == 2 {
-            return bankingString[row]
+            return bankingTitle[row]
         } else {
             return "error"
         }
