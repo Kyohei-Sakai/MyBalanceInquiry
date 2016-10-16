@@ -125,8 +125,7 @@
 			children = (
 				7FE339C11DAB948A00E4B9C8 /* BankClass.swift */,
 			);
-			name = Model;
-			path = model;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		7FF803601D916039001ACB83 = {
