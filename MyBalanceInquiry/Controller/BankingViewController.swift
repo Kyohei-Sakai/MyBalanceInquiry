@@ -106,13 +106,28 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         static let year = 6     // 2012~2016年
         static let month = 13   // 1~12年
         static let day = 32     // 1~31日
+        static let components = 3     // year, month, dayの3つのコンポーネント
+        
+        enum Components: Int {
+            case yaer, month, day
+            
+            // 要素数を返す
+            fileprivate static var menbers: Int {
+                var index = 0
+                while let _ = Components(rawValue: index) {
+                    index += 1
+                }
+                return index
+            }
+        }
+        
     }
     
     //コンポーネントの個数を返すメソッド
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView.tag == 1 {
-            // year, month, dayの3つのコンポーネント
-            return 3
+            return DateCount.Components.menbers
+//            return DateCount.components
         } else {
             return 1
         }
