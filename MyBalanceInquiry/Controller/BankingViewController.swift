@@ -142,38 +142,18 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     //データを返すメソッド
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView.tag == 1 {
-            switch component {
-            case 0:
-                if row == 0 {
-                    return String("年")
-                } else {
-                    let year: String = "20" + "\(17 - row)"
-                    return year
-                }
-            case 1:
-                if row == 0 {
-                    return String("月")
-                } else {
-                    let mounth: String = "\(row)"
-                    return mounth
-                }
-            case 2:
-                if row == 0 {
-                    return String("日")
-                } else {
-                    let day: String = "\(row)"
-                    return day
-                }
-            default:
-                return "error"
-            }
-        } else if pickerView.tag == 2 {
-            return bankingTitle[row]
-        } else {
+        switch (pickerView.tag, component, row) {
+        case (1, 0, 0): return "年"
+        case (1, 1, 0): return "月"
+        case (1, 2, 0): return "日"
+            
+        case (1, 0, _): return "20" + "\(17 - row)"
+        case (1, _, _): return "\(row)"
+        case (2, 0, _): return bankingTitle[row]
+            
+        default:
             return "error"
         }
-        
     }
     
     
