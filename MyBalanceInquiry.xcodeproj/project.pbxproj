@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		7FE339B11DAB906200E4B9C8 /* BankStatementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FE339AF1DAB906200E4B9C8 /* BankStatementCell.xib */; };
-		7FE339B21DAB906200E4B9C8 /* BarGraghClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B01DAB906200E4B9C8 /* BarGraghClass.swift */; };
+		7FE339B21DAB906200E4B9C8 /* BarGraghView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B01DAB906200E4B9C8 /* BarGraghView.swift */; };
 		7FE339B91DAB926C00E4B9C8 /* AddNewBankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B41DAB926C00E4B9C8 /* AddNewBankViewController.swift */; };
 		7FE339BA1DAB926C00E4B9C8 /* BankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B51DAB926C00E4B9C8 /* BankingViewController.swift */; };
 		7FE339BB1DAB926C00E4B9C8 /* GraghViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B61DAB926C00E4B9C8 /* GraghViewController.swift */; };
 		7FE339BC1DAB926C00E4B9C8 /* MyBankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B71DAB926C00E4B9C8 /* MyBankViewController.swift */; };
 		7FE339BD1DAB926C00E4B9C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B81DAB926C00E4B9C8 /* ViewController.swift */; };
 		7FE339BF1DAB933000E4B9C8 /* BankStatementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339BE1DAB933000E4B9C8 /* BankStatementCell.swift */; };
-		7FE339C21DAB948A00E4B9C8 /* BankClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339C11DAB948A00E4B9C8 /* BankClass.swift */; };
+		7FE339C21DAB948A00E4B9C8 /* BankModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339C11DAB948A00E4B9C8 /* BankModel.swift */; };
 		7FF8036D1D916039001ACB83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8036C1D916039001ACB83 /* AppDelegate.swift */; };
 		7FF803721D916039001ACB83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FF803701D916039001ACB83 /* Main.storyboard */; };
 		7FF803741D916039001ACB83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FF803731D916039001ACB83 /* Assets.xcassets */; };
@@ -43,14 +43,14 @@
 
 /* Begin PBXFileReference section */
 		7FE339AF1DAB906200E4B9C8 /* BankStatementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BankStatementCell.xib; sourceTree = "<group>"; };
-		7FE339B01DAB906200E4B9C8 /* BarGraghClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarGraghClass.swift; sourceTree = "<group>"; };
+		7FE339B01DAB906200E4B9C8 /* BarGraghView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarGraghView.swift; sourceTree = "<group>"; };
 		7FE339B41DAB926C00E4B9C8 /* AddNewBankViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewBankViewController.swift; sourceTree = "<group>"; };
 		7FE339B51DAB926C00E4B9C8 /* BankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankingViewController.swift; sourceTree = "<group>"; };
 		7FE339B61DAB926C00E4B9C8 /* GraghViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraghViewController.swift; sourceTree = "<group>"; };
 		7FE339B71DAB926C00E4B9C8 /* MyBankViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBankViewController.swift; sourceTree = "<group>"; };
 		7FE339B81DAB926C00E4B9C8 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7FE339BE1DAB933000E4B9C8 /* BankStatementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankStatementCell.swift; sourceTree = "<group>"; };
-		7FE339C11DAB948A00E4B9C8 /* BankClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankClass.swift; sourceTree = "<group>"; };
+		7FE339C11DAB948A00E4B9C8 /* BankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankModel.swift; sourceTree = "<group>"; };
 		7FF803691D916039001ACB83 /* MyBalanceInquiry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBalanceInquiry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF8036C1D916039001ACB83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FF803711D916039001ACB83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 			children = (
 				7FE339BE1DAB933000E4B9C8 /* BankStatementCell.swift */,
 				7FE339AF1DAB906200E4B9C8 /* BankStatementCell.xib */,
-				7FE339B01DAB906200E4B9C8 /* BarGraghClass.swift */,
+				7FE339B01DAB906200E4B9C8 /* BarGraghView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -115,7 +115,7 @@
 		7FE339C01DAB946500E4B9C8 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				7FE339C11DAB948A00E4B9C8 /* BankClass.swift */,
+				7FE339C11DAB948A00E4B9C8 /* BankModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -315,10 +315,10 @@
 				7FE339BF1DAB933000E4B9C8 /* BankStatementCell.swift in Sources */,
 				7FE339BB1DAB926C00E4B9C8 /* GraghViewController.swift in Sources */,
 				7FE339BC1DAB926C00E4B9C8 /* MyBankViewController.swift in Sources */,
-				7FE339B21DAB906200E4B9C8 /* BarGraghClass.swift in Sources */,
+				7FE339B21DAB906200E4B9C8 /* BarGraghView.swift in Sources */,
 				7FF8036D1D916039001ACB83 /* AppDelegate.swift in Sources */,
 				7FE339B91DAB926C00E4B9C8 /* AddNewBankViewController.swift in Sources */,
-				7FE339C21DAB948A00E4B9C8 /* BankClass.swift in Sources */,
+				7FE339C21DAB948A00E4B9C8 /* BankModel.swift in Sources */,
 				7FE339BA1DAB926C00E4B9C8 /* BankingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
