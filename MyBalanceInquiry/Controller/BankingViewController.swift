@@ -142,9 +142,9 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         case (1, 1, 0): return "月"
         case (1, 2, 0): return "日"
             
-        case (1, 0, row): return "20" + "\(17 - row)"
-        case (1, component, row): return "\(row)"
-        case (2, component, row):
+        case (1, 0, _): return "20" + "\(17 - row)"
+        case (1, _, _): return "\(row)"
+        case (2, 0, _):
             let banking: [String] = ["未入力", "入金", "出金"]
             return banking[row]
             
