@@ -20,6 +20,8 @@ class BankingViewController: UIViewController {
     fileprivate var pickDate: String?
     fileprivate var pickBanking: String?
     
+    fileprivate let bankingTitle = ["未入力", "入金", "出金"]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +51,9 @@ class BankingViewController: UIViewController {
         
         // String -> Banking
         var banking: BankingData.Banking?
-        if pickBanking == "入金" {
+        if pickBanking == bankingTitle[1] {
             banking = .payment
-        } else if pickBanking == "出金" {
+        } else if pickBanking == bankingTitle[2] {
             banking = .withdrawal
         }
         
@@ -102,11 +104,17 @@ class BankingViewController: UIViewController {
 
 extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
+    private struct DateCount {
+        static let year = 6     // 2012~2016年
+        static let month = 13   // 1~12年
+        static let day = 32     // 1~31日
+        static let components = 3     // year, month, dayの3つのコンポーネント
+    }
+    
     //コンポーネントの個数を返すメソッド
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView.tag == 1 {
-            // year, month, dayの3つのコンポーネント
-            return 3
+            return DateCount.components
         } else {
             return 1
         }
@@ -118,14 +126,11 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView.tag == 1 {
             switch component {
             case 0:
-                // 2012~2016 + 「年」
-                return 6
+                return DateCount.year
             case 1:
-                // 1~12 + 「月」
-                return 13
+                return DateCount.month
             case 2:
-                // 1~31 + 「日」
-                return 32
+                return DateCount.day
             default:
                 return 0
             }
@@ -144,9 +149,7 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             
         case (1, 0, _): return "20" + "\(17 - row)"
         case (1, _, _): return "\(row)"
-        case (2, 0, _):
-            let banking: [String] = ["未入力", "入金", "出金"]
-            return banking[row]
+        case (2, 0, _): return bankingTitle[row]
             
         default:
             return "error"
