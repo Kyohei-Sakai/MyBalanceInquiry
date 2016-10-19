@@ -28,6 +28,8 @@ class Bank {
         balance = self.firstBalance
     }
     
+    private var calendar: Calendar { return Calendar(identifier: Calendar.Identifier.gregorian) }
+    
     // 取引を追加し、入出金データに格納
     // StringからDateやIntに変換するため、引数をoptionalで定義
     func addBanking(date: Date?, banking: BankingData.Banking, amount: Int?) {
@@ -38,8 +40,6 @@ class Bank {
         let data = BankingData(date: date, banking: banking, amount: amount)
         
         // 日付順にデータを並び替えて格納する
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        
         // 配列が空でなければ
         if bankStatement.isEmpty {
             bankStatement.append(data)
@@ -85,8 +85,6 @@ class Bank {
     
     // 指定した期間の取引を計算する
     fileprivate func getTotalBalance(fromDate: Date, toDate: Date) -> Int {
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        
         // fromData < toDateでなかった場合は強制終了
         if calendar.compare(fromDate, to: toDate, toGranularity: .day) != .orderedAscending {
             print("期間設定に誤りがあります。")
@@ -123,9 +121,6 @@ class Bank {
     
     // 指定した期間の取引のみを表示
     fileprivate func printBankStatement(fromDate: Date, toDate: Date) {
-        
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        
         // fromData < toDateでなかった場合は強制終了
         if calendar.compare(fromDate, to: toDate, toGranularity: .day) != .orderedAscending {
             print("期間設定に誤りがあります。")
@@ -167,9 +162,6 @@ class Bank {
     
     // 指定した期間内での外部からの収入を得る
     fileprivate func getIncome(fromDate: Date, toDate: Date) -> Int {
-        
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        
         var income = 0
         
         // fromData < toDateでなかった場合は強制終了
@@ -249,6 +241,8 @@ class BankManager {
         return period.first
     }
     
+    private var calendar: Calendar { return Calendar(identifier: Calendar.Identifier.gregorian) }
+    
     
     init(banks: [Bank]) {
         self.banks = banks
@@ -299,7 +293,6 @@ class BankManager {
         
         // 日付順に並び替える
         let sortPeriod = datePeriod.sorted(by: { (date1: Date, date2: Date) -> Bool in
-            let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
             return calendar.compare(date1, to: date2, toGranularity: .day) == .orderedAscending
         })
         
