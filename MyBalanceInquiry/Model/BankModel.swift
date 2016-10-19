@@ -85,7 +85,6 @@ class Bank {
     
     // 指定した期間の取引を計算する
     fileprivate func getTotalBalance(fromDate: Date, toDate: Date) -> Int {
-        var totalBalance = 0
         let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         
         // fromData < toDateでなかった場合は強制終了
@@ -94,24 +93,14 @@ class Bank {
             exit(0)
         }
         
-        bankStatement.forEach { data in
-            
-            let result1 = calendar.compare(data.date, to: fromDate, toGranularity: .day)
-            // data.date > fromDateであれば
-            if result1 == .orderedDescending {
-                
-                let result2 = calendar.compare(data.date, to: toDate, toGranularity: .day)
-                // data.date < toDateであれば
-                if result2 == .orderedAscending {
-                    if case .payment = data.banking {
-                        totalBalance += data.amount
-                    } else {
-                        totalBalance -= data.amount
-                    }
+        return bankStatement.filter { data in
+            calendar.compare(fromDate, to: data.date, toGranularity: .day) == .orderedAscending && calendar.compare(data.date, to: toDate, toGranularity: .day) == .orderedAscending
+            }.reduce(0) { totalBalance, data in
+                switch data.banking {
+                case .payment:      return totalBalance + data.amount
+                case .withdrawal:   return totalBalance - data.amount
                 }
-            }
         }
-        return totalBalance
     }
     
     
