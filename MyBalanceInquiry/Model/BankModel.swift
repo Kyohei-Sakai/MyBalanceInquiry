@@ -84,19 +84,19 @@ class Bank {
     }
     
     // 指定した期間の取引を計算する
-    fileprivate func getTotalBalance(fromDate: Date, toDate: Date) -> Int {
+    fileprivate func getTotalBalance(fromDate: Date, toDate: Date) -> Int? {
         // fromData < toDateでなかった場合は強制終了
-        if calendar.compare(fromDate, to: toDate, toGranularity: .day) != .orderedAscending {
+        guard calendar.compare(fromDate, to: toDate, toGranularity: .day) != .orderedAscending else {
             print("期間設定に誤りがあります。")
-            exit(0)
+            return nil
         }
         
         return bankStatement.filter { data in
             calendar.compare(fromDate, to: data.date, toGranularity: .day) == .orderedAscending && calendar.compare(data.date, to: toDate, toGranularity: .day) == .orderedAscending
             }.reduce(0) { totalBalance, data in
                 switch data.banking {
-                case .payment:      return totalBalance + data.amount
-                case .withdrawal:   return totalBalance - data.amount
+                case .payment:      return totalBalance! + data.amount
+                case .withdrawal:   return totalBalance! - data.amount
                 }
         }
     }
@@ -161,13 +161,11 @@ class Bank {
     }
     
     // 指定した期間内での外部からの収入を得る
-    fileprivate func getIncome(fromDate: Date, toDate: Date) -> Int {
-        var income = 0
-        
+    fileprivate func getIncome(fromDate: Date, toDate: Date) -> Int? {
         // fromData < toDateでなかった場合は強制終了
-        if calendar.compare(fromDate, to: toDate, toGranularity: .day) != .orderedAscending {
+        guard calendar.compare(fromDate, to: toDate, toGranularity: .day) == .orderedAscending else {
             print("期間設定に誤りがあります。")
-            return income
+            return nil
         }
         
         bankStatement.forEach { data in
@@ -267,14 +265,8 @@ class BankManager {
     }
     
     // 指定期間の収支バランスを求める
-    func getSumTotalBalance(fromDate: Date, toDate: Date) -> Int {
-        return banks.reduce(0) { total, bank in
-            total + bank.getTotalBalance(fromDate: fromDate, toDate: toDate)
-        }
-        
-//        var total = 0
-//        banks.forEach { total += $0.getTotalBalance(fromDate: fromDate, toDate: toDate) }
-//        return total
+    func getSumTotalBalance(fromDate: Date, toDate: Date) -> Int? {
+        return banks.flatMap { $0.getTotalBalance(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
     }
     
     // 全ての取引期間の最新値と最古値の候補を返す
@@ -300,14 +292,8 @@ class BankManager {
     }
     
     // 指定した期間内での外部からの収入を得る
-    func getTotalIncome(fromDate: Date, toDate: Date) -> Int {
-        return banks.reduce(0) { income, bank in
-            income + bank.getIncome(fromDate: fromDate, toDate: toDate)
-        }
-        
-//        var income = 0
-//        banks.forEach { income += $0.getIncome(fromDate: fromDate, toDate: toDate) }
-//        return income
+    func getTotalIncome(fromDate: Date, toDate: Date) -> Int? {
+        return banks.flatMap { $0.getIncome(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
     }
     
 }
