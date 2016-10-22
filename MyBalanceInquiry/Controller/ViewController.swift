@@ -77,19 +77,9 @@ class ViewController: UIViewController {
         myBank3.addBanking(date: dateFormatter.date(from: "2016/09/09"), banking: .withdrawal, amount: 13000)
         myBank3.addBanking(date: dateFormatter.date(from: "2016/09/21"), banking: .withdrawal, amount: 29000)
         
-//        print(myBank1.balance)
-//        print(myBank2.balance)
-//        print(myBank3.balance)
-        
         // 全ての銀行を管理
         let superBank = BankManager(banks: [myBank1, myBank2, myBank3])
         self.superBank = superBank
-        
-//        print("合計残高：\(superBank.totalBalance)")
-//        
-//        print("8月の収支：\(superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: "2016/08/01"), toDate: dateFormatter.date(from: "2016/09/01")))")
-//        print("9月の収支：\(superBank.getSumTotalBalance(fromDate: dateFormatter.date(from: "2016/09/01"), toDate: dateFormatter.date(from: "2016/10/01")))")
-        
     }
     
     // My銀行を追加登録するボタンが押された時
@@ -98,7 +88,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func tapGraghViewButton(_ sender: UIButton) {
-        print("DitapGraghViewButton")
         performSegue(withIdentifier: "toGraghView", sender: nil)
     }
     

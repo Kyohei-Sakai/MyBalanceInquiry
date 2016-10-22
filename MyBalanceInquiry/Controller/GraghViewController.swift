@@ -27,7 +27,6 @@ class GraghViewController: UIViewController {
     }
     
     fileprivate func drawGraghIntoScrollView() {
-        
 
         let calendar = Calendar(identifier: .gregorian)
         
@@ -47,14 +46,12 @@ class GraghViewController: UIViewController {
                         let totalBalance = superBank?.getSumTotalBalance(fromDate: date, toDate: nextDate) ?? 0
                         // 月々の収入
                         let income = superBank?.getTotalIncome(fromDate: date, toDate: nextDate) ?? 0
-                        
                         myData.append(income - totalBalance)
                         
                         date = nextDate
                     }
                 }
             }
-            
         }
         
         let screenSize = UIScreen.main.bounds.size
@@ -73,15 +70,12 @@ class GraghViewController: UIViewController {
         graghScrollView.delegate = self
         
     }
-    
-    
 }
 
 
 extension GraghViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("textFieldShouldReturn")
         // 初期化
         graghScrollView.subviews.forEach { $0.removeFromSuperview() }
         myData.removeAll()

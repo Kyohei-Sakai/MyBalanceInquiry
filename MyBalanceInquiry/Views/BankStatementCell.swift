@@ -51,7 +51,6 @@ class BankStatementCell: UITableViewCell {
         if data.isIncome == true {
             self.backgroundColor = UIColor.cyan
         }
-        
     }
     
 }
