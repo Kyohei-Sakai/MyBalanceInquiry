@@ -82,7 +82,7 @@ class Bank {
     // 指定した期間の取引を計算する
     fileprivate func getTotalBalance(fromDate: Date, toDate: Date) -> Int? {
         // fromData < toDateでなかった場合は強制終了
-        guard calendar.compare(fromDate, to: toDate, toGranularity: .day) != .orderedAscending else {
+        guard calendar.compare(fromDate, to: toDate, toGranularity: .day) == .orderedAscending else {
             print("期間設定に誤りがあります。")
             return nil
         }
