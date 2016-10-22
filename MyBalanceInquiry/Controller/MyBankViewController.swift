@@ -46,7 +46,7 @@ class MyBankViewController: UIViewController {
 extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectedBank!.bankStatement.count
+        return selectedBank?.bankStatement.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {

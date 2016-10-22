@@ -38,8 +38,6 @@ class Bank {
         let data = BankingData(date: date, banking: banking, amount: amount)
         
         // 日付順にデータを並び替えて格納する
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        
         // 配列が空でなければ
         if bankStatement.isEmpty {
             bankStatement.append(data)
@@ -48,7 +46,7 @@ class Bank {
             let count = bankStatement.count
             var loop = 1
             
-            while (calendar.compare(date, to: bankStatement[count - loop].date, toGranularity: .day) == .orderedAscending) {
+            while date < bankStatement[count - loop].date {
                 
                 loop += 1
                 
@@ -71,50 +69,31 @@ class Bank {
     
     // 過去全ての取引を計算する
     fileprivate func getTotalBalance() -> Int {
-        var totalBalance = firstBalance
-        
-        bankStatement.forEach { data in
-            if case .payment = data.banking {
-                totalBalance += data.amount
-            } else {
-                totalBalance -= data.amount
+        return bankStatement.reduce(0) { totalBalance, data in
+            switch data.banking {
+            case .payment:      return totalBalance + data.amount
+            case .withdrawal:   return totalBalance - data.amount
             }
         }
-        return totalBalance
     }
     
     // 指定した期間の取引を計算する
-    fileprivate func getTotalBalance(fromDate: Date, toDate: Date) -> Int {
-        var totalBalance = 0
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        
+    fileprivate func getTotalBalance(fromDate: Date, toDate: Date) -> Int? {
         // fromData < toDateでなかった場合は強制終了
-        if calendar.compare(fromDate, to: toDate, toGranularity: .day) != .orderedAscending {
+        guard fromDate < toDate else {
             print("期間設定に誤りがあります。")
-            exit(0)
+            return nil
         }
         
-        bankStatement.forEach { data in
-            
-            let result1 = calendar.compare(data.date, to: fromDate, toGranularity: .day)
-            // data.date > fromDateであれば
-            if result1 == .orderedDescending {
-                
-                let result2 = calendar.compare(data.date, to: toDate, toGranularity: .day)
-                // data.date < toDateであれば
-                if result2 == .orderedAscending {
-                    if case .payment = data.banking {
-                        totalBalance += data.amount
-                    } else {
-                        totalBalance -= data.amount
-                    }
+        return bankStatement.filter { data in
+            fromDate < data.date && data.date < toDate
+            }.reduce(0) { totalBalance, data in
+                switch data.banking {
+                case .payment:      return totalBalance! + data.amount
+                case .withdrawal:   return totalBalance! - data.amount
                 }
-            }
         }
-        return totalBalance
     }
-    
-    
     
     // 取引明細を一覧で表示
     fileprivate func printBankStatement() {
@@ -134,27 +113,16 @@ class Bank {
     
     // 指定した期間の取引のみを表示
     fileprivate func printBankStatement(fromDate: Date, toDate: Date) {
-        
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        
         // fromData < toDateでなかった場合は強制終了
-        if calendar.compare(fromDate, to: toDate, toGranularity: .day) != .orderedAscending {
+        guard fromDate < toDate else {
             print("期間設定に誤りがあります。")
-            return;
+            return
         }
         
-        bankStatement.forEach { data in
-            
-            let result1 = calendar.compare(data.date, to: fromDate, toGranularity: .day)
-            // i.date > fromDateであれば
-            if result1 == .orderedDescending {
-                
-                let result2 = calendar.compare(data.date, to: toDate, toGranularity: .day)
-                // i.data < toDateであれば
-                if result2 == .orderedAscending {
-                    print("\(data.date), \(data.banking), \(data.amount)")
-                }
-            }
+        bankStatement.filter { data in
+            fromDate < data.date && data.date < toDate
+            }.forEach { data in
+                print("\(data.date), \(data.banking), \(data.amount)")
         }
     }
     
@@ -177,35 +145,24 @@ class Bank {
     }
     
     // 指定した期間内での外部からの収入を得る
-    fileprivate func getIncome(fromDate: Date, toDate: Date) -> Int {
-        
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        
-        var income = 0
-        
+    fileprivate func getIncome(fromDate: Date, toDate: Date) -> Int? {
         // fromData < toDateでなかった場合は強制終了
-        if calendar.compare(fromDate, to: toDate, toGranularity: .day) != .orderedAscending {
+        guard fromDate < toDate else {
             print("期間設定に誤りがあります。")
-            return income
+            return nil
         }
         
-        bankStatement.forEach { data in
-            
-            let result1 = calendar.compare(data.date, to: fromDate, toGranularity: .day)
-            // data.date > fromDateであれば
-            if result1 == .orderedDescending {
+        return bankStatement.filter { data in
+            fromDate < data.date && data.date < toDate
+            }.reduce(0) { income, data in
+                guard let income = income else { return nil }
                 
-                let result2 = calendar.compare(data.date, to: toDate, toGranularity: .day)
-                // data.data < toDateであれば
-                if result2 == .orderedAscending {
-                    if data.isIncome {
-                        income += data.amount
-                    }
+                if data.isIncome {
+                    return income + data.amount
+                } else {
+                    return income
                 }
-            }
         }
-        
-        return income
     }
     
 }
@@ -234,10 +191,8 @@ class BankingData {
     
     // 銀行取引の種類
     enum Banking {
-        // 入金
-        case payment
-        // 出金
-        case withdrawal
+        // 入金、出金
+        case payment, withdrawal
     }
     
 }
@@ -251,13 +206,11 @@ class BankManager {
     
     // 取引期間の最新の日付
     var mostNewDate: Date? {
-        let period = datePeriod()
-        return period.last
+        return datePeriod.last
     }
     // 取引期間の最古の日付
     var mostOldDate: Date? {
-        let period = datePeriod()
-        return period.first
+        return datePeriod.first
     }
     
     
@@ -277,25 +230,15 @@ class BankManager {
         return banks.reduce(0) { total, bank in
             total + bank.getTotalBalance()
         }
-        
-//        var total = 0
-//        banks.forEach { total += $0.getTotalBalance() }
-//        return total
     }
     
     // 指定期間の収支バランスを求める
-    func getSumTotalBalance(fromDate: Date, toDate: Date) -> Int {
-        return banks.reduce(0) { total, bank in
-            total + bank.getTotalBalance(fromDate: fromDate, toDate: toDate)
-        }
-        
-//        var total = 0
-//        banks.forEach { total += $0.getTotalBalance(fromDate: fromDate, toDate: toDate) }
-//        return total
+    func getSumTotalBalance(fromDate: Date, toDate: Date) -> Int? {
+        return banks.flatMap { $0.getTotalBalance(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
     }
     
     // 全ての取引期間の最新値と最古値の候補を返す
-    private func datePeriod() -> [Date] {
+    private var datePeriod: [Date] {
         // 要素にnilが入り得る
         var period: [Date?] = []
         
@@ -310,22 +253,15 @@ class BankManager {
         
         // 日付順に並び替える
         let sortPeriod = datePeriod.sorted(by: { (date1: Date, date2: Date) -> Bool in
-            let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-            return calendar.compare(date1, to: date2, toGranularity: .day) == .orderedAscending
+            return date1 < date2
         })
         
         return sortPeriod
     }
     
     // 指定した期間内での外部からの収入を得る
-    func getTotalIncome(fromDate: Date, toDate: Date) -> Int {
-        return banks.reduce(0) { income, bank in
-            income + bank.getIncome(fromDate: fromDate, toDate: toDate)
-        }
-        
-//        var income = 0
-//        banks.forEach { income += $0.getIncome(fromDate: fromDate, toDate: toDate) }
-//        return income
+    func getTotalIncome(fromDate: Date, toDate: Date) -> Int? {
+        return banks.flatMap { $0.getIncome(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
     }
     
 }
