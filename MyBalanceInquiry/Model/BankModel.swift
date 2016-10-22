@@ -28,8 +28,6 @@ class Bank {
         balance = self.firstBalance
     }
     
-    private var calendar: Calendar { return Calendar(identifier: Calendar.Identifier.gregorian) }
-    
     // 取引を追加し、入出金データに格納
     // StringからDateやIntに変換するため、引数をoptionalで定義
     func addBanking(date: Date?, banking: BankingData.Banking, amount: Int?) {
@@ -48,7 +46,7 @@ class Bank {
             let count = bankStatement.count
             var loop = 1
             
-            while (calendar.compare(date, to: bankStatement[count - loop].date, toGranularity: .day) == .orderedAscending) {
+            while date < bankStatement[count - loop].date {
                 
                 loop += 1
                 
@@ -82,13 +80,13 @@ class Bank {
     // 指定した期間の取引を計算する
     fileprivate func getTotalBalance(fromDate: Date, toDate: Date) -> Int? {
         // fromData < toDateでなかった場合は強制終了
-        guard calendar.compare(fromDate, to: toDate, toGranularity: .day) == .orderedAscending else {
+        guard fromDate < toDate else {
             print("期間設定に誤りがあります。")
             return nil
         }
         
         return bankStatement.filter { data in
-            calendar.compare(fromDate, to: data.date, toGranularity: .day) == .orderedAscending && calendar.compare(data.date, to: toDate, toGranularity: .day) == .orderedAscending
+            fromDate < data.date && data.date < toDate
             }.reduce(0) { totalBalance, data in
                 switch data.banking {
                 case .payment:      return totalBalance! + data.amount
@@ -116,14 +114,13 @@ class Bank {
     // 指定した期間の取引のみを表示
     fileprivate func printBankStatement(fromDate: Date, toDate: Date) {
         // fromData < toDateでなかった場合は強制終了
-        guard calendar.compare(fromDate, to: toDate, toGranularity: .day) == .orderedAscending else {
+        guard fromDate < toDate else {
             print("期間設定に誤りがあります。")
             return
         }
         
         bankStatement.filter { data in
-            // fromDate < data.date < toDate
-            calendar.compare(fromDate, to: data.date, toGranularity: .day) == .orderedAscending && calendar.compare(data.date, to: toDate, toGranularity: .day) == .orderedAscending
+            fromDate < data.date && data.date < toDate
             }.forEach { data in
                 print("\(data.date), \(data.banking), \(data.amount)")
         }
@@ -150,14 +147,13 @@ class Bank {
     // 指定した期間内での外部からの収入を得る
     fileprivate func getIncome(fromDate: Date, toDate: Date) -> Int? {
         // fromData < toDateでなかった場合は強制終了
-        guard calendar.compare(fromDate, to: toDate, toGranularity: .day) == .orderedAscending else {
+        guard fromDate < toDate else {
             print("期間設定に誤りがあります。")
             return nil
         }
         
         return bankStatement.filter { data in
-            // fromDate < data.date < toDate
-            calendar.compare(fromDate, to: data.date, toGranularity: .day) == .orderedAscending && calendar.compare(data.date, to: toDate, toGranularity: .day) == .orderedAscending
+            fromDate < data.date && data.date < toDate
             }.reduce(0) { income, data in
                 guard let income = income else { return nil }
                 
@@ -217,8 +213,6 @@ class BankManager {
         return datePeriod.first
     }
     
-    private var calendar: Calendar { return Calendar(identifier: Calendar.Identifier.gregorian) }
-    
     
     init(banks: [Bank]) {
         self.banks = banks
@@ -259,7 +253,7 @@ class BankManager {
         
         // 日付順に並び替える
         let sortPeriod = datePeriod.sorted(by: { (date1: Date, date2: Date) -> Bool in
-            return calendar.compare(date1, to: date2, toGranularity: .day) == .orderedAscending
+            return date1 < date2
         })
         
         return sortPeriod
