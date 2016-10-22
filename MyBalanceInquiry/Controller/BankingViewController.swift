@@ -145,7 +145,7 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         case (1, _, _): return "\(row)"
         case (2, 0, _): return bankingTitle[row]
             
-        default: return "error"
+        default: return nil
         }
     }
     
