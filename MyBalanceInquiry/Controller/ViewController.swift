@@ -104,12 +104,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {
         guard let superBank = superBank else {
-            let cell: UITableViewCell = UITableViewCell()
+            let cell = UITableViewCell()
             return cell
         }
         
         // セルを定義（ここではデフォルトのセル）
-        let cell: UITableViewCell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
         cell.textLabel?.text = superBank.banks[indexPath.row].bankName
         
         return cell
