@@ -159,8 +159,10 @@ class Bank {
             // fromDate < data.date < toDate
             calendar.compare(fromDate, to: data.date, toGranularity: .day) == .orderedAscending && calendar.compare(data.date, to: toDate, toGranularity: .day) == .orderedAscending
             }.reduce(0) { income, data in
+                guard let income = income else { return nil }
+                
                 if data.isIncome {
-                    return income! + data.amount
+                    return income + data.amount
                 } else {
                     return income
                 }
