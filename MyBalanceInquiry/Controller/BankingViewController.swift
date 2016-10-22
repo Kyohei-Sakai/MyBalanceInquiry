@@ -125,18 +125,12 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == 1 {
             switch component {
-            case 0:
-                return DateCount.year
-            case 1:
-                return DateCount.month
-            case 2:
-                return DateCount.day
-            default:
-                return 0
+            case 0: return DateCount.year
+            case 1: return DateCount.month
+            case 2: return DateCount.day
+            default: return 0
             }
-        } else {
-            return 3
-        }
+        } else { return 3 }
         
     }
     
@@ -151,8 +145,7 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         case (1, _, _): return "\(row)"
         case (2, 0, _): return bankingTitle[row]
             
-        default:
-            return "error"
+        default: return "error"
         }
     }
     
