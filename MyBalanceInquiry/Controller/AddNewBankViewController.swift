@@ -22,22 +22,40 @@ class AddNewBankViewController: UIViewController {
     
     // Addボタンが押された時
     @IBAction private func tapAddBank(_ sender: AnyObject) {
-        guard let superBank = superBank, let name = bankTextField.text, let balanceText = balanceTextField.text else {
-            return
-        }
+        guard let superBank = superBank, let name = bankTextField.text, let balanceText = balanceTextField.text else { return }
         
-        if let firstBalance = Int(balanceText) {
-            // 新しいBankを作成
-            let newBank = Bank(name: name, firstBalance: firstBalance)
-            
+        if !name.isEmpty, !balanceText.isEmpty, let firstBalance = Int(balanceText) {
             // BankManagerにBankを追加
-            superBank.add(bank: newBank)
-            
+            superBank.add(bank: Bank(name: name, firstBalance: firstBalance))
             superBank.banks.forEach { print($0.bankName) }
             
             performSegue(withIdentifier: "toViewController", sender: superBank)
+        } else {
+            alertError()
         }
         
+    }
+    
+    // 入力事項に誤りがあることをユーザに通知する
+    private func alertError() {
+        
+        let alertController = UIAlertController(
+            title: "エラー",
+            message: "入力事項に不備があります。",
+            preferredStyle: .actionSheet)
+        
+        let otherAction = UIAlertAction(title: "やり直す", style: .default, handler: { action in
+            print("\(action.title)が押されました")
+        })
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: { action in
+            print("\(action.title)が押されました")
+        })
+        
+        alertController.addAction(otherAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
 }
