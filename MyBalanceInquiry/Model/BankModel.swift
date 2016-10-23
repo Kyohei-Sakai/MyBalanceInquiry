@@ -16,16 +16,18 @@ class Bank {
     let bankName: String
     // 初期残高を記録
     private let firstBalance: Int
-    // 残高
-    var balance: Int
     // 入出金データ
     var bankStatement: [BankingData] = []
+    
+    // 残高
+    var balance: Int {
+        return firstBalance + fluctuationAmount
+    }
     
     
     init(name: String, firstBalance: Int) {
         bankName = name
         self.firstBalance = firstBalance
-        balance = self.firstBalance
     }
     
     // 取引を追加し、入出金データに格納
@@ -58,27 +60,20 @@ class Bank {
             bankStatement.insert(data, at: count - loop + 1)
             
         }
-        
-        // 残高を求める
-        if case .payment = banking {
-            balance += amount
-        } else {
-            balance -= amount
-        }
     }
     
-    // 過去全ての取引を計算する
-    fileprivate func getTotalBalance() -> Int {
-        return bankStatement.reduce(0) { totalBalance, data in
+    // 全ての取引の増減額
+    fileprivate var fluctuationAmount: Int {
+        return bankStatement.reduce(0) { value, data in
             switch data.banking {
-            case .payment:      return totalBalance + data.amount
-            case .withdrawal:   return totalBalance - data.amount
+            case .payment:      return value + data.amount
+            case .withdrawal:   return value - data.amount
             }
         }
     }
     
-    // 指定した期間の取引を計算する
-    fileprivate func getTotalBalance(fromDate: Date, toDate: Date) -> Int? {
+    // 指定した期間の取引の増減額
+    fileprivate func fluctuationAmount(fromDate: Date, toDate: Date) -> Int? {
         // fromData < toDateでなかった場合は強制終了
         guard fromDate < toDate else {
             print("期間設定に誤りがあります。")
@@ -145,7 +140,7 @@ class Bank {
     }
     
     // 指定した期間内での外部からの収入を得る
-    fileprivate func getIncome(fromDate: Date, toDate: Date) -> Int? {
+    fileprivate func income(fromDate: Date, toDate: Date) -> Int? {
         // fromData < toDateでなかった場合は強制終了
         guard fromDate < toDate else {
             print("期間設定に誤りがあります。")
@@ -154,17 +149,16 @@ class Bank {
         
         return bankStatement.filter { data in
             fromDate < data.date && data.date < toDate
-            }.reduce(0) { income, data in
-                guard let income = income else { return nil }
+            }.reduce(0) { value, data in
+                guard let value = value else { return nil }
                 
                 if data.isIncome {
-                    return income + data.amount
+                    return value + data.amount
                 } else {
-                    return income
+                    return value
                 }
         }
     }
-    
 }
 
 
@@ -202,8 +196,11 @@ class BankingData {
 
 class BankManager {
     var banks: [Bank] = []
-    fileprivate var totalBalance = 0
     
+    // 総残高
+    fileprivate var totalBalance: Int {
+        return banks.flatMap { $0.balance }.reduce(0, +)
+    }
     // 取引期間の最新の日付
     var mostNewDate: Date? {
         return datePeriod.last
@@ -216,25 +213,21 @@ class BankManager {
     
     init(banks: [Bank]) {
         self.banks = banks
-        totalBalance = getSumTotalBalance()
     }
     
     // 銀行を追加
     func addBank(bank: Bank) {
         banks.append(bank)
-        totalBalance = getSumTotalBalance()
     }
     
-    // 合計残高を算出
-    fileprivate func getSumTotalBalance() -> Int {
-        return banks.reduce(0) { total, bank in
-            total + bank.getTotalBalance()
-        }
+    // 全ての取引の総増減額
+    fileprivate var sumFluctuationAmount: Int {
+        return banks.flatMap { $0.fluctuationAmount }.reduce(0, +)
     }
     
     // 指定期間の収支バランスを求める
-    func getSumTotalBalance(fromDate: Date, toDate: Date) -> Int? {
-        return banks.flatMap { $0.getTotalBalance(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
+    func sumFluctuationAmount(fromDate: Date, toDate: Date) -> Int? {
+        return banks.flatMap { $0.fluctuationAmount(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
     }
     
     // 全ての取引期間の最新値と最古値の候補を返す
@@ -248,20 +241,15 @@ class BankManager {
             period.append(bank.newDate)
         }
         
-        // nilを除いたDate配列を作る
-        let datePeriod: [Date] = period.flatMap { $0 }
-        
-        // 日付順に並び替える
-        let sortPeriod = datePeriod.sorted(by: { (date1: Date, date2: Date) -> Bool in
+        // nilを除いて日付順に並び替える
+        return period.flatMap { $0 }.sorted(by: { (date1: Date, date2: Date) -> Bool in
             return date1 < date2
         })
-        
-        return sortPeriod
     }
     
     // 指定した期間内での外部からの収入を得る
-    func getTotalIncome(fromDate: Date, toDate: Date) -> Int? {
-        return banks.flatMap { $0.getIncome(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
+    func totalIncome(fromDate: Date, toDate: Date) -> Int? {
+        return banks.flatMap { $0.income(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
     }
     
 }

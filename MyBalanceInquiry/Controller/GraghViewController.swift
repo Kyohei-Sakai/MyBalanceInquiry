@@ -42,11 +42,11 @@ class GraghViewController: UIViewController {
                 while date <= finalDate {
                     // dateの１ヶ月後
                     if let nextDate = calendar.date(byAdding: DateComponents(month: 1), to: date) {
-                        // 月々の合計変動額の差
-                        let totalBalance = superBank?.getSumTotalBalance(fromDate: date, toDate: nextDate) ?? 0
+                        // 月々の総増減額
+                        let fluctuationAmount = superBank?.sumFluctuationAmount(fromDate: date, toDate: nextDate) ?? 0
                         // 月々の収入
-                        let income = superBank?.getTotalIncome(fromDate: date, toDate: nextDate) ?? 0
-                        myData.append(income - totalBalance)
+                        let income = superBank?.totalIncome(fromDate: date, toDate: nextDate) ?? 0
+                        myData.append(income - fluctuationAmount)
                         
                         date = nextDate
                     }
