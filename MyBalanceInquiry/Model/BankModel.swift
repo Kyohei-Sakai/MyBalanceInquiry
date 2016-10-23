@@ -216,8 +216,20 @@ class BankManager {
     }
     
     // 銀行を追加
-    func addBank(bank: Bank) {
+    func add(bank: Bank) {
         banks.append(bank)
+    }
+    
+    // 銀行を削除
+    func remove(bank: Bank) {
+        var index = 0
+        for existingBank in banks {
+            if bank === existingBank {
+                banks.remove(at: index)
+                return
+            }
+            index += 1
+        }
     }
     
     // 全ての取引の総増減額
