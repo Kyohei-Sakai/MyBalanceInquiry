@@ -23,6 +23,7 @@ class GraghViewController: UIViewController {
         super.viewDidLoad()
         
         drawGraghIntoScrollView()
+        config()
         
     }
     
@@ -66,26 +67,61 @@ class GraghViewController: UIViewController {
             graghScrollView.contentSize = CGSize(width: spendingGragh.frame.size.width, height: spendingGragh.frame.size.height)
         }
         
-        textField.delegate = self
-        graghScrollView.delegate = self
-        
     }
-}
-
-
-extension GraghViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    fileprivate func config() {
+        textField.placeholder = "100000"
+        textField.textAlignment = .right
+        textField.keyboardType = .numberPad
+        textField.clearButtonMode = .whileEditing
+//        textField.delegate = self
+        
+        // ツールバーを生成
+        let accessoryBar = UIToolbar()
+        accessoryBar.sizeToFit()
+        
+        let doneBtn = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneBtnDidPush(_:)))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        accessoryBar.setItems([spacer, doneBtn], animated: true)
+        
+        // ツールバーをtextViewのアクセサリViewに設定する
+        textField.inputAccessoryView = accessoryBar
+        
+        graghScrollView.delegate = self
+    }
+    
+    @objc private func doneBtnDidPush(_ sender: UIButton) {
         // 初期化
         graghScrollView.subviews.forEach { $0.removeFromSuperview() }
         myData.removeAll()
         // 再描画
         drawGraghIntoScrollView()
-        return true
+        // キーボードを閉じる
+        textField.resignFirstResponder()
     }
     
 }
 
+
+// MARK: - UITextFieldDelegate method
+
+extension GraghViewController: UITextFieldDelegate {
+    
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        // 初期化
+//        graghScrollView.subviews.forEach { $0.removeFromSuperview() }
+//        myData.removeAll()
+//        // 再描画
+//        drawGraghIntoScrollView()
+//        // キーボードを閉じる
+//        textField.resignFirstResponder()
+//        return true
+//    }
+    
+}
+
+
+// MARK: - UIScrollViewDelegate method
 
 extension GraghViewController: UIScrollViewDelegate {
     
