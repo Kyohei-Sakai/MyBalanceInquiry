@@ -74,7 +74,7 @@ class GraghViewController: UIViewController {
         textField.textAlignment = .right
         textField.keyboardType = .numberPad
         textField.clearButtonMode = .whileEditing
-//        textField.delegate = self
+        textField.delegate = self
         
         // ツールバーを生成
         let accessoryBar = UIToolbar()
@@ -98,6 +98,8 @@ class GraghViewController: UIViewController {
         drawGraghIntoScrollView()
         // キーボードを閉じる
         textField.resignFirstResponder()
+        // 画面位置を元に戻す
+        self.view.frame.origin.y = 0
     }
     
 }
@@ -107,16 +109,11 @@ class GraghViewController: UIViewController {
 
 extension GraghViewController: UITextFieldDelegate {
     
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        // 初期化
-//        graghScrollView.subviews.forEach { $0.removeFromSuperview() }
-//        myData.removeAll()
-//        // 再描画
-//        drawGraghIntoScrollView()
-//        // キーボードを閉じる
-//        textField.resignFirstResponder()
-//        return true
-//    }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // 画面を上にずらしてTextFieldが見えるようにする
+        self.view.frame.origin.y = -200
+        return true
+    }
     
 }
 
