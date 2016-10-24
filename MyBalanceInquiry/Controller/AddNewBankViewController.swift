@@ -19,18 +19,18 @@ class AddNewBankViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configbankTextFeid()
-        configbalanceTextFeid()
+        configurebankTextFeid()
+        configurebalanceTextFeid()
     }
     
-    private func configbankTextFeid() {
+    private func configurebankTextFeid() {
         bankTextField.placeholder = "◯◯銀行"
         bankTextField.returnKeyType = .done
         bankTextField.clearButtonMode = .whileEditing
         bankTextField.delegate = self
     }
     
-    private func configbalanceTextFeid() {
+    private func configurebalanceTextFeid() {
         balanceTextField.placeholder = "0"
         balanceTextField.keyboardType = .numberPad
         balanceTextField.clearButtonMode = .whileEditing
@@ -39,9 +39,9 @@ class AddNewBankViewController: UIViewController {
         let accessoryBar = UIToolbar()
         accessoryBar.sizeToFit()
         
-        let doneBtn = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneBtnDidPush(_:)))
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonDidPush(_:)))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        accessoryBar.setItems([spacer, doneBtn], animated: true)
+        accessoryBar.setItems([spacer, doneButton], animated: true)
         
         // ツールバーをtextViewのアクセサリViewに設定する
         balanceTextField.inputAccessoryView = accessoryBar
@@ -77,7 +77,7 @@ class AddNewBankViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    @objc private func doneBtnDidPush(_ sender: UIButton) {
+    @objc private func doneButtonDidPush(_ sender: UIButton) {
         // キーボードを閉じる
         balanceTextField.resignFirstResponder()
     }

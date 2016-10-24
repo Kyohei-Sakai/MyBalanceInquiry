@@ -27,11 +27,11 @@ class BankingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configPickerView()
-        configTextField()
+        configurePickerView()
+        configureTextField()
     }
     
-    private func configPickerView() {
+    private func configurePickerView() {
         datePicker.delegate = self
         datePicker.dataSource = self
         datePicker.tag = 1
@@ -41,7 +41,7 @@ class BankingViewController: UIViewController {
         bankingPicker.tag = 2
     }
     
-    private func configTextField() {
+    private func configureTextField() {
         amountTextField.placeholder = "0"
         amountTextField.keyboardType = .numberPad
         amountTextField.clearButtonMode = .whileEditing
@@ -50,9 +50,9 @@ class BankingViewController: UIViewController {
         let accessoryBar = UIToolbar()
         accessoryBar.sizeToFit()
         
-        let doneBtn = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneBtnDidPush(_:)))
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonDidPush(_:)))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        accessoryBar.setItems([spacer, doneBtn], animated: true)
+        accessoryBar.setItems([spacer, doneButton], animated: true)
         
         // ツールバーをtextViewのアクセサリViewに設定する
         amountTextField.inputAccessoryView = accessoryBar
@@ -114,7 +114,7 @@ class BankingViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    @objc private func doneBtnDidPush(_ sender: UIButton) {
+    @objc private func doneButtonDidPush(_ sender: UIButton) {
         // キーボードを閉じる
         amountTextField.resignFirstResponder()
     }

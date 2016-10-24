@@ -23,7 +23,7 @@ class GraghViewController: UIViewController {
         super.viewDidLoad()
         
         drawGraghIntoScrollView()
-        config()
+        configure()
         
     }
     
@@ -69,7 +69,7 @@ class GraghViewController: UIViewController {
         
     }
     
-    fileprivate func config() {
+    fileprivate func configure() {
         textField.placeholder = "100000"
         textField.textAlignment = .right
         textField.keyboardType = .numberPad
@@ -80,9 +80,9 @@ class GraghViewController: UIViewController {
         let accessoryBar = UIToolbar()
         accessoryBar.sizeToFit()
         
-        let doneBtn = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneBtnDidPush(_:)))
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonDidPush(_:)))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        accessoryBar.setItems([spacer, doneBtn], animated: true)
+        accessoryBar.setItems([spacer, doneButton], animated: true)
         
         // ツールバーをtextViewのアクセサリViewに設定する
         textField.inputAccessoryView = accessoryBar
@@ -90,7 +90,7 @@ class GraghViewController: UIViewController {
         graghScrollView.delegate = self
     }
     
-    @objc private func doneBtnDidPush(_ sender: UIButton) {
+    @objc private func doneButtonDidPush(_ sender: UIButton) {
         // 初期化
         graghScrollView.subviews.forEach { $0.removeFromSuperview() }
         myData.removeAll()
