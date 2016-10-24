@@ -12,7 +12,8 @@ class BankingViewController: UIViewController {
     
     @IBOutlet fileprivate weak var datePicker: UIPickerView!
     @IBOutlet fileprivate weak var bankingPicker: UIPickerView!
-    @IBOutlet fileprivate weak var textField: UITextField!
+    
+    @IBOutlet fileprivate weak var amountTextField: UITextField!
     
     var selectedBank: Bank?
     
@@ -26,6 +27,11 @@ class BankingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configPickerView()
+        configTextField()
+    }
+    
+    private func configPickerView() {
         datePicker.delegate = self
         datePicker.dataSource = self
         datePicker.tag = 1
@@ -33,12 +39,27 @@ class BankingViewController: UIViewController {
         bankingPicker.delegate = self
         bankingPicker.dataSource = self
         bankingPicker.tag = 2
+    }
+    
+    private func configTextField() {
+        amountTextField.keyboardType = .numberPad
+        amountTextField.clearButtonMode = .whileEditing
         
+        // ツールバーを生成
+        let accessoryBar = UIToolbar()
+        accessoryBar.sizeToFit()
+        
+        let doneBtn = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneBtnDidPush(_:)))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        accessoryBar.setItems([spacer, doneBtn], animated: true)
+        
+        // ツールバーをtextViewのアクセサリViewに設定する
+        amountTextField.inputAccessoryView = accessoryBar
     }
     
     // 必要事項を入力した後Addボタンで確定
     @IBAction private func tapAddButton(_ sender: UIButton) {
-        guard let pickDate = pickDate, let pickBanking = pickBanking, let text = textField.text else {
+        guard let pickDate = pickDate, let pickBanking = pickBanking, let text = amountTextField.text else {
             print("未入力の項目があります。")
             alertError()
             return
@@ -75,19 +96,14 @@ class BankingViewController: UIViewController {
     // 入力事項に誤りがあることをユーザに通知する
     private func alertError() {
         
-        let alertController = UIAlertController(
-            title: "エラー",
-            message: "入力事項に誤りがあります。",
-            preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "エラー", message: "入力事項に誤りがあります。", preferredStyle: .actionSheet)
         
         let otherAction = UIAlertAction(title: "やり直す", style: .default, handler: { action in
             print("\(action.title)が押されました")
-            
         })
         
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: { action in
             print("\(action.title)が押されました")
-//            self.performSegue(withIdentifier: "fromBankingToBank", sender: nil)
         })
         
         // Cancelは追加する順序に関わらず左側に表示される
@@ -95,6 +111,11 @@ class BankingViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func doneBtnDidPush(_ sender: UIButton) {
+        // キーボードを閉じる
+        amountTextField.resignFirstResponder()
     }
     
 }

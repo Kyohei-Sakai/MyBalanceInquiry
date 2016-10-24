@@ -23,22 +23,21 @@ class AddNewBankViewController: UIViewController {
         configbalanceTextFeid()
     }
     
-    func configbankTextFeid() {
+    private func configbankTextFeid() {
         bankTextField.returnKeyType = .done
         bankTextField.clearButtonMode = .whileEditing
         bankTextField.delegate = self
     }
     
-    func configbalanceTextFeid() {
+    private func configbalanceTextFeid() {
         balanceTextField.keyboardType = .numberPad
-        balanceTextField.returnKeyType = .done
         balanceTextField.clearButtonMode = .whileEditing
         
         // ツールバーを生成
         let accessoryBar = UIToolbar()
         accessoryBar.sizeToFit()
         
-        let doneBtn = UIBarButtonItem(title: "完了", style: .done, target: self, action: #selector(doneBtnDidPush(_:)))
+        let doneBtn = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneBtnDidPush(_:)))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         accessoryBar.setItems([spacer, doneBtn], animated: true)
         
@@ -76,7 +75,7 @@ class AddNewBankViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func doneBtnDidPush(_ sender: UIButton) {
+    @objc private func doneBtnDidPush(_ sender: UIButton) {
         // キーボードを閉じる
         balanceTextField.resignFirstResponder()
     }
