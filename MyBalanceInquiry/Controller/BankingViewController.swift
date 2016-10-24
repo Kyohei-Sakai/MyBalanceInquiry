@@ -42,6 +42,7 @@ class BankingViewController: UIViewController {
     }
     
     private func configTextField() {
+        amountTextField.placeholder = "0"
         amountTextField.keyboardType = .numberPad
         amountTextField.clearButtonMode = .whileEditing
         

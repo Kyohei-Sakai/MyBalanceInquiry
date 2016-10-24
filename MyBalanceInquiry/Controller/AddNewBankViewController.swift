@@ -24,12 +24,14 @@ class AddNewBankViewController: UIViewController {
     }
     
     private func configbankTextFeid() {
+        bankTextField.placeholder = "◯◯銀行"
         bankTextField.returnKeyType = .done
         bankTextField.clearButtonMode = .whileEditing
         bankTextField.delegate = self
     }
     
     private func configbalanceTextFeid() {
+        balanceTextField.placeholder = "0"
         balanceTextField.keyboardType = .numberPad
         balanceTextField.clearButtonMode = .whileEditing
         
