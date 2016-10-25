@@ -91,12 +91,8 @@ extension AddNewBankViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // retrueKeyを押すとキーボードが引っ込む
-        if textField === bankTextField {
-            textField.resignFirstResponder()
-            return true
-        } else {
-            return false
-        }
+        textField.resignFirstResponder()
+        return true
     }
     
 }
