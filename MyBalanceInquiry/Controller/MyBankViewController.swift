@@ -113,11 +113,6 @@ extension MyBankViewController {
         
     }
     
-    // 戻るボタンにより前画面へ遷移
-    @IBAction private func cancel(segue: UIStoryboardSegue) {
-        print("cancel")
-    }
-    
 }
 
 

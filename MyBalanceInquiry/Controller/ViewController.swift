@@ -145,11 +145,6 @@ extension ViewController {
         
     }
     
-    // 戻るボタンにより前画面へ遷移
-    @IBAction func back(segue: UIStoryboardSegue) {
-        print("back")
-    }
-    
 }
 
 
