@@ -13,14 +13,21 @@ class AddNewBankViewController: UIViewController {
     @IBOutlet fileprivate weak var bankTextField: UITextField!
     @IBOutlet fileprivate weak var balanceTextField: UITextField!
     
+    fileprivate var scrolView = UIScrollView()
+    
     var superBank: BankManager?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureScrollView()
         configurebankTextFeid()
         configurebalanceTextFeid()
+    }
+    
+    private func configureScrollView() {
+        
     }
     
     private func configurebankTextFeid() {
@@ -39,7 +46,7 @@ class AddNewBankViewController: UIViewController {
         let accessoryBar = UIToolbar()
         accessoryBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonDidPush(_:)))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidPush(_:)))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         accessoryBar.setItems([spacer, doneButton], animated: true)
         
@@ -115,6 +122,11 @@ extension AddNewBankViewController {
 }
 
 
+// MARK: - UIScrollViewDelegate method
+
+extension AddNewBankViewController: UIScrollViewDelegate {
+    
+}
 
 
 

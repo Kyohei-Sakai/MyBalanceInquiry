@@ -80,7 +80,7 @@ class GraghViewController: UIViewController {
         let accessoryBar = UIToolbar()
         accessoryBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonDidPush(_:)))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidPush(_:)))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         accessoryBar.setItems([spacer, doneButton], animated: true)
         
