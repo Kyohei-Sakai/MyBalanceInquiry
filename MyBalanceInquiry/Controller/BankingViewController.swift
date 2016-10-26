@@ -63,10 +63,7 @@ class BankingViewController: UIViewController {
         if let date = date, let banking = banking, let amount = amount {
             // 入力されたデータより取引明細を追加
             selectedBank?.addBanking(date: date, banking: banking, amount: amount)
-            print("入力されたデータより取引明細を追加")
-            // 更新後、明細画面に戻る
-            performSegue(withIdentifier: "fromBankingToBank", sender: selectedBank)
-            print("セグエを呼ぶ")
+            // PickerViewとTextFieldを初期化
             
         }
         
