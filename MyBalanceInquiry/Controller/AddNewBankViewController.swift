@@ -13,11 +13,45 @@ class AddNewBankViewController: UIViewController {
     @IBOutlet fileprivate weak var bankTextField: UITextField!
     @IBOutlet fileprivate weak var balanceTextField: UITextField!
     
+    fileprivate var scrolView = UIScrollView()
+    
     var superBank: BankManager?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureScrollView()
+        configurebankTextFeid()
+        configurebalanceTextFeid()
+    }
+    
+    private func configureScrollView() {
+        
+    }
+    
+    private func configurebankTextFeid() {
+        bankTextField.placeholder = "◯◯銀行"
+        bankTextField.returnKeyType = .done
+        bankTextField.clearButtonMode = .whileEditing
+        bankTextField.delegate = self
+    }
+    
+    private func configurebalanceTextFeid() {
+        balanceTextField.placeholder = "0"
+        balanceTextField.keyboardType = .numberPad
+        balanceTextField.clearButtonMode = .whileEditing
+        
+        // ツールバーを生成
+        let accessoryBar = UIToolbar()
+        accessoryBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidPush(_:)))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        accessoryBar.setItems([spacer, doneButton], animated: true)
+        
+        // ツールバーをtextViewのアクセサリViewに設定する
+        balanceTextField.inputAccessoryView = accessoryBar
     }
     
     // Addボタンが押された時
@@ -39,23 +73,33 @@ class AddNewBankViewController: UIViewController {
     // 入力事項に誤りがあることをユーザに通知する
     private func alertError() {
         
-        let alertController = UIAlertController(
-            title: "エラー",
-            message: "入力事項に不備があります。",
-            preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "エラー", message: "入力事項に不備があります。", preferredStyle: .actionSheet)
         
-        let otherAction = UIAlertAction(title: "やり直す", style: .default, handler: { action in
-            print("\(action.title)が押されました")
-        })
-        
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: { action in
-            print("\(action.title)が押されました")
-        })
+        let otherAction = UIAlertAction(title: "やり直す", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         
         alertController.addAction(otherAction)
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func doneButtonDidPush(_ sender: UIButton) {
+        // キーボードを閉じる
+        balanceTextField.resignFirstResponder()
+    }
+    
+}
+
+
+// MARK: - UITextFieldDelegate method
+
+extension AddNewBankViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // retrueKeyを押すとキーボードが引っ込む
+        textField.resignFirstResponder()
+        return true
     }
     
 }
@@ -68,7 +112,6 @@ extension AddNewBankViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
         if let homeVC = segue.destination as? ViewController, segue.identifier == "toViewController" {
-            
             // 遷移先にBankManagerの参照先を渡す
             homeVC.superBank = sender as? BankManager
             // 追加したBankが改めて初期設定されて消えるのを防ぐため
@@ -79,6 +122,11 @@ extension AddNewBankViewController {
 }
 
 
+// MARK: - UIScrollViewDelegate method
+
+extension AddNewBankViewController: UIScrollViewDelegate {
+    
+}
 
 
 

@@ -247,7 +247,7 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="100000" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lzd-aO-BoB">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lzd-aO-BoB">
                                 <frame key="frameInset" minX="57" minY="451" width="261" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
@@ -343,9 +343,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="amountTextField" destination="yD8-UE-JGT" id="BCu-YZ-sZP"/>
                         <outlet property="bankingPicker" destination="6qN-Z9-XH7" id="KcY-kQ-NfF"/>
                         <outlet property="datePicker" destination="PEu-Wg-VDT" id="7Qa-6N-Zc5"/>
-                        <outlet property="textField" destination="yD8-UE-JGT" id="Pg2-SO-Rhh"/>
                         <segue destination="X6p-Xq-umI" kind="show" identifier="fromBankingToBank" id="zLZ-UY-k2h"/>
                     </connections>
                 </viewController>
@@ -356,6 +356,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aTS-cW-AJx"/>
+        <segue reference="zLZ-UY-k2h"/>
     </inferredMetricsTieBreakers>
 </document>

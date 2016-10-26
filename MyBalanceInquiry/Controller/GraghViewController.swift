@@ -23,6 +23,7 @@ class GraghViewController: UIViewController {
         super.viewDidLoad()
         
         drawGraghIntoScrollView()
+        configure()
         
     }
     
@@ -66,26 +67,58 @@ class GraghViewController: UIViewController {
             graghScrollView.contentSize = CGSize(width: spendingGragh.frame.size.width, height: spendingGragh.frame.size.height)
         }
         
-        textField.delegate = self
-        graghScrollView.delegate = self
-        
     }
-}
-
-
-extension GraghViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    fileprivate func configure() {
+        textField.placeholder = "100000"
+        textField.textAlignment = .right
+        textField.keyboardType = .numberPad
+        textField.clearButtonMode = .whileEditing
+        textField.delegate = self
+        
+        // ツールバーを生成
+        let accessoryBar = UIToolbar()
+        accessoryBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidPush(_:)))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        accessoryBar.setItems([spacer, doneButton], animated: true)
+        
+        // ツールバーをtextViewのアクセサリViewに設定する
+        textField.inputAccessoryView = accessoryBar
+        
+        graghScrollView.delegate = self
+    }
+    
+    @objc private func doneButtonDidPush(_ sender: UIButton) {
         // 初期化
         graghScrollView.subviews.forEach { $0.removeFromSuperview() }
         myData.removeAll()
         // 再描画
         drawGraghIntoScrollView()
+        // キーボードを閉じる
+        textField.resignFirstResponder()
+        // 画面位置を元に戻す
+        self.view.frame.origin.y = 0
+    }
+    
+}
+
+
+// MARK: - UITextFieldDelegate method
+
+extension GraghViewController: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // 画面を上にずらしてTextFieldが見えるようにする
+        self.view.frame.origin.y = -200
         return true
     }
     
 }
 
+
+// MARK: - UIScrollViewDelegate method
 
 extension GraghViewController: UIScrollViewDelegate {
     
