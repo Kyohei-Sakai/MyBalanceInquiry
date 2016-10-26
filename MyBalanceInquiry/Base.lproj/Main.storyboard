@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4O5-wK-RAF">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--My 銀行一覧-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MyBalanceInquiry" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,21 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My 銀行" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dnl-Lu-SXf">
-                                <frame key="frameInset" minY="28" width="375" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.41888874510000002" blue="0.39035230630000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mvI-bM-fwc">
-                                <frame key="frameInset" minY="103" width="375" height="243"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZJx-Sy-jqT">
-                                <frame key="frameInset" minX="16" minY="354" width="343" height="43"/>
+                                <frame key="frameInset" minX="16" minY="333" width="343" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.72379202509999996" blue="0.36235675820000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -44,8 +31,13 @@
                                     <action selector="tapAddNewBankButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ciY-UE-BRS"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mvI-bM-fwc">
+                                <frame key="frameInset" minY="82" width="375" height="243"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUb-ws-OSq">
-                                <frame key="frameInset" minX="16" minY="405" width="343" height="246"/>
+                                <frame key="frameInset" minX="16" minY="391" width="343" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.22125456979999999" blue="0.14860198569999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -59,18 +51,19 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" title="My 銀行一覧" id="5qK-GQ-t5X"/>
                     <connections>
                         <outlet property="myBanktableView" destination="mvI-bM-fwc" id="EtI-hu-rtI"/>
-                        <segue destination="X6p-Xq-umI" kind="showDetail" identifier="toMyBank" id="aTS-cW-AJx"/>
                         <segue destination="jkh-o8-amz" kind="show" identifier="toGraghView" id="2DD-hi-AOz"/>
-                        <segue destination="own-ol-SFH" kind="presentation" identifier="toAddNewBank" id="sIl-P9-uOC"/>
+                        <segue destination="own-ol-SFH" kind="show" identifier="toAddNewBank" id="sIl-P9-uOC"/>
+                        <segue destination="X6p-Xq-umI" kind="show" identifier="toMyBank" id="f6b-Sa-0p2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="24.800000000000001" y="18.440779610194905"/>
         </scene>
-        <!--My Bank View Controller-->
+        <!--残高照会-->
         <scene sceneID="UaN-zD-0J0">
             <objects>
                 <viewController id="X6p-Xq-umI" customClass="MyBankViewController" customModule="MyBalanceInquiry" customModuleProvider="target" sceneMemberID="viewController">
@@ -82,34 +75,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My 銀行" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iJn-qg-SA7">
-                                <frame key="frameInset" minY="28" width="375" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.41888874510000002" blue="0.39035230630000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="38u-LL-bfd">
                                 <frame key="frameInset" minY="176" width="375" height="383"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="残高　¥ 20000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNQ-qn-rCZ">
-                                <frame key="frameInset" minX="16" minY="95" width="343" height="65"/>
+                                <frame key="frameInset" minX="16" minY="112" width="343" height="65"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IK6-VZ-rFs">
-                                <frame key="frameInset" minX="9" minY="38" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="q7R-lk-pEY" kind="unwind" unwindAction="backWithSegue:" id="mM0-zI-Ru7"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GqK-9w-POw">
                                 <frame key="frameInset" minX="16" minY="567" width="343" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -120,24 +97,32 @@
                                 </state>
                                 <connections>
                                     <action selector="tapAddButton:" destination="X6p-Xq-umI" eventType="touchUpInside" id="9CR-Dv-FVY"/>
-                                    <segue destination="9kx-rE-zWN" kind="presentation" identifier="toBankingViewController" id="DPM-xJ-c0N"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My 銀行" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iJn-qg-SA7">
+                                <frame key="frameInset" minY="64" width="375" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.41888874510000002" blue="0.39035230630000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="残高照会" id="4Pg-E6-Qyb"/>
                     <connections>
                         <outlet property="balanceLabel" destination="nNQ-qn-rCZ" id="rN3-tv-DBC"/>
                         <outlet property="bankNameLabel" destination="iJn-qg-SA7" id="6jI-kE-dPy"/>
                         <outlet property="bankStatementTableView" destination="38u-LL-bfd" id="fpM-c8-u32"/>
+                        <segue destination="9kx-rE-zWN" kind="show" identifier="toBankingViewController" id="ciB-18-MLI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9TT-l0-4gQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="q7R-lk-pEY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="740" y="17.541229385307346"/>
         </scene>
-        <!--Add New Bank View Controller-->
+        <!--新規銀行登録-->
         <scene sceneID="29Z-og-eCf">
             <objects>
                 <viewController id="own-ol-SFH" customClass="AddNewBankViewController" customModule="MyBalanceInquiry" customModuleProvider="target" sceneMemberID="viewController">
@@ -149,30 +134,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quo-se-i7U">
-                                <frame key="frameInset" minX="113" minY="248" width="246" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.72379202509999996" blue="0.36235675820000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Add New Bank">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="tapAddBank:" destination="own-ol-SFH" eventType="touchUpInside" id="LIs-4O-YJf"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ycg-8I-yXE">
-                                <frame key="frameInset" minX="16" minY="248" width="87" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.22125456979999999" blue="0.14860198569999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="4yh-CA-ucp" kind="unwind" unwindAction="backWithSegue:" id="m7w-mE-HiU"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YqV-Ka-gpv">
                                 <frame key="frameInset" minX="151" minY="96" width="176" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -201,21 +162,48 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quo-se-i7U">
+                                <frame key="frameInset" minX="64" minY="244" width="246" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.72379202509999996" blue="0.36235675820000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Add New Bank">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapAddBank:" destination="own-ol-SFH" eventType="touchUpInside" id="LIs-4O-YJf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="新規銀行登録" id="rSJ-PB-vKl"/>
                     <connections>
                         <outlet property="balanceTextField" destination="3rC-8n-QQy" id="UvT-ob-Rda"/>
                         <outlet property="bankTextField" destination="YqV-Ka-gpv" id="6r6-m8-A1f"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="toViewController" id="gSf-WD-ppS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hti-p2-dSx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="4yh-CA-ucp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-164" y="865"/>
+            <point key="canvasLocation" x="25" y="801"/>
         </scene>
-        <!--Gragh View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="hC8-Ei-jw7">
+            <objects>
+                <navigationController id="4O5-wK-RAF" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wr5-7B-Tit">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="gok-td-DGQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pny-dI-b2s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-719" y="18"/>
+        </scene>
+        <!--支出管理-->
         <scene sceneID="T0X-cw-0w1">
             <objects>
                 <viewController id="jkh-o8-amz" customClass="GraghViewController" customModule="MyBalanceInquiry" customModuleProvider="target" sceneMemberID="viewController">
@@ -223,30 +211,10 @@
                         <viewControllerLayoutGuide type="top" id="7Mo-ku-cPp"/>
                         <viewControllerLayoutGuide type="bottom" id="6eb-vX-z78"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="FFP-6w-oKa" customClass="BarGragh" customModule="MyBalanceInquiry" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="FFP-6w-oKa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3k-JE-Ljw">
-                                <frame key="frameInset" minX="8" minY="20" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="EkG-on-nX8" kind="unwind" unwindAction="backWithSegue:" id="jZ8-a5-HyF"/>
-                                </connections>
-                            </button>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FYO-qg-UQg">
-                                <frame key="frameInset" minY="97" width="375" height="339"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="支出" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MQb-Qs-wdt">
-                                <frame key="frameInset" minY="58" width="375" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.57351358411686182" blue="0.64315361030595419" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="100000" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lzd-aO-BoB">
                                 <frame key="frameInset" minX="57" minY="451" width="261" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -261,20 +229,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FYO-qg-UQg">
+                                <frame key="frameInset" minY="86" width="375" height="339"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.41888874510000002" blue="0.39035230630000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="支出管理" id="4JT-xL-aEL"/>
                     <connections>
                         <outlet property="graghScrollView" destination="FYO-qg-UQg" id="gDQ-wU-d7Q"/>
                         <outlet property="textField" destination="lzd-aO-BoB" id="cKX-so-H7F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vb0-FX-a4q" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="EkG-on-nX8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="854" y="865"/>
+            <point key="canvasLocation" x="740" y="800"/>
         </scene>
-        <!--Banking View Controller-->
+        <!--新規取引を追加-->
         <scene sceneID="xO7-7O-rIo">
             <objects>
                 <viewController id="9kx-rE-zWN" customClass="BankingViewController" customModule="MyBalanceInquiry" customModuleProvider="target" sceneMemberID="viewController">
@@ -316,7 +288,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOX-uu-ZGF">
-                                <frame key="frameInset" minX="113" minY="362" width="246" height="43"/>
+                                <frame key="frameInset" minX="27" minY="347" width="320" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -327,35 +299,19 @@
                                     <action selector="tapAddButton:" destination="9kx-rE-zWN" eventType="touchUpInside" id="hZd-eY-RtQ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tiS-fM-Age">
-                                <frame key="frameInset" minX="21" minY="362" width="87" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.22125456979999999" blue="0.14860198569999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="EvH-Od-kpE" kind="unwind" unwindAction="cancelWithSegue:" id="Ymh-Bq-DVe"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="新規取引を追加" id="vCv-2y-Ayg"/>
                     <connections>
                         <outlet property="bankingPicker" destination="6qN-Z9-XH7" id="KcY-kQ-NfF"/>
                         <outlet property="datePicker" destination="PEu-Wg-VDT" id="7Qa-6N-Zc5"/>
                         <outlet property="textField" destination="yD8-UE-JGT" id="Pg2-SO-Rhh"/>
-                        <segue destination="X6p-Xq-umI" kind="show" identifier="fromBankingToBank" id="zLZ-UY-k2h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ad2-jH-zAR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="EvH-Od-kpE" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1469.5999999999999" y="17.541229385307346"/>
+            <point key="canvasLocation" x="1463" y="18"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="aTS-cW-AJx"/>
-    </inferredMetricsTieBreakers>
 </document>
