@@ -18,6 +18,9 @@ class AddNewBankViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.backBarButtonItem?.action = #selector(tapBackButton(_:))
+        print(self.navigationItem.backBarButtonItem)
     }
     
     // Addボタンが押された時
@@ -54,6 +57,11 @@ class AddNewBankViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    // NavigationのbackButtonが押された時
+    func tapBackButton(_ sender: UIBarButtonItem) {
+        print("tapBackButton")
     }
     
 }
