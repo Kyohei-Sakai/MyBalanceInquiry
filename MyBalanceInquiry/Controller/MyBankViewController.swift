@@ -68,12 +68,12 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
         if let count = selectedBank?.bankStatement.count, let statement = selectedBank?.bankStatement[count - (1 + indexPath.row)], statement.banking == .payment {
             // 最後の要素から順にセルに格納されている
             // 入金データであるかどうか
-            alertIsIncome(data: statement)
+            alertIsIncome(data: statement, at: indexPath)
         }
         
     }
     
-    private func alertIsIncome(data: BankingData) {
+    private func alertIsIncome(data: BankingData, at indexPath: IndexPath) {
         
         let alertController = UIAlertController(
             title: "取引の設定",
@@ -83,7 +83,7 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
         let otherAction = UIAlertAction(title: "はい", style: .default, handler: { action in
             print("\(action.title)が押されました")
             data.setIncome()
-            self.bankStatementTableView.reloadData()
+            self.bankStatementTableView.reloadRows(at: [indexPath], with: .none)
         })
         
         let cancelAction = UIAlertAction(title: "いいえ", style: .cancel, handler: { action in
