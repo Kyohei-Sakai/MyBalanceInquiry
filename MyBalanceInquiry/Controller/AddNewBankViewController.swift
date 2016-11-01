@@ -19,8 +19,9 @@ class AddNewBankViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.backBarButtonItem?.action = #selector(tapBackButton(_:))
-        print(self.navigationItem.backBarButtonItem)
+//        self.navigationItem.backBarButtonItem?.action = #selector(tapBackButton(_:))
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: #selector(tapBackButton(_:)))
+//        print(self.navigationItem.backBarButtonItem)
     }
     
     // Addボタンが押された時
