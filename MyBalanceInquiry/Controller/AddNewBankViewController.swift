@@ -20,10 +20,8 @@ class AddNewBankViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.title = "新規銀行登録"
-        
-//        self.navigationItem.backBarButtonItem?.action = #selector(tapBackButton(_:))
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: #selector(tapBackButton(_:)))
-//        print(self.navigationItem.backBarButtonItem)
+        // backButtonを生成
+//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(tapBackButton(_:)))
     }
     
     // Addボタンが押された時
@@ -34,6 +32,8 @@ class AddNewBankViewController: UIViewController {
             // BankManagerにBankを追加
             superBank.add(bank: Bank(name: name, firstBalance: firstBalance))
             superBank.banks.forEach { print($0.bankName) }
+            
+            backTransition()
         } else {
             alertError()
         }
@@ -62,29 +62,41 @@ class AddNewBankViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    // NavigationのbackButtonが押された時
-    func tapBackButton(_ sender: UIBarButtonItem) {
-        print("tapBackButton")
-    }
-    
 }
 
 
 // MARK: - 画面遷移に関する処理
 
 extension AddNewBankViewController {
-    // Segue 準備
-    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        
-        if let homeVC = segue.destination as? ViewController, segue.identifier == "toViewController" {
-            
+    // NavigationのbackButtonが押された時
+//    @objc fileprivate func tapBackButton(_ sender: UIBarButtonItem) {
+//        print("tapBackButton")
+//        backTransition()
+//    }
+    
+    // 前の画面に遷移する際の処理
+    fileprivate func backTransition() {
+        if let _ = self.navigationController?.popViewController(animated: true), let rootVC = self.navigationController?.topViewController as? ViewController {
             // 遷移先にBankManagerの参照先を渡す
-            homeVC.superBank = sender as? BankManager
+            rootVC.superBank = self.superBank
             // 追加したBankが改めて初期設定されて消えるのを防ぐため
-            homeVC.isFirstLoad = false
+            rootVC.isFirstLoad = false
+            // TableViewを再度読み込む
+            rootVC.myBanktableView.reloadData()
         }
     }
     
+//    // Segue 準備
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+//        
+//        if let homeVC = segue.destination as? ViewController, segue.identifier == "toViewController" {
+//            
+//            // 遷移先にBankManagerの参照先を渡す
+//            homeVC.superBank = sender as? BankManager
+//            // 追加したBankが改めて初期設定されて消えるのを防ぐため
+//            homeVC.isFirstLoad = false
+//        }
+//    }
 }
 
 

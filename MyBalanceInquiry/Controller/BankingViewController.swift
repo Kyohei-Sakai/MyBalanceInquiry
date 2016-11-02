@@ -66,7 +66,8 @@ class BankingViewController: UIViewController {
             // 入力されたデータより取引明細を追加
             selectedBank?.addBanking(date: date, banking: banking, amount: amount)
             // PickerViewとTextFieldを初期化
-            
+                // do somethig
+            backTransition()
         }
         
     }
@@ -160,12 +161,12 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             let day = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 2), forComponent: 2)
             
             pickDate = "\(year!)/\(month!)/\(day!)"
-            print(pickDate)
+//            print(pickDate)
             
         } else if pickerView.tag == 2 {
             let banking = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 0), forComponent: 0)
             pickBanking = banking
-            print(pickBanking)
+//            print(pickBanking)
         }
         
     }
@@ -176,13 +177,23 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 // MARK: - 画面遷移に関する処理
 
 extension BankingViewController {
+    // 前の画面に遷移する際の処理
+    fileprivate func backTransition() {
+        if let _ = self.navigationController?.popViewController(animated: true), let bankVC = self.navigationController?.topViewController as? MyBankViewController {
+            // 遷移先にBankManagerの参照先を渡す
+            bankVC.selectedBank = self.selectedBank
+            // TableViewを再度読み込む
+            bankVC.bankStatementTableView.reloadData()
+            bankVC.viewDidLoad()
+        }
+    }
+    
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
         if let bankVC = segue.destination as? MyBankViewController, segue.identifier == "fromBankingToBank" {
             // 遷移先にBankの参照先を渡す
             bankVC.selectedBank = sender as? Bank
-            print("遷移先にBankの参照先を渡す")
         }
     }
     

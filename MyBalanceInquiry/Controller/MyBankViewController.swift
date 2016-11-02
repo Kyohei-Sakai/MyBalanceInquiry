@@ -11,7 +11,7 @@ import UIKit
 class MyBankViewController: UIViewController {
     
     @IBOutlet fileprivate weak var bankNameLabel: UILabel!
-    @IBOutlet fileprivate weak var bankStatementTableView: UITableView!
+    @IBOutlet weak var bankStatementTableView: UITableView!
     @IBOutlet fileprivate weak var balanceLabel: UILabel!
     
     var selectedBank: Bank?

@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet fileprivate weak var myBanktableView: UITableView!
+    @IBOutlet weak var myBanktableView: UITableView!
     
     var superBank: BankManager?
     
