@@ -19,6 +19,8 @@ class AddNewBankViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "新規銀行登録"
+        
 //        self.navigationItem.backBarButtonItem?.action = #selector(tapBackButton(_:))
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: #selector(tapBackButton(_:)))
 //        print(self.navigationItem.backBarButtonItem)

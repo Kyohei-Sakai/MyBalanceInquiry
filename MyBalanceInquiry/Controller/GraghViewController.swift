@@ -22,6 +22,8 @@ class GraghViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "支出管理"
+        
         drawGraghIntoScrollView()
         
     }

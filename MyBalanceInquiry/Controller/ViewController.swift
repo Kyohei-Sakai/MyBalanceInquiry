@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "銀行一覧"
+        
         // 初めてのロードであれば、初期設定を行う
         if isFirstLoad {
             setBanking()

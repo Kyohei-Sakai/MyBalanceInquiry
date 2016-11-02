@@ -26,6 +26,8 @@ class BankingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "新規取引を追加"
+        
         datePicker.delegate = self
         datePicker.dataSource = self
         datePicker.tag = 1

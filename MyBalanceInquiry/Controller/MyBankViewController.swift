@@ -20,6 +20,8 @@ class MyBankViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "残高照会"
+        
         bankStatementTableView.register(UINib(nibName: "BankStatementCell", bundle: nil), forCellReuseIdentifier: "StatementCell")
         
         bankStatementTableView.delegate = self
