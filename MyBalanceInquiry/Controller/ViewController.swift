@@ -16,18 +16,13 @@ class ViewController: UIViewController {
     
     var selectedBank: Bank?
     
-    var isFirstLoad = true
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.title = "銀行一覧"
         
-        // 初めてのロードであれば、初期設定を行う
-        if isFirstLoad {
-            setBanking()
-        }
+        setBanking()
         
         myBanktableView.delegate = self
         myBanktableView.dataSource = self
