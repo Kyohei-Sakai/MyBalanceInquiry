@@ -179,13 +179,15 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 extension BankingViewController {
     // 前の画面に遷移する際の処理
     fileprivate func backTransition() {
-        if let _ = self.navigationController?.popViewController(animated: true), let bankVC = self.navigationController?.topViewController as? MyBankViewController {
-            // 遷移先にBankManagerの参照先を渡す
-            bankVC.selectedBank = self.selectedBank
-            // TableViewを再度読み込む
-            bankVC.bankStatementTableView.reloadData()
-            bankVC.viewDidLoad()
-        }
+        if let _ = self.navigationController?.popViewController(animated: true) {}
+        
+//        if let _ = self.navigationController?.popViewController(animated: true), let bankVC = self.navigationController?.topViewController as? MyBankViewController {
+//            // 遷移先にBankManagerの参照先を渡す
+//            bankVC.selectedBank = self.selectedBank
+//            // TableViewを再度読み込む
+//            bankVC.bankStatementTableView.reloadData()
+//            bankVC.viewDidLoad()
+//        }
     }
     
     // Segue 準備

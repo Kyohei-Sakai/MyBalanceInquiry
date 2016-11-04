@@ -76,27 +76,16 @@ extension AddNewBankViewController {
     
     // 前の画面に遷移する際の処理
     fileprivate func backTransition() {
-        if let _ = self.navigationController?.popViewController(animated: true), let rootVC = self.navigationController?.topViewController as? ViewController {
-            // 遷移先にBankManagerの参照先を渡す
-            rootVC.superBank = self.superBank
-            // 追加したBankが改めて初期設定されて消えるのを防ぐため
-            rootVC.isFirstLoad = false
-            // TableViewを再度読み込む
-            rootVC.myBanktableView.reloadData()
-        }
+        if let _ = self.navigationController?.popViewController(animated: true) {}
+        
+//        if let _ = self.navigationController?.popViewController(animated: true), let rootVC = self.navigationController?.topViewController as? ViewController {
+//            // 遷移先にBankManagerの参照先を渡す
+//            rootVC.superBank = self.superBank
+//            // TableViewを再度読み込む
+//            rootVC.myBanktableView.reloadData()
+//        }
     }
     
-//    // Segue 準備
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-//        
-//        if let homeVC = segue.destination as? ViewController, segue.identifier == "toViewController" {
-//            
-//            // 遷移先にBankManagerの参照先を渡す
-//            homeVC.superBank = sender as? BankManager
-//            // 追加したBankが改めて初期設定されて消えるのを防ぐため
-//            homeVC.isFirstLoad = false
-//        }
-//    }
 }
 
 
