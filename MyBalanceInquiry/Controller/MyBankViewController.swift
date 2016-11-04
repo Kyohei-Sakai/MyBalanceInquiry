@@ -26,12 +26,19 @@ class MyBankViewController: UIViewController {
         
         bankStatementTableView.delegate = self
         bankStatementTableView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         bankNameLabel.text = selectedBank?.bankName
+        
         if let balance = selectedBank?.balance {
             balanceLabel.text = "残高　¥ \(balance)"
             print("残高を更新しました。")
         }
+        
+        bankStatementTableView.reloadData()
     }
     
     // 取引を追加するためのボタンが押された時

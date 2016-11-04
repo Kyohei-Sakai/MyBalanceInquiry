@@ -34,6 +34,12 @@ class ViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        myBanktableView.reloadData()
+    }
+    
     // 初期データを設定
     private func setBanking() {
         
