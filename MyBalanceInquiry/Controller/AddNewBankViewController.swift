@@ -12,8 +12,6 @@ class AddNewBankViewController: UIViewController {
     
     @IBOutlet fileprivate weak var bankTextField: UITextField!
     @IBOutlet fileprivate weak var balanceTextField: UITextField!
-	
-	fileprivate var scrolView = UIScrollView()
     
     var superBank: BankManager?
     
@@ -25,10 +23,34 @@ class AddNewBankViewController: UIViewController {
         // backButtonを生成
 //        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(tapBackButton(_:)))
         
-        configureScrollView()
         configurebankTextFeid()
         configurebalanceTextFeid()
     }
+    
+    private func configurebankTextFeid() {
+        bankTextField.placeholder = "◯◯銀行"
+        bankTextField.returnKeyType = .done
+        bankTextField.clearButtonMode = .whileEditing
+        bankTextField.delegate = self
+    }
+    
+    private func configurebalanceTextFeid() {
+        balanceTextField.placeholder = "0"
+        balanceTextField.keyboardType = .numberPad
+        balanceTextField.clearButtonMode = .whileEditing
+        
+        // ツールバーを生成
+        let accessoryBar = UIToolbar()
+        accessoryBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidPush(_:)))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        accessoryBar.setItems([spacer, doneButton], animated: true)
+        
+        // ツールバーをtextViewのアクセサリViewに設定する
+        balanceTextField.inputAccessoryView = accessoryBar
+    }
+    
     
     // Addボタンが押された時
     @IBAction private func tapAddBank(_ sender: AnyObject) {
@@ -103,14 +125,6 @@ extension AddNewBankViewController {
     }
     
 }
-
-
-// MARK: - UIScrollViewDelegate method
-
-extension AddNewBankViewController: UIScrollViewDelegate {
-    
-}
-
 
 
 

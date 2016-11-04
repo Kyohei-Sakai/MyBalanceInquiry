@@ -57,9 +57,9 @@
                     <navigationItem key="navigationItem" id="5qK-GQ-t5X"/>
                     <connections>
                         <outlet property="myBanktableView" destination="mvI-bM-fwc" id="EtI-hu-rtI"/>
-                        <segue destination="jkh-o8-amz" kind="show" identifier="toGraghView" id="2DD-hi-AOz"/>
-                        <segue destination="own-ol-SFH" kind="show" identifier="toAddNewBank" id="sIl-P9-uOC"/>
-                        <segue destination="X6p-Xq-umI" kind="show" identifier="toMyBank" id="f6b-Sa-0p2"/>
+                        <segue destination="X6p-Xq-umI" kind="show" identifier="toMyBank" id="eN2-p7-uek"/>
+                        <segue destination="jkh-o8-amz" kind="show" identifier="toGraghView" id="6DL-Q2-Dc5"/>
+                        <segue destination="own-ol-SFH" kind="show" identifier="toAddNewBank" id="NP4-cG-5dO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -118,7 +118,7 @@
                         <outlet property="balanceLabel" destination="nNQ-qn-rCZ" id="rN3-tv-DBC"/>
                         <outlet property="bankNameLabel" destination="iJn-qg-SA7" id="6jI-kE-dPy"/>
                         <outlet property="bankStatementTableView" destination="38u-LL-bfd" id="fpM-c8-u32"/>
-                        <segue destination="9kx-rE-zWN" kind="show" identifier="toBankingViewController" id="ciB-18-MLI"/>
+                        <segue destination="9kx-rE-zWN" kind="show" identifier="toBankingViewController" id="Nmv-Vx-PIa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9TT-l0-4gQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
