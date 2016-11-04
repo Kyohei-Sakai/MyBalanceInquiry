@@ -307,9 +307,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="vCv-2y-Ayg"/>
                     <connections>
+                        <outlet property="amountTextField" destination="yD8-UE-JGT" id="BCu-YZ-sZP"/>
                         <outlet property="bankingPicker" destination="6qN-Z9-XH7" id="KcY-kQ-NfF"/>
                         <outlet property="datePicker" destination="PEu-Wg-VDT" id="7Qa-6N-Zc5"/>
-                        <outlet property="textField" destination="yD8-UE-JGT" id="Pg2-SO-Rhh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ad2-jH-zAR" userLabel="First Responder" sceneMemberID="firstResponder"/>

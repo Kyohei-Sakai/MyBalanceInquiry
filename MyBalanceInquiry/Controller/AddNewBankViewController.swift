@@ -12,6 +12,8 @@ class AddNewBankViewController: UIViewController {
     
     @IBOutlet fileprivate weak var bankTextField: UITextField!
     @IBOutlet fileprivate weak var balanceTextField: UITextField!
+	
+	fileprivate var scrolView = UIScrollView()
     
     var superBank: BankManager?
     
@@ -22,6 +24,10 @@ class AddNewBankViewController: UIViewController {
         self.navigationItem.title = "新規銀行登録"
         // backButtonを生成
 //        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(tapBackButton(_:)))
+        
+        configureScrollView()
+        configurebankTextFeid()
+        configurebalanceTextFeid()
     }
     
     // Addボタンが押された時
@@ -43,23 +49,33 @@ class AddNewBankViewController: UIViewController {
     // 入力事項に誤りがあることをユーザに通知する
     private func alertError() {
         
-        let alertController = UIAlertController(
-            title: "エラー",
-            message: "入力事項に不備があります。",
-            preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "エラー", message: "入力事項に不備があります。", preferredStyle: .actionSheet)
         
-        let otherAction = UIAlertAction(title: "やり直す", style: .default, handler: { action in
-            print("\(action.title)が押されました")
-        })
-        
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: { action in
-            print("\(action.title)が押されました")
-        })
+        let otherAction = UIAlertAction(title: "やり直す", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         
         alertController.addAction(otherAction)
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func doneButtonDidPush(_ sender: UIButton) {
+        // キーボードを閉じる
+        balanceTextField.resignFirstResponder()
+    }
+    
+}
+
+
+// MARK: - UITextFieldDelegate method
+
+extension AddNewBankViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // retrueKeyを押すとキーボードが引っ込む
+        textField.resignFirstResponder()
+        return true
     }
     
 }
@@ -89,6 +105,11 @@ extension AddNewBankViewController {
 }
 
 
+// MARK: - UIScrollViewDelegate method
+
+extension AddNewBankViewController: UIScrollViewDelegate {
+    
+}
 
 
 
