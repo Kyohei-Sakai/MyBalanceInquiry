@@ -36,9 +36,9 @@ class MyBankViewController: UIViewController {
         if let balance = selectedBank?.balance {
             balanceLabel.text = "残高　¥ \(balance)"
             print("残高を更新しました。")
+            bankStatementTableView.reloadData()
         }
         
-        bankStatementTableView.reloadData()
     }
     
     // 取引を追加するためのボタンが押された時
