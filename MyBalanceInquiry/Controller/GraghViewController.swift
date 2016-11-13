@@ -16,7 +16,7 @@ class GraghViewController: UIViewController {
     
     fileprivate var barGraghView: BarGraghView?
     
-    fileprivate var barGraghData: [Int] = []
+    fileprivate var barGraghData: [CGFloat] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,7 @@ class GraghViewController: UIViewController {
                         let fluctuationAmount = superBank?.sumFluctuationAmount(fromDate: date, toDate: nextDate) ?? 0
                         // 月々の収入
                         let income = superBank?.totalIncome(fromDate: date, toDate: nextDate) ?? 0
-                        barGraghData.append(income - fluctuationAmount)
+                        barGraghData.append(CGFloat(income - fluctuationAmount))
                         
                         date = nextDate
                     }
@@ -58,7 +58,7 @@ class GraghViewController: UIViewController {
     fileprivate func configureBarGragh() {
         let barGraghView = BarGraghView(frame: CGRect(x: 0, y: 97, width: UIScreen.main.bounds.size.width, height: 340))
         // グラフデータをセット
-        barGraghView.dataArray = barGraghData
+        barGraghView.graghValues = barGraghData
         // ラベルデータをセット
         if let mostOldDate = superBank?.mostOldDate {
             barGraghView.oldDate = mostOldDate
@@ -96,7 +96,7 @@ class GraghViewController: UIViewController {
         barGraghView?.subviews.forEach { $0.removeFromSuperview() }
         barGraghView?.contentSize = CGSize.zero
         if let text = textField.text {
-           barGraghView?.average = Int(text) ?? 0
+           barGraghView?.comparisonValue = CGFloat(Int(text) ?? 0)
         }
         // 再描画
         barGraghView?.loadGraghView()
@@ -128,7 +128,7 @@ extension GraghViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 設定額のラベルをスクロールとともに追従させる
-        barGraghView?.reloadAverage()
+        barGraghView?.reloadComparisonValue()
     }
     
 }
