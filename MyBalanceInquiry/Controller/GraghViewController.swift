@@ -10,25 +10,24 @@ import UIKit
 
 class GraghViewController: UIViewController {
     
-    @IBOutlet fileprivate weak var graghScrollView: UIScrollView!
     @IBOutlet fileprivate weak var textField: UITextField!
     
     var superBank: BankManager?
     
-    fileprivate var barGragh: BarGragh?
+    fileprivate var barGraghView: BarGraghView?
     
-    fileprivate var myData: [Int] = []
+    fileprivate var barGraghData: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        drawGraghIntoScrollView()
-        configure()
+        setBarGraghData()
+        configureBarGragh()
+        configureTextField()
         
     }
     
-    fileprivate func drawGraghIntoScrollView() {
-
+    fileprivate func setBarGraghData() {
         let calendar = Calendar(identifier: .gregorian)
         
         if let oldDate = superBank?.mostOldDate, let newDate = superBank?.mostNewDate {
@@ -47,29 +46,33 @@ class GraghViewController: UIViewController {
                         let fluctuationAmount = superBank?.sumFluctuationAmount(fromDate: date, toDate: nextDate) ?? 0
                         // 月々の収入
                         let income = superBank?.totalIncome(fromDate: date, toDate: nextDate) ?? 0
-                        myData.append(income - fluctuationAmount)
+                        barGraghData.append(income - fluctuationAmount)
                         
                         date = nextDate
                     }
                 }
             }
         }
-        
-        let screenSize = UIScreen.main.bounds.size
-        let height = graghScrollView.frame.size.height
-        
-        if let mostOldDate = superBank?.mostOldDate, let text = textField.text {
-            let spendingGragh = BarGragh(dataArray: myData, oldDate: mostOldDate, barAreaWidth: screenSize.width / 4, height: height, average: Int(text) ?? 0)
-            
-            barGragh = spendingGragh
-            
-            graghScrollView.addSubview(spendingGragh)
-            graghScrollView.contentSize = CGSize(width: spendingGragh.frame.size.width, height: spendingGragh.frame.size.height)
-        }
-        
     }
     
-    fileprivate func configure() {
+    fileprivate func configureBarGragh() {
+        let barGraghView = BarGraghView(frame: CGRect(x: 0, y: 97, width: UIScreen.main.bounds.size.width, height: 340))
+        // グラフデータをセット
+        barGraghView.dataArray = barGraghData
+        // ラベルデータをセット
+        if let mostOldDate = superBank?.mostOldDate {
+            barGraghView.oldDate = mostOldDate
+        }
+        // グラフを生成
+        barGraghView.loadGraghView()
+        
+        barGraghView.delegate = self
+        
+        view.addSubview(barGraghView)
+        self.barGraghView = barGraghView
+    }
+    
+    fileprivate func configureTextField() {
         textField.placeholder = "100000"
         textField.textAlignment = .right
         textField.keyboardType = .numberPad
@@ -86,16 +89,17 @@ class GraghViewController: UIViewController {
         
         // ツールバーをtextViewのアクセサリViewに設定する
         textField.inputAccessoryView = accessoryBar
-        
-        graghScrollView.delegate = self
     }
     
     @objc private func doneButtonDidPush(_ sender: UIButton) {
         // 初期化
-        graghScrollView.subviews.forEach { $0.removeFromSuperview() }
-        myData.removeAll()
+        barGraghView?.subviews.forEach { $0.removeFromSuperview() }
+        barGraghView?.contentSize = CGSize.zero
+        if let text = textField.text {
+           barGraghView?.average = Int(text) ?? 0
+        }
         // 再描画
-        drawGraghIntoScrollView()
+        barGraghView?.loadGraghView()
         // キーボードを閉じる
         textField.resignFirstResponder()
         // 画面位置を元に戻す
@@ -124,8 +128,7 @@ extension GraghViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 設定額のラベルをスクロールとともに追従させる
-        barGragh?.averageLabel.frame.origin.x = scrollView.contentOffset.x
-        
+        barGraghView?.reloadAverage()
     }
     
 }

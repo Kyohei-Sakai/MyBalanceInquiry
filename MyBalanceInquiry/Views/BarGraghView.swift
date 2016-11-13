@@ -10,75 +10,73 @@ import UIKit
 
 // MARK: - BarGragh Class
 
-class BarGragh: UIView {
+@IBDesignable final class BarGraghView: UIScrollView {
     
-    // データ配列
-    private var dataArray: [Int] = []
+    // MARK: - Private properties
+    
     // データの中の最大支出 -> これをもとにBar表示エリアの高さを決める
-    private var maxSpending: Int?
-    // 生成するBarの幅
-    private var barAreaWidth: CGFloat
-    //
-    private var oldDate: Date?
+    private var maxSpending: Int? { return dataArray.max() }
     
-    private var average: Int
     private var averageX: CGFloat = 0
     private var averageY: CGFloat = 0
+    
     // 比較するための設定値を表示
-    var averageLabel: UILabel = UILabel()
+    private var averageLabel: UILabel = UILabel()
     
     
-    init(dataArray: [Int], oldDate: Date, barAreaWidth: CGFloat, height: CGFloat, average: Int) {
-        self.dataArray = dataArray
-        self.oldDate = oldDate
-        maxSpending = dataArray.max()
-        self.barAreaWidth = barAreaWidth
-        self.average = average
-        
-        let width: CGFloat = barAreaWidth * CGFloat(dataArray.count)
-        
-        let rect = CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height))
-        super.init(frame: rect)
-        self.backgroundColor = UIColor.white
+    // MARK: - Public properties
+    
+    // データ配列
+    var dataArray: [Int] = []
+    // 生成するBarの幅
+    var barAreaWidth: CGFloat = 50
+    
+    var oldDate: Date?
+    // 目盛りの値
+    var average: Int = 100000
+    
+    var averageIsHidden: Bool = false {
+        didSet {
+            averageLabel.isHidden = averageIsHidden
+        }
     }
     
-    // UIViewの継承時はこれがないとエラーになる
+    // MARK: - Initializers
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+//        self.dataArray = dataArray
+//        self.oldDate = oldDate
+//        maxSpending = dataArray.max()
+        
+//        let width: CGFloat = barAreaWidth * CGFloat(dataArray.count)
+        
+//        self.backgroundColor = UIColor.white
+    }
+    
+//    init(dataArray: [Int], oldDate: Date, height: CGFloat) {
+//        self.dataArray = dataArray
+//        self.oldDate = oldDate
+//        maxSpending = dataArray.max()
+//        
+//        let width: CGFloat = barAreaWidth * CGFloat(dataArray.count)
+//        let rect = CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height))
+//        self.init(frame: rect)
+//    }
+    
+    // storyboardで生成する時
     required init?(coder aDecoder: NSCoder) {
-        self.dataArray = []
-        self.maxSpending = 0
-        self.barAreaWidth = 0
-        self.average = 0
         super.init(coder: aDecoder)
         
 //        fatalError("init(coder:) has not been implemented")
     }
     
-    override func draw(_ rect: CGRect) {
-        
-        let calendar = Calendar(identifier: .gregorian)
-        
-        for index in 0..<dataArray.count {
-            
-            // 任意のデータ数が収まる幅
-            let height = rect.height
-            // barの表示をずらしていく
-            let x = CGFloat(index) * barAreaWidth
-            
-            if let oldDate = oldDate, let date = calendar.date(byAdding: DateComponents(month: index), to: oldDate), let maxSpending = maxSpending {
-                let rect = CGRect(origin: CGPoint(x: x, y: 0), size: CGSize(width: barAreaWidth, height: height))
-                
-                let bar = Bar(rect, spending: dataArray[index], maxSpendig: maxSpending, date: date, average: average)
-                self.addSubview(bar)
-                
-                self.averageY = bar.averageY
-                
-            }
-            
-        }
-        
-        drawLabel(x: averageX, y: averageY, width: 50, height: 20, text: String(average))
-        
-    }
+    // MARK: - Override
+    
+//    override func draw(_ rect: CGRect) {
+//    }
+    
+    // MARK: - Private methods
     
     private func drawLabel(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, text: String) {
         let label: UILabel = UILabel()
@@ -88,7 +86,34 @@ class BarGragh: UIView {
         label.textAlignment = .center
         label.font = label.font.withSize(10)
         label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
-        self.addSubview(label)
+        addSubview(label)
+    }
+    
+    // MARK: - Public methods
+    
+    func loadGraghView() {
+        let calendar = Calendar(identifier: .gregorian)
+        
+        for index in 0..<dataArray.count {
+            // barの表示をずらしていく
+            let x = CGFloat(index) * barAreaWidth
+            
+            if let oldDate = oldDate, let date = calendar.date(byAdding: DateComponents(month: index), to: oldDate), let maxSpending = maxSpending {
+                let rect = CGRect(origin: CGPoint(x: x, y: 0), size: CGSize(width: barAreaWidth, height: frame.height))
+                
+                let bar = Bar(rect, spending: dataArray[index], maxSpendig: maxSpending, date: date, average: average)
+                
+                self.addSubview(bar)
+                self.contentSize.width += bar.frame.width
+                
+                self.averageY = bar.averageY
+            }
+        }
+        drawLabel(x: averageX, y: averageY, width: 50, height: 20, text: String(average))
+    }
+    
+    func reloadAverage() {
+        averageLabel.frame.origin.x = contentOffset.x
     }
 
 }
@@ -114,7 +139,7 @@ class Bar: UIView {
         self.backgroundColor = UIColor.orange.withAlphaComponent(0.5)
     }
     
-    // UIViewの継承時はこれがないとエラーになる
+    // storyboardで生成する時
     required init?(coder aDecoder: NSCoder) {
         self.spending = 0
         self.maxSpendig = 0
@@ -182,7 +207,7 @@ class Bar: UIView {
         label.textAlignment = .center
         label.font = label.font.withSize(10)
         label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
-        self.addSubview(label)
+        addSubview(label)
     }
     
     private func drawLine(from: CGPoint, to: CGPoint, width: CGFloat) {
