@@ -136,7 +136,18 @@ import UIKit
     func setBarWidth(rate: CGFloat) {
         Bar.LayoutProportion.barWidthRate = rate
     }
-
+    
+    func setBar(color: UIColor) {
+        Bar.LayoutProportion.barColor = color
+    }
+    
+    func setLabel(backgroundcolor: UIColor) {
+        Bar.LayoutProportion.labelBackgroundColor = backgroundcolor
+    }
+    
+    func setGragh(backgroundcolor: UIColor) {
+        Bar.LayoutProportion.GraghBackgroundColor = backgroundcolor
+    }
 }
 
 
@@ -184,6 +195,12 @@ class Bar: UIView {
         static var maxGraghValueRate: CGFloat = 0.8
         // bar.width / rect.width
         static var barWidthRate: CGFloat = 0.5
+        // Bar Color
+        static var barColor = UIColor.blue.withAlphaComponent(0.8)
+        // Label backgroundColor
+        static var labelBackgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+        // Gragh backgroundColor
+        static var GraghBackgroundColor = UIColor.orange.withAlphaComponent(0.5)
     }
     
     
@@ -195,7 +212,7 @@ class Bar: UIView {
         self.date = date
         self.comparisonValue = comparisonValue
         super.init(frame: frame)
-        self.backgroundColor = UIColor.orange.withAlphaComponent(0.5)
+        self.backgroundColor = LayoutProportion.GraghBackgroundColor
     }
     
     // storyboardで生成する時
@@ -235,7 +252,7 @@ class Bar: UIView {
         BarPath.move(to: from)
         BarPath.addLine(to: to)
         BarPath.lineWidth = barWidth
-        UIColor.orange.setStroke()
+        LayoutProportion.barColor.setStroke()
         BarPath.stroke()
     }
     
@@ -246,7 +263,7 @@ class Bar: UIView {
         label.text = text
         label.textAlignment = .center
         label.font = label.font.withSize(10)
-        label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+        label.backgroundColor = LayoutProportion.labelBackgroundColor
         addSubview(label)
     }
     
