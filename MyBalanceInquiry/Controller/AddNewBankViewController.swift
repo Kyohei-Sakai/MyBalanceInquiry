@@ -19,9 +19,9 @@ class AddNewBankViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "新規銀行登録"
+        navigationItem.title = "新規銀行登録"
         // backButtonを生成
-//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(tapBackButton(_:)))
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(tapBackButton(_:)))
         
         configurebankTextFeid()
         configurebalanceTextFeid()
@@ -79,7 +79,7 @@ class AddNewBankViewController: UIViewController {
         alertController.addAction(otherAction)
         alertController.addAction(cancelAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     @objc private func doneButtonDidPush(_ sender: UIButton) {
@@ -114,9 +114,9 @@ extension AddNewBankViewController {
     
     // 前の画面に遷移する際の処理
     fileprivate func backTransition() {
-        if let _ = self.navigationController?.popViewController(animated: true) {}
+        if let _ = navigationController?.popViewController(animated: true) {}
         
-//        if let _ = self.navigationController?.popViewController(animated: true), let rootVC = self.navigationController?.topViewController as? ViewController {
+//        if let _ = navigationController?.popViewController(animated: true), let rootVC = navigationController?.topViewController as? ViewController {
 //            // 遷移先にBankManagerの参照先を渡す
 //            rootVC.superBank = self.superBank
 //            // TableViewを再度読み込む

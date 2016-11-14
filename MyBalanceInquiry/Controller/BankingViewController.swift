@@ -27,7 +27,7 @@ class BankingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-		self.navigationItem.title = "新規取引を追加"
+		navigationItem.title = "新規取引を追加"
 		
         configurePickerView()
         configureTextField()
@@ -111,7 +111,7 @@ class BankingViewController: UIViewController {
         alertController.addAction(otherAction)
         alertController.addAction(cancelAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     @objc private func doneButtonDidPush(_ sender: UIButton) {
@@ -201,9 +201,9 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 extension BankingViewController {
     // 前の画面に遷移する際の処理
     fileprivate func backTransition() {
-        if let _ = self.navigationController?.popViewController(animated: true) {}
+        if let _ = navigationController?.popViewController(animated: true) {}
         
-//        if let _ = self.navigationController?.popViewController(animated: true), let bankVC = self.navigationController?.topViewController as? MyBankViewController {
+//        if let _ = navigationController?.popViewController(animated: true), let bankVC = navigationController?.topViewController as? MyBankViewController {
 //            // 遷移先にBankManagerの参照先を渡す
 //            bankVC.selectedBank = self.selectedBank
 //            // TableViewを再度読み込む

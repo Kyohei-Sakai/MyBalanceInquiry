@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "銀行一覧"
+        navigationItem.title = "銀行一覧"
         
         setBanking()
         

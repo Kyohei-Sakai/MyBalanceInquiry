@@ -20,7 +20,7 @@ class MyBankViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "残高照会"
+        navigationItem.title = "残高照会"
         
         bankStatementTableView.register(UINib(nibName: "BankStatementCell", bundle: nil), forCellReuseIdentifier: "StatementCell")
         
@@ -102,7 +102,7 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
         alertController.addAction(otherAction)
         alertController.addAction(cancelAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
 }

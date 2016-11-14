@@ -49,7 +49,7 @@ class BankStatementCell: UITableViewCell {
         amountLabel.text = "¥ \(data.amount)"
         
         if data.isIncome == true {
-            self.backgroundColor = UIColor.cyan
+            backgroundColor = UIColor.cyan
         }
         
     }
