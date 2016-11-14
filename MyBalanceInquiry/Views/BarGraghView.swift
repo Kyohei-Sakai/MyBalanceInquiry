@@ -60,15 +60,7 @@ import UIKit
     // storyboardで生成する時
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-//        fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    // MARK: - Override
-    
-//    override func draw(_ rect: CGRect) {
-//    }
     
     
     // MARK: - Private methods
