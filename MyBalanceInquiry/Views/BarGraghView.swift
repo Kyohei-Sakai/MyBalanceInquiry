@@ -41,6 +41,7 @@ import UIKit
         }
     }
     
+    
     // MARK: - Initializers
     
     override init(frame: CGRect) {
@@ -123,14 +124,17 @@ import UIKit
         comparisonValueLabel.frame.origin.x = contentOffset.x
     }
     
+    // BarのLayoutProportionはBarGraghViewから変更する
+    func setBarAreaHeight(rate: CGFloat) {
+        Bar.LayoutProportion.barAreaHeightRate = rate
+    }
     
-    // MARK: - Struct
+    func setMaxGraghValue(rate: CGFloat) {
+        Bar.LayoutProportion.maxGraghValueRate = rate
+    }
     
-    struct barData {
-        static var barAreaHeightRate: CGFloat = 1
-        static var barHeigthRate: CGFloat = 1
-        
-        
+    func setBarWidth(rate: CGFloat) {
+        Bar.LayoutProportion.barWidthRate = rate
     }
 
 }
@@ -149,9 +153,9 @@ class Bar: UIView {
     private var date: Date?
     private var comparisonValue: CGFloat = 0
     
-    private var maxBarAreaHeight: CGFloat { return maxGraghValue / maxSpendigRate }
-    private var barAreaHeight: CGFloat { return frame.height * barAreaHeightRate }
-    private var barWidth: CGFloat { return frame.width * barWidthRate }
+    private var maxBarAreaHeight: CGFloat { return maxGraghValue / LayoutProportion.maxGraghValueRate }
+    private var barAreaHeight: CGFloat { return frame.height * LayoutProportion.barAreaHeightRate }
+    private var barWidth: CGFloat { return frame.width * LayoutProportion.barWidthRate }
     private var barHeigth: CGFloat { return barAreaHeight * graghValue / maxBarAreaHeight }
     
     // barの始点のX座標（＝終点のX座標）
@@ -170,14 +174,17 @@ class Bar: UIView {
     fileprivate var comparisonValueY: CGFloat { return y - comparisonValueHeight }
     
     
-    // MARK: - Public properties
+    // MARK: - Struct
     
-    // barAreaHeight / frame.height
-    var barAreaHeightRate: CGFloat = 0.8
-    // maxSpendig / maxBarAreaHeight
-    var maxSpendigRate: CGFloat = 0.8
-    // bar.width / rect.width
-    var barWidthRate: CGFloat = 0.5
+    // Barのレイアウトを決定するためのデータ
+    fileprivate struct LayoutProportion {
+        // barAreaHeight / frame.height
+        static var barAreaHeightRate: CGFloat = 0.8
+        // maxGraghValueRate / maxBarAreaHeight
+        static var maxGraghValueRate: CGFloat = 0.8
+        // bar.width / rect.width
+        static var barWidthRate: CGFloat = 0.5
+    }
     
     
     // MARK: - Initializers

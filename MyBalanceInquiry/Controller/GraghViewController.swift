@@ -63,6 +63,10 @@ class GraghViewController: UIViewController {
         if let mostOldDate = superBank?.mostOldDate {
             barGraghView.oldDate = mostOldDate
         }
+        // グラフレイアウトデータをセット
+        barGraghView.setBarWidth(rate: 0.9)
+        barGraghView.setBarAreaHeight(rate: 0.9)
+        barGraghView.setMaxGraghValue(rate: 0.6)
         // グラフを生成
         barGraghView.loadGraghView()
         
