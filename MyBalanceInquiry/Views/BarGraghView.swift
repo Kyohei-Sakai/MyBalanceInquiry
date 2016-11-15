@@ -19,6 +19,7 @@ import UIKit
     
     // 比較値を設定
     private var comparisonValueLabel = UILabel()
+    private var comparisonValueLineView = UIView()
     private var comparisonValueX: CGFloat = 0
     private var comparisonValueY: CGFloat = 0
     
@@ -37,6 +38,7 @@ import UIKit
     var comparisonValueIsHidden: Bool = false {
         didSet {
             comparisonValueLabel.isHidden = comparisonValueIsHidden
+            comparisonValueLineView.isHidden = comparisonValueIsHidden
         }
     }
     
@@ -79,8 +81,8 @@ import UIKit
     
     private func drawComparisonValueLine(from: CGPoint, to: CGPoint) {
         // GraghViewと同じ大きさのViewを用意
-        let canvasView = UIView(frame: CGRect(origin: CGPoint.zero, size: contentSize))
-        canvasView.backgroundColor = UIColor.clear
+        comparisonValueLineView.frame = CGRect(origin: CGPoint.zero, size: contentSize)
+        comparisonValueLineView.backgroundColor = UIColor.clear
         // Lineを描画
         UIGraphicsBeginImageContextWithOptions(contentSize, false, 0)
         let linePath = UIBezierPath()
@@ -90,10 +92,10 @@ import UIKit
         linePath.lineWidth = GraghLayoutData.lineWidth
         GraghLayoutData.lineColor.setStroke()
         linePath.stroke()
-        canvasView.layer.contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+        comparisonValueLineView.layer.contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
         UIGraphicsEndImageContext()
         // GraghViewに重ねる
-        addSubview(canvasView)
+        addSubview(comparisonValueLineView)
     }
     
     
