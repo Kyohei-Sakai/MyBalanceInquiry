@@ -129,7 +129,7 @@ extension GraghViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 設定額のラベルをスクロールとともに追従させる
-        barGraghView?.reloadComparisonValue()
+        barGraghView?.redrawComparisonValue()
     }
     
 }

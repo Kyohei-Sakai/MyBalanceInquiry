@@ -131,7 +131,7 @@ import UIKit
         loadGraghView()
     }
     
-    func reloadComparisonValue() {
+    func redrawComparisonValue() {
         comparisonValueLabel.frame.origin.x = contentOffset.x
     }
     
