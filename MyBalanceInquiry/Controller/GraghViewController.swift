@@ -67,6 +67,10 @@ class GraghViewController: UIViewController {
         barGraghView.setBarWidth(rate: 0.9)
         barGraghView.setBarAreaHeight(rate: 0.9)
         barGraghView.setMaxGraghValue(rate: 0.6)
+        barGraghView.setBarArea(width: 100)
+        barGraghView.setComparisonValueLine(color: .green)
+        barGraghView.setComparisonValueLabel(backgroundColor: UIColor.yellow.withAlphaComponent(0.7))
+        
         // グラフを生成
         barGraghView.loadGraghView()
         

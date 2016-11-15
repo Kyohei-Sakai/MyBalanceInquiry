@@ -27,8 +27,7 @@ import UIKit
     
     // データ配列
     var graghValues: [CGFloat] = []
-    // 生成するBar領域の幅
-    var barAreaWidth: CGFloat = 50
+    
     // グラフのラベルに表示する情報
     var oldDate: Date?
     
@@ -64,7 +63,7 @@ import UIKit
     // MARK: - Private methods
     
     private func drawComparisonValue() {
-        drawComparisonValueLine(from: CGPoint(x: 0, y: comparisonValueY), to: CGPoint(x: contentSize.width, y: comparisonValueY), width: 3)
+        drawComparisonValueLine(from: CGPoint(x: 0, y: comparisonValueY), to: CGPoint(x: contentSize.width, y: comparisonValueY))
         
         drawComparisonValueLabel(x: comparisonValueX, y: comparisonValueY, width: 50, height: 20, text: String(describing: comparisonValue))
     }
@@ -74,11 +73,11 @@ import UIKit
         comparisonValueLabel.text = text
         comparisonValueLabel.textAlignment = .center
         comparisonValueLabel.font = comparisonValueLabel.font.withSize(10)
-        comparisonValueLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+        comparisonValueLabel.backgroundColor = GraghLayoutData.labelBackgroundColor
         addSubview(comparisonValueLabel)
     }
     
-    private func drawComparisonValueLine(from: CGPoint, to: CGPoint, width: CGFloat) {
+    private func drawComparisonValueLine(from: CGPoint, to: CGPoint) {
         // GraghViewと同じ大きさのViewを用意
         let canvasView = UIView(frame: CGRect(origin: CGPoint.zero, size: contentSize))
         canvasView.backgroundColor = UIColor.clear
@@ -88,8 +87,8 @@ import UIKit
         linePath.lineCapStyle = .round
         linePath.move(to: from)
         linePath.addLine(to: to)
-        linePath.lineWidth = width
-        UIColor.red.setStroke()
+        linePath.lineWidth = GraghLayoutData.lineWidth
+        GraghLayoutData.lineColor.setStroke()
         linePath.stroke()
         canvasView.layer.contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
         UIGraphicsEndImageContext()
@@ -107,7 +106,7 @@ import UIKit
         for index in 0..<graghValues.count {
             if let oldDate = oldDate, let date = calendar.date(byAdding: DateComponents(month: index), to: oldDate), let maxGraghValue = maxGraghValue {
                 // barの表示をずらしていく
-                let rect = CGRect(origin: CGPoint(x: CGFloat(index) * barAreaWidth, y: 0), size: CGSize(width: barAreaWidth, height: frame.height))
+                let rect = CGRect(origin: CGPoint(x: CGFloat(index) * GraghLayoutData.barAreaWidth, y: 0), size: CGSize(width: GraghLayoutData.barAreaWidth, height: frame.height))
                 
                 let bar = Bar(frame: rect, graghValue: graghValues[index], maxGraghValue: maxGraghValue, date: date, comparisonValue: comparisonValue)
                 
@@ -131,6 +130,18 @@ import UIKit
     
     func redrawComparisonValue() {
         comparisonValueLabel.frame.origin.x = contentOffset.x
+    }
+    
+    func setBarArea(width: CGFloat) {
+        GraghLayoutData.barAreaWidth = width
+    }
+    
+    func setComparisonValueLabel(backgroundColor: UIColor) {
+        GraghLayoutData.labelBackgroundColor = backgroundColor
+    }
+    
+    func setComparisonValueLine(color: UIColor) {
+        GraghLayoutData.lineColor = color
     }
     
     // BarのLayoutProportionはBarGraghViewから変更する
@@ -157,6 +168,19 @@ import UIKit
     func setGragh(backgroundcolor: UIColor) {
         Bar.LayoutProportion.GraghBackgroundColor = backgroundcolor
     }
+    
+    
+    // MARK: - Struct
+    
+    private struct GraghLayoutData {
+        // 生成するBar領域の幅
+        static var barAreaWidth: CGFloat = 50
+        static var labelBackgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+        static var lineColor = UIColor.red
+        static var lineWidth: CGFloat = 2
+        
+    }
+    
 }
 
 
