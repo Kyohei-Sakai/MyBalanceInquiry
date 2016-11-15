@@ -96,14 +96,11 @@ class GraghViewController: UIViewController {
     }
     
     @objc private func doneButtonDidPush(_ sender: UIButton) {
-        // 初期化
-        barGraghView?.subviews.forEach { $0.removeFromSuperview() }
-        barGraghView?.contentSize = CGSize.zero
         if let text = textField.text {
            barGraghView?.comparisonValue = CGFloat(Int(text) ?? 0)
         }
         // 再描画
-        barGraghView?.loadGraghView()
+        barGraghView?.reloadGraghView()
         // キーボードを閉じる
         textField.resignFirstResponder()
         // 画面位置を元に戻す

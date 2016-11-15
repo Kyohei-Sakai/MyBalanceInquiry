@@ -123,9 +123,12 @@ import UIKit
         drawComparisonValue()
     }
     
-    func drawComparisonValue() {
-        drawComparisonValueLine(from: CGPoint(x: 0, y: comparisonValueY), to: CGPoint(x: contentSize.width, y: comparisonValueY), width: 1)
-        drawComparisonValueLabel(x: comparisonValueX, y: comparisonValueY, width: 50, height: 20, text: String(describing: comparisonValue))
+    func reloadGraghView() {
+        // GraghViewの初期化
+        subviews.forEach { $0.removeFromSuperview() }
+        contentSize = CGSize.zero
+        
+        loadGraghView()
     }
     
     func reloadComparisonValue() {
