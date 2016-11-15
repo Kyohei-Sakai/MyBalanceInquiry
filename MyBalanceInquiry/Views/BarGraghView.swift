@@ -65,6 +65,12 @@ import UIKit
     
     // MARK: - Private methods
     
+    private func drawComparisonValue() {
+        drawComparisonValueLine(from: CGPoint(x: 0, y: comparisonValueY), to: CGPoint(x: contentSize.width, y: comparisonValueY), width: 3)
+        
+        drawComparisonValueLabel(x: comparisonValueX, y: comparisonValueY, width: 50, height: 20, text: String(describing: comparisonValue))
+    }
+    
     private func drawComparisonValueLabel(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, text: String) {
         comparisonValueLabel.frame = CGRect(x: x, y: y, width: width, height: height)
         comparisonValueLabel.text = text
@@ -75,13 +81,22 @@ import UIKit
     }
     
     private func drawComparisonValueLine(from: CGPoint, to: CGPoint, width: CGFloat) {
-        let LinePath = UIBezierPath()
-        LinePath.lineCapStyle = .round
-        LinePath.move(to: from)
-        LinePath.addLine(to: to)
-        LinePath.lineWidth = width
-        UIColor.red.withAlphaComponent(0.6).setStroke()
-        LinePath.stroke()
+        // GraghViewと同じ大きさのViewを用意
+        let canvasView = UIView(frame: CGRect(origin: CGPoint.zero, size: contentSize))
+        canvasView.backgroundColor = UIColor.clear
+        // Lineを描画
+        UIGraphicsBeginImageContextWithOptions(contentSize, false, 0)
+        let linePath = UIBezierPath()
+        linePath.lineCapStyle = .round
+        linePath.move(to: from)
+        linePath.addLine(to: to)
+        linePath.lineWidth = width
+        UIColor.red.setStroke()
+        linePath.stroke()
+        canvasView.layer.contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+        UIGraphicsEndImageContext()
+        // GraghViewに重ねる
+        addSubview(canvasView)
     }
     
     
@@ -89,6 +104,7 @@ import UIKit
     
     func loadGraghView() {
         let calendar = Calendar(identifier: .gregorian)
+        contentSize.height = frame.size.height
         
         for index in 0..<graghValues.count {
             if let oldDate = oldDate, let date = calendar.date(byAdding: DateComponents(month: index), to: oldDate), let maxGraghValue = maxGraghValue {
