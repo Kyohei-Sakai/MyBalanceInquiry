@@ -48,14 +48,12 @@ import UIKit
         super.init(frame: frame)
     }
     
-//    init(graghValues: [Int], oldDate: Date, height: CGFloat) {
-//        self.graghValues = graghValues
-//        self.oldDate = oldDate
-//        
-//        let width: CGFloat = barAreaWidth * CGFloat(graghValues.count)
-//        let rect = CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height))
-//        self.init(frame: rect)
-//    }
+    convenience init(frame: CGRect, graghValues: [CGFloat], oldDate: Date) {
+        self.init(frame: frame)
+        self.graghValues = graghValues
+        self.oldDate = oldDate
+        loadGraghView()
+    }
     
     // storyboardで生成する時
     required init?(coder aDecoder: NSCoder) {
