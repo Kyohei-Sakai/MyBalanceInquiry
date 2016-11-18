@@ -10,26 +10,29 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet fileprivate weak var myBanktableView: UITableView!
+    @IBOutlet weak var myBanktableView: UITableView!
     
     var superBank: BankManager?
     
     var selectedBank: Bank?
     
-    var isFirstLoad = true
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 初めてのロードであれば、初期設定を行う
-        if isFirstLoad {
-            setBanking()
-        }
+        navigationItem.title = "銀行一覧"
+        
+        setBanking()
         
         myBanktableView.delegate = self
         myBanktableView.dataSource = self
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        myBanktableView.reloadData()
     }
     
     // 初期データを設定
@@ -143,11 +146,6 @@ extension ViewController {
             graghVC.superBank = self.superBank
         }
         
-    }
-    
-    // 戻るボタンにより前画面へ遷移
-    @IBAction func back(segue: UIStoryboardSegue) {
-        print("back")
     }
     
 }

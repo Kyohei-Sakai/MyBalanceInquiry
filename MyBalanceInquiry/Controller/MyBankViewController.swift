@@ -11,7 +11,7 @@ import UIKit
 class MyBankViewController: UIViewController {
     
     @IBOutlet fileprivate weak var bankNameLabel: UILabel!
-    @IBOutlet fileprivate weak var bankStatementTableView: UITableView!
+    @IBOutlet weak var bankStatementTableView: UITableView!
     @IBOutlet fileprivate weak var balanceLabel: UILabel!
     
     var selectedBank: Bank?
@@ -20,16 +20,25 @@ class MyBankViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "残高照会"
+        
         bankStatementTableView.register(UINib(nibName: "BankStatementCell", bundle: nil), forCellReuseIdentifier: "StatementCell")
         
         bankStatementTableView.delegate = self
         bankStatementTableView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         bankNameLabel.text = selectedBank?.bankName
+        
         if let balance = selectedBank?.balance {
             balanceLabel.text = "残高　¥ \(balance)"
             print("残高を更新しました。")
+            bankStatementTableView.reloadData()
         }
+        
     }
     
     // 取引を追加するためのボタンが押された時
@@ -93,7 +102,7 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
         alertController.addAction(otherAction)
         alertController.addAction(cancelAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
 }
@@ -110,11 +119,6 @@ extension MyBankViewController {
             BankingVC.selectedBank = self.selectedBank
         }
         
-    }
-    
-    // 戻るボタンにより前画面へ遷移
-    @IBAction private func cancel(segue: UIStoryboardSegue) {
-        print("cancel")
     }
     
 }

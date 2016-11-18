@@ -22,6 +22,8 @@ class GraghViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "支出管理"
+        
         drawGraghIntoScrollView()
         configure()
         
@@ -111,7 +113,7 @@ extension GraghViewController: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         // 画面を上にずらしてTextFieldが見えるようにする
-        self.view.frame.origin.y = -200
+        view.frame.origin.y = -200
         return true
     }
     
