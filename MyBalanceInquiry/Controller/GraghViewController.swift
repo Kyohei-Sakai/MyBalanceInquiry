@@ -129,10 +129,10 @@ extension GraghViewController: UITextFieldDelegate {
 
 extension GraghViewController: UIScrollViewDelegate {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // 設定額のラベルをスクロールとともに追従させる
-        barGraghView?.redrawComparisonValue()
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        // 設定額のラベルをスクロールとともに追従させる
+//        barGraghView?.redrawComparisonValue()
+//    }
     
 }
 

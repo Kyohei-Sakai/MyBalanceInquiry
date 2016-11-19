@@ -62,6 +62,18 @@ import UIKit
     }
     
     
+    // MARK: - Override
+    
+    override var contentOffset: CGPoint {
+        didSet {
+            if !comparisonValueIsHidden {
+                // ComparisonValueLabelをスクロールとともに追従させる
+                comparisonValueLabel.frame.origin.x = contentOffset.x
+            }
+        }
+    }
+    
+    
     // MARK: - Private methods
     
     private func drawComparisonValue() {
