@@ -34,6 +34,7 @@ import UIKit
     
     // 比較値を設定
     var comparisonValue: CGFloat = 100000
+    var graghStyle: GraghViewCell.GraghStyle = .bar
     
     var comparisonValueIsHidden: Bool = false {
     @IBInspectable var comparisonValue: CGFloat = 100000
@@ -59,6 +60,7 @@ import UIKit
         self.init(frame: frame)
         self.graghValues = graghValues
         self.oldDate = oldDate
+        self.graghStyle = style
         loadGraghView()
     }
     
@@ -213,6 +215,8 @@ class GraghViewCell: UIView {
     // MARK: - Private properties
     
     // 各月の支出
+    // default is bar
+    private var style: GraghStyle?
     private var graghValue: CGFloat
     private var maxGraghValue: CGFloat
     
@@ -264,8 +268,17 @@ class GraghViewCell: UIView {
     // MARK: - Override
     
     override func draw(_ rect: CGRect) {
-        // barを表示
-        drawBar(from: CGPoint(x: x, y: y), to: CGPoint(x: x, y: toY))
+        guard let style = style else {
+            return
+        }
+        
+        if let toY = toY {
+            // Graghを描画
+            switch style {
+            case .bar: drawBar(from: CGPoint(x: x, y: y), to: CGPoint(x: x, y: toY))
+            case .round: drawRound(point: CGPoint(x: x, y: toY))
+            }
+        }
         
         // 上部に支出額を表示
         drawLabel(centerX: x, centerY: labelHeight / 2, width: rect.width, height: labelHeight, text: String("¥ \(graghValue)"))
@@ -293,6 +306,15 @@ class GraghViewCell: UIView {
         BarPath.lineWidth = barWidth
         LayoutProportion.barColor.setStroke()
         BarPath.stroke()
+    }
+    
+    private func drawRound(point: CGPoint) {
+        let origin = CGPoint(x: point.x - LayoutProportion.roundSize / 2, y: point.y - LayoutProportion.roundSize / 2)
+        let size = CGSize(width: LayoutProportion.roundSize, height: LayoutProportion.roundSize)
+        let round = UIBezierPath(ovalIn: CGRect(origin: origin, size: size))
+        LayoutProportion.roundColor.setFill()
+        round.fill()
+        
     }
     
     private func drawLabel(centerX x: CGFloat, centerY y: CGFloat, width: CGFloat, height: CGFloat, text: String) {
@@ -336,6 +358,11 @@ class GraghViewCell: UIView {
         // round color
         static var roundColor = UIColor.red.withAlphaComponent(0.8)
     }
+    
+    
+    // MARK: - Enumeration
+    
+    enum GraghStyle { case bar, round }
     
 }
 
