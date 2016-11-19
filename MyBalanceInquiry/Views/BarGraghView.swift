@@ -8,7 +8,7 @@
 
 import UIKit
 
-// MARK: - BarGraghView Class
+// MARK: - GraghView Class
 
 @IBDesignable final class GraghView: UIScrollView {
     
@@ -45,6 +45,9 @@ import UIKit
         }
     }
     
+    // Delegate
+//    var barDelegate: BarGraghViewDelegate?
+    
     
     // MARK: - Initializers
     
@@ -79,19 +82,12 @@ import UIKit
     
     // MARK: - Private methods
     
+    // MARK: Drawing
+    
     private func drawComparisonValue() {
         drawComparisonValueLine(from: CGPoint(x: 0, y: comparisonValueY), to: CGPoint(x: contentSize.width, y: comparisonValueY))
         
-        drawComparisonValueLabel(x: comparisonValueX, y: comparisonValueY, width: 50, height: 20, text: String(describing: comparisonValue))
-    }
-    
-    private func drawComparisonValueLabel(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, text: String) {
-        comparisonValueLabel.frame = CGRect(x: x, y: y, width: width, height: height)
-        comparisonValueLabel.text = text
-        comparisonValueLabel.textAlignment = .center
-        comparisonValueLabel.font = comparisonValueLabel.font.withSize(10)
-        comparisonValueLabel.backgroundColor = GraghLayoutData.labelBackgroundColor
-        addSubview(comparisonValueLabel)
+        drawComparisonValueLabel(frame: CGRect(x: comparisonValueX, y: comparisonValueY, width: 50, height: 20), text: String(describing: comparisonValue))
     }
     
     private func drawComparisonValueLine(from statPoint: CGPoint, to endPoint: CGPoint) {
@@ -113,12 +109,21 @@ import UIKit
         addSubview(comparisonValueLineView)
     }
     
+    private func drawComparisonValueLabel(frame: CGRect, text: String) {
+        comparisonValueLabel.frame = frame
+        comparisonValueLabel.text = text
+        comparisonValueLabel.textAlignment = .center
+        comparisonValueLabel.font = comparisonValueLabel.font.withSize(10)
+        comparisonValueLabel.backgroundColor = GraghLayoutData.labelBackgroundColor
+        addSubview(comparisonValueLabel)
+    }
+    
     
     // MARK: - Public methods
     
     func loadGraghView() {
         let calendar = Calendar(identifier: .gregorian)
-        contentSize.height = frame.size.height
+        contentSize.height = frame.height
         
         for index in 0..<graghValues.count {
             if let oldDate = oldDate, let date = calendar.date(byAdding: DateComponents(month: index), to: oldDate), let maxGraghValue = maxGraghValue {
@@ -140,7 +145,7 @@ import UIKit
     func reloadGraghView() {
         // GraghViewの初期化
         subviews.forEach { $0.removeFromSuperview() }
-        contentSize = CGSize.zero
+        contentSize = .zero
         
         loadGraghView()
     }
@@ -161,25 +166,25 @@ import UIKit
         GraghLayoutData.lineColor = color
     }
     
-    // BarのLayoutProportionはBarGraghViewから変更する
+    // BarのLayoutProportionはGraghViewから変更する
     func setBarAreaHeight(rate: CGFloat) {
-        Bar.LayoutProportion.barAreaHeightRate = rate
+        GraghViewCell.LayoutProportion.barAreaHeightRate = rate
     }
     
     func setMaxGraghValue(rate: CGFloat) {
-        Bar.LayoutProportion.maxGraghValueRate = rate
+        GraghViewCell.LayoutProportion.maxGraghValueRate = rate
     }
     
     func setBarWidth(rate: CGFloat) {
-        Bar.LayoutProportion.barWidthRate = rate
+        GraghViewCell.LayoutProportion.barWidthRate = rate
     }
     
     func setBar(color: UIColor) {
-        Bar.LayoutProportion.barColor = color
+        GraghViewCell.LayoutProportion.barColor = color
     }
     
     func setLabel(backgroundcolor: UIColor) {
-        Bar.LayoutProportion.labelBackgroundColor = backgroundcolor
+        GraghViewCell.LayoutProportion.labelBackgroundColor = backgroundcolor
     }
     
     func setGragh(backgroundcolor: UIColor) {
@@ -233,24 +238,6 @@ class GraghViewCell: UIView {
     // MARK: - FilePrivate properties
     
     fileprivate var comparisonValueY: CGFloat { return y - comparisonValueHeight }
-    
-    
-    // MARK: - Struct
-    
-    // Barのレイアウトを決定するためのデータ
-    fileprivate struct LayoutProportion {
-        // barAreaHeight / frame.height
-        static var barAreaHeightRate: CGFloat = 0.8
-        // maxGraghValueRate / maxBarAreaHeight
-        static var maxGraghValueRate: CGFloat = 0.8
-        // bar.width / rect.width
-        static var barWidthRate: CGFloat = 0.5
-        // Bar Color
-        static var barColor = UIColor.blue.withAlphaComponent(0.8)
-        // Label backgroundColor
-        static var labelBackgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
-        // Gragh backgroundColor
-        static var GraghBackgroundColor = UIColor.orange.withAlphaComponent(0.5)
     }
     
     
@@ -297,10 +284,12 @@ class GraghViewCell: UIView {
     
     // MARK: - Private methods
     
-    private func drawBar(from: CGPoint, to: CGPoint) {
+    // MARK: Drawing
+    
+    private func drawBar(from startPoint: CGPoint, to endPoint: CGPoint) {
         let BarPath = UIBezierPath()
-        BarPath.move(to: from)
-        BarPath.addLine(to: to)
+        BarPath.move(to: startPoint)
+        BarPath.addLine(to: endPoint)
         BarPath.lineWidth = barWidth
         LayoutProportion.barColor.setStroke()
         BarPath.stroke()
@@ -315,6 +304,37 @@ class GraghViewCell: UIView {
         label.font = label.font.withSize(10)
         label.backgroundColor = LayoutProportion.labelBackgroundColor
         addSubview(label)
+    }
+    
+    
+    // MARK: - Struct
+    
+    // Barのレイアウトを決定するためのデータ
+    fileprivate struct LayoutProportion {
+        // MARK: Shared
+        
+        // barAreaHeight / frame.height
+        static var barAreaHeightRate: CGFloat = 0.8
+        // maxGraghValueRate / maxBarAreaHeight
+        static var maxGraghValueRate: CGFloat = 0.8
+        
+        // MARK: Only Bar
+        
+        // bar.width / rect.width
+        static var barWidthRate: CGFloat = 0.5
+        // Bar Color
+        static var barColor = UIColor.blue.withAlphaComponent(0.8)
+        // Label backgroundColor
+        static var labelBackgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+        // Gragh backgroundColor
+        static var GraghBackgroundColor = UIColor.orange.withAlphaComponent(0.5)
+        
+        // MARK: Only Round
+        
+        // round size
+        static var roundSize: CGFloat = 10
+        // round color
+        static var roundColor = UIColor.red.withAlphaComponent(0.8)
     }
     
 }
