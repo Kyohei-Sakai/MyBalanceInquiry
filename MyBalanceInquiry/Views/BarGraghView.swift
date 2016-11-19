@@ -17,7 +17,7 @@ import UIKit
     // データの中の最大値 -> これをもとにBar表示領域の高さを決める
     private var maxGraghValue: CGFloat? { return graghValues.max() }
     
-    // 比較値を設定
+    // MARK: Setting ComparisonValue
     private var comparisonValueLabel = UILabel()
     private var comparisonValueLineView = UIView()
     private var comparisonValueX: CGFloat = 0
@@ -28,15 +28,13 @@ import UIKit
     
     // データ配列
     var graghValues: [CGFloat] = []
-    
     // グラフのラベルに表示する情報
     var minimumDate: Date?
     
-    // 比較値を設定
-    var comparisonValue: CGFloat = 100000
     var graghStyle: GraghViewCell.GraghStyle = .bar
     
-    var comparisonValueIsHidden: Bool = false {
+    // MARK: Setting ComparisonValue
+    
     @IBInspectable var comparisonValue: CGFloat = 100000
     
     @IBInspectable var comparisonValueIsHidden: Bool = false {
@@ -155,6 +153,7 @@ import UIKit
     func redrawComparisonValue() {
         comparisonValueLabel.frame.origin.x = contentOffset.x
     }
+    // MARK: Set Gragh Customize
     
     func setBarArea(width: CGFloat) {
         GraghLayoutData.barAreaWidth = width
@@ -208,13 +207,14 @@ import UIKit
 }
 
 
-// MARK: - Bar Class
+// MARK: - GraghViewCell Class
 
 class GraghViewCell: UIView {
     
     // MARK: - Private properties
     
-    // 各月の支出
+    // MARK: Shared
+    
     // default is bar
     private var style: GraghStyle?
     private var graghValue: CGFloat
@@ -365,6 +365,14 @@ class GraghViewCell: UIView {
     enum GraghStyle { case bar, round }
     
 }
+
+
+
+
+
+
+
+
 
 
 

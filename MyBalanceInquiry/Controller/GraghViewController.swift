@@ -99,10 +99,10 @@ class GraghViewController: UIViewController {
     
     @objc private func doneButtonDidPush(_ sender: UIButton) {
         if let text = textField.text {
-           barGraghView?.comparisonValue = CGFloat(Int(text) ?? 0)
+           graghView.comparisonValue = CGFloat(Int(text) ?? 0)
         }
         // 再描画
-        barGraghView?.reloadGraghView()
+        graghView.reloadGraghView()
         // キーボードを閉じる
         textField.resignFirstResponder()
         // 画面位置を元に戻す
