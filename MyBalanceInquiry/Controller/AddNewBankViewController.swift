@@ -13,21 +13,18 @@ class AddNewBankViewController: UIViewController {
     @IBOutlet fileprivate weak var bankTextField: UITextField!
     @IBOutlet fileprivate weak var balanceTextField: UITextField!
     
-    fileprivate var scrolView = UIScrollView()
-    
     var superBank: BankManager?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureScrollView()
+        navigationItem.title = "新規銀行登録"
+        // backButtonを生成
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(tapBackButton(_:)))
+        
         configurebankTextFeid()
         configurebalanceTextFeid()
-    }
-    
-    private func configureScrollView() {
-        
     }
     
     private func configurebankTextFeid() {
@@ -54,6 +51,7 @@ class AddNewBankViewController: UIViewController {
         balanceTextField.inputAccessoryView = accessoryBar
     }
     
+    
     // Addボタンが押された時
     @IBAction private func tapAddBank(_ sender: AnyObject) {
         guard let superBank = superBank, let name = bankTextField.text, let balanceText = balanceTextField.text else { return }
@@ -63,7 +61,7 @@ class AddNewBankViewController: UIViewController {
             superBank.add(bank: Bank(name: name, firstBalance: firstBalance))
 //            superBank.banks.forEach { print($0.bankName) }
             
-            performSegue(withIdentifier: "toViewController", sender: superBank)
+            backTransition()
         } else {
             alertError()
         }
@@ -81,7 +79,7 @@ class AddNewBankViewController: UIViewController {
         alertController.addAction(otherAction)
         alertController.addAction(cancelAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     @objc private func doneButtonDidPush(_ sender: UIButton) {
@@ -108,26 +106,25 @@ extension AddNewBankViewController: UITextFieldDelegate {
 // MARK: - 画面遷移に関する処理
 
 extension AddNewBankViewController {
-    // Segue 準備
-    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+    // NavigationのbackButtonが押された時
+//    @objc fileprivate func tapBackButton(_ sender: UIBarButtonItem) {
+//        print("tapBackButton")
+//        backTransition()
+//    }
+    
+    // 前の画面に遷移する際の処理
+    fileprivate func backTransition() {
+        if let _ = navigationController?.popViewController(animated: true) {}
         
-        if let homeVC = segue.destination as? ViewController, segue.identifier == "toViewController" {
-            // 遷移先にBankManagerの参照先を渡す
-            homeVC.superBank = sender as? BankManager
-            // 追加したBankが改めて初期設定されて消えるのを防ぐため
-            homeVC.isFirstLoad = false
-        }
+//        if let _ = navigationController?.popViewController(animated: true), let rootVC = navigationController?.topViewController as? ViewController {
+//            // 遷移先にBankManagerの参照先を渡す
+//            rootVC.superBank = self.superBank
+//            // TableViewを再度読み込む
+//            rootVC.myBanktableView.reloadData()
+//        }
     }
     
 }
-
-
-// MARK: - UIScrollViewDelegate method
-
-extension AddNewBankViewController: UIScrollViewDelegate {
-    
-}
-
 
 
 
