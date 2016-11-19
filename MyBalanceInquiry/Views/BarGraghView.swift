@@ -36,6 +36,9 @@ import UIKit
     var comparisonValue: CGFloat = 100000
     
     var comparisonValueIsHidden: Bool = false {
+    @IBInspectable var comparisonValue: CGFloat = 100000
+    
+    @IBInspectable var comparisonValueIsHidden: Bool = false {
         didSet {
             comparisonValueLabel.isHidden = comparisonValueIsHidden
             comparisonValueLineView.isHidden = comparisonValueIsHidden
