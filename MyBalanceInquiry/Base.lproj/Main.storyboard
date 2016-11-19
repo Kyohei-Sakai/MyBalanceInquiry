@@ -260,17 +260,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2fc-4X-P95" customClass="GraghView" customModule="MyBalanceInquiry" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="112" width="375" height="324"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="comparisonValue">
+                                        <real key="value" value="30000"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="graghView" destination="2fc-4X-P95" id="VR7-Re-xQg"/>
                         <outlet property="textField" destination="lzd-aO-BoB" id="cKX-so-H7F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vb0-FX-a4q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="EkG-on-nX8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="854" y="865"/>
+            <point key="canvasLocation" x="853.60000000000002" y="864.91754122938539"/>
         </scene>
         <!--Banking View Controller-->
         <scene sceneID="xO7-7O-rIo">

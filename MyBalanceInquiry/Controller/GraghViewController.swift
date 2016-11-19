@@ -11,10 +11,9 @@ import UIKit
 class GraghViewController: UIViewController {
     
     @IBOutlet fileprivate weak var textField: UITextField!
+    @IBOutlet fileprivate weak var graghView: GraghView!
     
     var superBank: BankManager?
-    
-    fileprivate var barGraghView: BarGraghView?
     
     fileprivate var barGraghData: [CGFloat] = []
     
@@ -56,28 +55,27 @@ class GraghViewController: UIViewController {
     }
     
     fileprivate func configureBarGragh() {
-        let barGraghView = BarGraghView(frame: CGRect(x: 0, y: 97, width: UIScreen.main.bounds.size.width, height: 340))
+//        let graghView = GraghView(frame: CGRect(x: 0, y: 97, width: UIScreen.main.bounds.size.width, height: 340))
         // グラフデータをセット
-        barGraghView.graghValues = barGraghData
+        graghView.graghValues = barGraghData
         // ラベルデータをセット
         if let mostOldDate = superBank?.mostOldDate {
-            barGraghView.oldDate = mostOldDate
+            graghView.minimumDate = mostOldDate
         }
         // グラフレイアウトデータをセット
-        barGraghView.setBarWidth(rate: 0.9)
-        barGraghView.setBarAreaHeight(rate: 0.9)
-        barGraghView.setMaxGraghValue(rate: 0.6)
-        barGraghView.setBarArea(width: 100)
-        barGraghView.setComparisonValueLine(color: .green)
-        barGraghView.setComparisonValueLabel(backgroundColor: UIColor.yellow.withAlphaComponent(0.7))
-        
+        graghView.graghStyle = .round
+        graghView.setBarWidth(rate: 0.9)
+        graghView.setBarAreaHeight(rate: 0.9)
+        graghView.setMaxGraghValue(rate: 0.6)
+        graghView.setBarArea(width: 100)
+        graghView.setComparisonValueLine(color: .green)
+        graghView.setComparisonValueLabel(backgroundColor: UIColor.yellow.withAlphaComponent(0.7))
         // グラフを生成
-        barGraghView.loadGraghView()
+        graghView.loadGraghView()
         
-        barGraghView.delegate = self
+        graghView.delegate = self
         
-        view.addSubview(barGraghView)
-        self.barGraghView = barGraghView
+        view.addSubview(graghView)
     }
     
     fileprivate func configureTextField() {
