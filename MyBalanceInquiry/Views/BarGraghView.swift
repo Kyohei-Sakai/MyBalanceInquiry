@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - BarGraghView Class
 
-@IBDesignable final class BarGraghView: UIScrollView {
+@IBDesignable final class GraghView: UIScrollView {
     
     // MARK: - Private properties
     
@@ -188,7 +188,7 @@ import UIKit
 
 // MARK: - Bar Class
 
-class Bar: UIView {
+class GraghViewCell: UIView {
     
     // MARK: - Private properties
     
