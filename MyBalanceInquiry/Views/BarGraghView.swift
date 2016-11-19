@@ -15,13 +15,13 @@ import UIKit
     // MARK: - Private properties
     
     // データの中の最大値 -> これをもとにBar表示領域の高さを決める
-    private var maxGraghValue: CGFloat? { return graghValues.max() }
+    var maxGraghValue: CGFloat? { return graghValues.max() }
     
     // MARK: Setting ComparisonValue
     private var comparisonValueLabel = UILabel()
     private var comparisonValueLineView = UIView()
     private var comparisonValueX: CGFloat = 0
-    private var comparisonValueY: CGFloat = 0
+    private var comparisonValueY: CGFloat?
     
     
     // MARK: - Public properties
@@ -54,10 +54,10 @@ import UIKit
         super.init(frame: frame)
     }
     
-    convenience init(frame: CGRect, graghValues: [CGFloat], oldDate: Date) {
+    convenience init(frame: CGRect, graghValues: [CGFloat], minimumDate: Date, style: GraghViewCell.GraghStyle = .bar) {
         self.init(frame: frame)
         self.graghValues = graghValues
-        self.oldDate = oldDate
+        self.minimumDate = minimumDate
         self.graghStyle = style
         loadGraghView()
     }
@@ -85,7 +85,11 @@ import UIKit
     // MARK: Drawing
     
     private func drawComparisonValue() {
-        drawComparisonValueLine(from: CGPoint(x: 0, y: comparisonValueY), to: CGPoint(x: contentSize.width, y: comparisonValueY))
+        guard let comparisonValueY = comparisonValueY else {
+            return
+        }
+        
+        drawComparisonValueLine(from: CGPoint(x: comparisonValueX, y: comparisonValueY), to: CGPoint(x: contentSize.width, y: comparisonValueY))
         
         drawComparisonValueLabel(frame: CGRect(x: comparisonValueX, y: comparisonValueY, width: 50, height: 20), text: String(describing: comparisonValue))
     }
@@ -126,16 +130,17 @@ import UIKit
         contentSize.height = frame.height
         
         for index in 0..<graghValues.count {
-            if let oldDate = oldDate, let date = calendar.date(byAdding: DateComponents(month: index), to: oldDate), let maxGraghValue = maxGraghValue {
+            contentSize.width += GraghLayoutData.barAreaWidth
+            
+            if let minimumDate = minimumDate, let date = calendar.date(byAdding: DateComponents(month: index), to: minimumDate) {
                 // barの表示をずらしていく
                 let rect = CGRect(origin: CGPoint(x: CGFloat(index) * GraghLayoutData.barAreaWidth, y: 0), size: CGSize(width: GraghLayoutData.barAreaWidth, height: frame.height))
                 
-                let bar = Bar(frame: rect, graghValue: graghValues[index], maxGraghValue: maxGraghValue, date: date, comparisonValue: comparisonValue)
+                let cell = GraghViewCell(frame: rect, graghValue: graghValues[index], date: date, comparisonValue: comparisonValue, target: self)
                 
-                addSubview(bar)
-                contentSize.width += bar.frame.width
+                addSubview(cell)
                 
-                self.comparisonValueY = bar.comparisonValueY
+                self.comparisonValueY = cell.comparisonValueY
             }
         }
         
@@ -150,9 +155,6 @@ import UIKit
         loadGraghView()
     }
     
-    func redrawComparisonValue() {
-        comparisonValueLabel.frame.origin.x = contentOffset.x
-    }
     // MARK: Set Gragh Customize
     
     func setBarArea(width: CGFloat) {
@@ -189,7 +191,15 @@ import UIKit
     }
     
     func setGragh(backgroundcolor: UIColor) {
-        Bar.LayoutProportion.GraghBackgroundColor = backgroundcolor
+        GraghViewCell.LayoutProportion.GraghBackgroundColor = backgroundcolor
+    }
+    
+    func setRound(size: CGFloat) {
+        GraghViewCell.LayoutProportion.roundSize = size
+    }
+    
+    func setRound(color: UIColor) {
+        GraghViewCell.LayoutProportion.roundColor = color
     }
     
     
@@ -217,39 +227,64 @@ class GraghViewCell: UIView {
     
     // default is bar
     private var style: GraghStyle?
+    
+    private var graghView: GraghView?
+    
     private var graghValue: CGFloat
-    private var maxGraghValue: CGFloat
+    private var maxGraghValue: CGFloat? { return graghView?.maxGraghValue }
     
     private var date: Date?
-    private var comparisonValue: CGFloat = 0
+    private var comparisonValue: CGFloat?
     
-    private var maxBarAreaHeight: CGFloat { return maxGraghValue / LayoutProportion.maxGraghValueRate }
+    private var maxBarAreaHeight: CGFloat? {
+        guard let maxGraghValue = maxGraghValue else { return nil }
+        return maxGraghValue / LayoutProportion.maxGraghValueRate
+    }
+    
     private var barAreaHeight: CGFloat { return frame.height * LayoutProportion.barAreaHeightRate }
+    
+    private var barHeigth: CGFloat? {
+        guard let maxBarAreaHeight = maxBarAreaHeight else { return nil }
+        return barAreaHeight * graghValue / maxBarAreaHeight
+    }
+    
+    // barの終点のY座標・roundのposition
+    private var toY: CGFloat? {
+        guard let barHeigth = barHeigth else { return nil }
+        return y - barHeigth
+    }
+    
+    private var labelHeight: CGFloat { return (frame.height - barAreaHeight) / 2 }
+    
+    private var comparisonValueHeight: CGFloat? {
+        guard let maxBarAreaHeight = maxBarAreaHeight, let comparisonValue = comparisonValue else { return nil }
+        return barAreaHeight * comparisonValue / maxBarAreaHeight
+    }
+    
+    // MARK: Only Bar
+    
     private var barWidth: CGFloat { return frame.width * LayoutProportion.barWidthRate }
-    private var barHeigth: CGFloat { return barAreaHeight * graghValue / maxBarAreaHeight }
     
     // barの始点のX座標（＝終点のX座標）
     private var x: CGFloat { return frame.width / 2 }
     // barの始点のY座標（上下に文字列表示用の余白がある）
     private var y: CGFloat { return barAreaHeight + (frame.height - barAreaHeight) / 2 }
-    // barの終点のY座標
-    private var toY: CGFloat { return y - barHeigth }
-    
-    private var labelHeight: CGFloat { return (frame.height - barAreaHeight) / 2 }
-    private var comparisonValueHeight: CGFloat { return barAreaHeight * comparisonValue / maxBarAreaHeight }
     
     
     // MARK: - FilePrivate properties
     
-    fileprivate var comparisonValueY: CGFloat { return y - comparisonValueHeight }
+    fileprivate var comparisonValueY: CGFloat? {
+        guard let comparisonValueHeight = comparisonValueHeight else { return nil }
+        return y - comparisonValueHeight
     }
     
     
     // MARK: - Initializers
     
-    init(frame: CGRect, graghValue: CGFloat, maxGraghValue: CGFloat, date: Date, comparisonValue: CGFloat) {
+    init(frame: CGRect, graghValue: CGFloat, date: Date, comparisonValue: CGFloat, target graghView: GraghView? = nil) {
+        self.graghView = graghView
+        self.style = graghView?.graghStyle
         self.graghValue = graghValue
-        self.maxGraghValue = maxGraghValue
         self.date = date
         self.comparisonValue = comparisonValue
         super.init(frame: frame)
@@ -259,7 +294,6 @@ class GraghViewCell: UIView {
     // storyboardで生成する時
     required init?(coder aDecoder: NSCoder) {
         self.graghValue = 0
-        self.maxGraghValue = 0
         super.init(coder: aDecoder)
 //        fatalError("init(coder:) has not been implemented")
     }
