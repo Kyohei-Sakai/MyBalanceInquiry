@@ -29,9 +29,9 @@ class GraghViewController: UIViewController {
     fileprivate func setBarGraghData() {
         let calendar = Calendar(identifier: .gregorian)
         
-        if let oldDate = superBank?.mostOldDate, let newDate = superBank?.mostNewDate {
+        if let minimumDate = superBank?.mostOldDate, let newDate = superBank?.mostNewDate {
             // 年と月だけのコンポーネントを作る
-            let oldComps = DateComponents(calendar: calendar, year: calendar.component(.year, from: oldDate), month: calendar.component(.month, from: oldDate))
+            let oldComps = DateComponents(calendar: calendar, year: calendar.component(.year, from: minimumDate), month: calendar.component(.month, from: minimumDate))
             
             let newComps = DateComponents(calendar: calendar, year: calendar.component(.year, from: newDate), month: calendar.component(.month, from: newDate))
             

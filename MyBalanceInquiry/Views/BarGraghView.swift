@@ -30,7 +30,7 @@ import UIKit
     var graghValues: [CGFloat] = []
     
     // グラフのラベルに表示する情報
-    var oldDate: Date?
+    var minimumDate: Date?
     
     // 比較値を設定
     var comparisonValue: CGFloat = 100000
