@@ -91,7 +91,7 @@ import UIKit
         addSubview(comparisonValueLabel)
     }
     
-    private func drawComparisonValueLine(from: CGPoint, to: CGPoint) {
+    private func drawComparisonValueLine(from statPoint: CGPoint, to endPoint: CGPoint) {
         // GraghViewと同じ大きさのViewを用意
         comparisonValueLineView.frame = CGRect(origin: CGPoint.zero, size: contentSize)
         comparisonValueLineView.backgroundColor = UIColor.clear
@@ -99,8 +99,8 @@ import UIKit
         UIGraphicsBeginImageContextWithOptions(contentSize, false, 0)
         let linePath = UIBezierPath()
         linePath.lineCapStyle = .round
-        linePath.move(to: from)
-        linePath.addLine(to: to)
+        linePath.move(to: statPoint)
+        linePath.addLine(to: endPoint)
         linePath.lineWidth = GraghLayoutData.lineWidth
         GraghLayoutData.lineColor.setStroke()
         linePath.stroke()
