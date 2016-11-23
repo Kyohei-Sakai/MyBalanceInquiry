@@ -19,8 +19,8 @@ class GraghViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-		navigationItem.title = "支出管理"
+        
+        navigationItem.title = "支出管理"
         
         setBarGraghData()
         configureBarGragh()

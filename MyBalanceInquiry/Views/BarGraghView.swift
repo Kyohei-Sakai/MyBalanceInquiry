@@ -18,9 +18,9 @@ import UIKit
     var maxGraghValue: CGFloat? { return graghValues.max() }
     
     // MARK: Setting ComparisonValue
-    private var comparisonValueLabel = UILabel()
-    private var comparisonValueLineView = UIView()
-    private var comparisonValueX: CGFloat = 0
+    private let comparisonValueLabel = UILabel()
+    private let comparisonValueLineView = UIView()
+    private let comparisonValueX: CGFloat = 0
     private var comparisonValueY: CGFloat?
     
     
@@ -96,7 +96,7 @@ import UIKit
     
     private func drawComparisonValueLine(from statPoint: CGPoint, to endPoint: CGPoint) {
         // GraghViewと同じ大きさのViewを用意
-        comparisonValueLineView.frame = CGRect(origin: CGPoint.zero, size: contentSize)
+        comparisonValueLineView.frame = CGRect(origin: .zero, size: contentSize)
         comparisonValueLineView.backgroundColor = UIColor.clear
         // Lineを描画
         UIGraphicsBeginImageContextWithOptions(contentSize, false, 0)
