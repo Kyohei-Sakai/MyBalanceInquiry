@@ -179,7 +179,7 @@ class BankingData {
     func setIncome() {
         if case .payment = banking {
             isIncome = true
-            print("\(date),\(amount)を\(isIncome)")
+//            print("\(date),\(amount)を\(isIncome)")
         }
     }
     

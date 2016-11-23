@@ -59,7 +59,7 @@ class AddNewBankViewController: UIViewController {
         if !name.isEmpty, !balanceText.isEmpty, let firstBalance = Int(balanceText) {
             // BankManagerにBankを追加
             superBank.add(bank: Bank(name: name, firstBalance: firstBalance))
-            superBank.banks.forEach { print($0.bankName) }
+//            superBank.banks.forEach { print($0.bankName) }
             
             backTransition()
         } else {

@@ -8,145 +8,314 @@
 
 import UIKit
 
-// MARK: - BarGragh Class
+// MARK: - GraghView Class
 
-class BarGragh: UIView {
+@IBDesignable final class GraghView: UIScrollView {
+    
+    // MARK: - Private properties
+    
+    // データの中の最大値 -> これをもとにBar表示領域の高さを決める
+    var maxGraghValue: CGFloat? { return graghValues.max() }
+    
+    // MARK: Setting ComparisonValue
+    private let comparisonValueLabel = UILabel()
+    private let comparisonValueLineView = UIView()
+    private let comparisonValueX: CGFloat = 0
+    private var comparisonValueY: CGFloat?
+    
+    
+    // MARK: - Public properties
     
     // データ配列
-    private var dataArray: [Int] = []
-    // データの中の最大支出 -> これをもとにBar表示エリアの高さを決める
-    private var maxSpending: Int?
-    // 生成するBarの幅
-    private var barAreaWidth: CGFloat
-    //
-    private var oldDate: Date?
+    var graghValues: [CGFloat] = []
+    // グラフのラベルに表示する情報
+    var minimumDate: Date?
     
-    private var average: Int
-    private var averageX: CGFloat = 0
-    private var averageY: CGFloat = 0
-    // 比較するための設定値を表示
-    var averageLabel: UILabel = UILabel()
+    var graghStyle: GraghViewCell.GraghStyle = .bar
     
+    // MARK: Setting ComparisonValue
     
-    init(dataArray: [Int], oldDate: Date, barAreaWidth: CGFloat, height: CGFloat, average: Int) {
-        self.dataArray = dataArray
-        self.oldDate = oldDate
-        maxSpending = dataArray.max()
-        self.barAreaWidth = barAreaWidth
-        self.average = average
-        
-        let width: CGFloat = barAreaWidth * CGFloat(dataArray.count)
-        
-        let rect = CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height))
-        super.init(frame: rect)
-        self.backgroundColor = UIColor.white
+    @IBInspectable var comparisonValue: CGFloat = 100000
+    
+    @IBInspectable var comparisonValueIsHidden: Bool = false {
+        didSet {
+            comparisonValueLabel.isHidden = comparisonValueIsHidden
+            comparisonValueLineView.isHidden = comparisonValueIsHidden
+        }
     }
     
-    // UIViewの継承時はこれがないとエラーになる
+    // Delegate
+//    var barDelegate: BarGraghViewDelegate?
+    
+    
+    // MARK: - Initializers
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    convenience init(frame: CGRect, graghValues: [CGFloat], minimumDate: Date, style: GraghViewCell.GraghStyle = .bar) {
+        self.init(frame: frame)
+        self.graghValues = graghValues
+        self.minimumDate = minimumDate
+        self.graghStyle = style
+        loadGraghView()
+    }
+    
+    // storyboardで生成する時
     required init?(coder aDecoder: NSCoder) {
-        self.dataArray = []
-        self.maxSpending = 0
-        self.barAreaWidth = 0
-        self.average = 0
         super.init(coder: aDecoder)
-        
-//        fatalError("init(coder:) has not been implemented")
     }
     
-    override func draw(_ rect: CGRect) {
-        
-        let calendar = Calendar(identifier: .gregorian)
-        
-        for index in 0..<dataArray.count {
-            
-            // 任意のデータ数が収まる幅
-            let height = rect.height
-            // barの表示をずらしていく
-            let x = CGFloat(index) * barAreaWidth
-            
-            if let oldDate = oldDate, let date = calendar.date(byAdding: DateComponents(month: index), to: oldDate), let maxSpending = maxSpending {
-                let rect = CGRect(origin: CGPoint(x: x, y: 0), size: CGSize(width: barAreaWidth, height: height))
-                
-                let bar = Bar(rect, spending: dataArray[index], maxSpendig: maxSpending, date: date, average: average)
-                self.addSubview(bar)
-                
-                self.averageY = bar.averageY
-                
+    
+    // MARK: - Override
+    
+    override var contentOffset: CGPoint {
+        didSet {
+            if !comparisonValueIsHidden {
+                // ComparisonValueLabelをスクロールとともに追従させる
+                comparisonValueLabel.frame.origin.x = contentOffset.x
             }
-            
+        }
+    }
+    
+    
+    // MARK: - Private methods
+    
+    // MARK: Drawing
+    
+    private func drawComparisonValue() {
+        guard let comparisonValueY = comparisonValueY else {
+            return
         }
         
-        drawLabel(x: averageX, y: averageY, width: 50, height: 20, text: String(average))
+        drawComparisonValueLine(from: CGPoint(x: comparisonValueX, y: comparisonValueY), to: CGPoint(x: contentSize.width, y: comparisonValueY))
+        
+        drawComparisonValueLabel(frame: CGRect(x: comparisonValueX, y: comparisonValueY, width: 50, height: 20), text: String(describing: comparisonValue))
+    }
+    
+    private func drawComparisonValueLine(from statPoint: CGPoint, to endPoint: CGPoint) {
+        // GraghViewと同じ大きさのViewを用意
+        comparisonValueLineView.frame = CGRect(origin: .zero, size: contentSize)
+        comparisonValueLineView.backgroundColor = UIColor.clear
+        // Lineを描画
+        UIGraphicsBeginImageContextWithOptions(contentSize, false, 0)
+        let linePath = UIBezierPath()
+        linePath.lineCapStyle = .round
+        linePath.move(to: statPoint)
+        linePath.addLine(to: endPoint)
+        linePath.lineWidth = GraghLayoutData.lineWidth
+        GraghLayoutData.lineColor.setStroke()
+        linePath.stroke()
+        comparisonValueLineView.layer.contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+        UIGraphicsEndImageContext()
+        // GraghViewに重ねる
+        addSubview(comparisonValueLineView)
+    }
+    
+    private func drawComparisonValueLabel(frame: CGRect, text: String) {
+        comparisonValueLabel.frame = frame
+        comparisonValueLabel.text = text
+        comparisonValueLabel.textAlignment = .center
+        comparisonValueLabel.font = comparisonValueLabel.font.withSize(10)
+        comparisonValueLabel.backgroundColor = GraghLayoutData.labelBackgroundColor
+        addSubview(comparisonValueLabel)
+    }
+    
+    
+    // MARK: - Public methods
+    
+    func loadGraghView() {
+        let calendar = Calendar(identifier: .gregorian)
+        contentSize.height = frame.height
+        
+        for index in 0..<graghValues.count {
+            contentSize.width += GraghLayoutData.barAreaWidth
+            
+            if let minimumDate = minimumDate, let date = calendar.date(byAdding: DateComponents(month: index), to: minimumDate) {
+                // barの表示をずらしていく
+                let rect = CGRect(origin: CGPoint(x: CGFloat(index) * GraghLayoutData.barAreaWidth, y: 0), size: CGSize(width: GraghLayoutData.barAreaWidth, height: frame.height))
+                
+                let cell = GraghViewCell(frame: rect, graghValue: graghValues[index], date: date, comparisonValue: comparisonValue, target: self)
+                
+                addSubview(cell)
+                
+                self.comparisonValueY = cell.comparisonValueY
+            }
+        }
+        
+        drawComparisonValue()
+    }
+    
+    func reloadGraghView() {
+        // GraghViewの初期化
+        subviews.forEach { $0.removeFromSuperview() }
+        contentSize = .zero
+        
+        loadGraghView()
+    }
+    
+    // MARK: Set Gragh Customize
+    
+    func setBarArea(width: CGFloat) {
+        GraghLayoutData.barAreaWidth = width
+    }
+    
+    func setComparisonValueLabel(backgroundColor: UIColor) {
+        GraghLayoutData.labelBackgroundColor = backgroundColor
+    }
+    
+    func setComparisonValueLine(color: UIColor) {
+        GraghLayoutData.lineColor = color
+    }
+    
+    // BarのLayoutProportionはGraghViewから変更する
+    func setBarAreaHeight(rate: CGFloat) {
+        GraghViewCell.LayoutProportion.barAreaHeightRate = rate
+    }
+    
+    func setMaxGraghValue(rate: CGFloat) {
+        GraghViewCell.LayoutProportion.maxGraghValueRate = rate
+    }
+    
+    func setBarWidth(rate: CGFloat) {
+        GraghViewCell.LayoutProportion.barWidthRate = rate
+    }
+    
+    func setBar(color: UIColor) {
+        GraghViewCell.LayoutProportion.barColor = color
+    }
+    
+    func setLabel(backgroundcolor: UIColor) {
+        GraghViewCell.LayoutProportion.labelBackgroundColor = backgroundcolor
+    }
+    
+    func setGragh(backgroundcolor: UIColor) {
+        GraghViewCell.LayoutProportion.GraghBackgroundColor = backgroundcolor
+    }
+    
+    func setRound(size: CGFloat) {
+        GraghViewCell.LayoutProportion.roundSize = size
+    }
+    
+    func setRound(color: UIColor) {
+        GraghViewCell.LayoutProportion.roundColor = color
+    }
+    
+    
+    // MARK: - Struct
+    
+    private struct GraghLayoutData {
+        // 生成するBar領域の幅
+        static var barAreaWidth: CGFloat = 50
+        static var labelBackgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+        static var lineColor = UIColor.red
+        static var lineWidth: CGFloat = 2
         
     }
     
-    private func drawLabel(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, text: String) {
-        let label: UILabel = UILabel()
-        averageLabel = label
-        label.frame = CGRect(x: x, y: y, width: width, height: height)
-        label.text = text
-        label.textAlignment = .center
-        label.font = label.font.withSize(10)
-        label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
-        self.addSubview(label)
-    }
-
 }
 
 
-// MARK: - Bar Class
+// MARK: - GraghViewCell Class
 
-class Bar: UIView {
-    // 各月の支出
-    private var spending: Int
-    private var maxSpendig: Int
+class GraghViewCell: UIView {
+    
+    // MARK: - Private properties
+    
+    // MARK: Shared
+    
+    // default is bar
+    private var style: GraghStyle?
+    
+    private var graghView: GraghView?
+    
+    private var graghValue: CGFloat
+    private var maxGraghValue: CGFloat? { return graghView?.maxGraghValue }
     
     private var date: Date?
-    private var average = 0
-    fileprivate var averageY: CGFloat = 0
+    private var comparisonValue: CGFloat?
     
-    init(_ rect: CGRect, spending: Int, maxSpendig: Int, date: Date, average: Int) {
-        self.spending = spending
-        self.maxSpendig = maxSpendig
-        self.date = date
-        self.average = average
-        super.init(frame: rect)
-        self.backgroundColor = UIColor.orange.withAlphaComponent(0.5)
+    private var maxBarAreaHeight: CGFloat? {
+        guard let maxGraghValue = maxGraghValue else { return nil }
+        return maxGraghValue / LayoutProportion.maxGraghValueRate
     }
     
-    // UIViewの継承時はこれがないとエラーになる
+    private var barAreaHeight: CGFloat { return frame.height * LayoutProportion.barAreaHeightRate }
+    
+    private var barHeigth: CGFloat? {
+        guard let maxBarAreaHeight = maxBarAreaHeight else { return nil }
+        return barAreaHeight * graghValue / maxBarAreaHeight
+    }
+    
+    // barの終点のY座標・roundのposition
+    private var toY: CGFloat? {
+        guard let barHeigth = barHeigth else { return nil }
+        return y - barHeigth
+    }
+    
+    private var labelHeight: CGFloat { return (frame.height - barAreaHeight) / 2 }
+    
+    private var comparisonValueHeight: CGFloat? {
+        guard let maxBarAreaHeight = maxBarAreaHeight, let comparisonValue = comparisonValue else { return nil }
+        return barAreaHeight * comparisonValue / maxBarAreaHeight
+    }
+    
+    // MARK: Only Bar
+    
+    private var barWidth: CGFloat { return frame.width * LayoutProportion.barWidthRate }
+    
+    // barの始点のX座標（＝終点のX座標）
+    private var x: CGFloat { return frame.width / 2 }
+    // barの始点のY座標（上下に文字列表示用の余白がある）
+    private var y: CGFloat { return barAreaHeight + (frame.height - barAreaHeight) / 2 }
+    
+    
+    // MARK: - FilePrivate properties
+    
+    fileprivate var comparisonValueY: CGFloat? {
+        guard let comparisonValueHeight = comparisonValueHeight else { return nil }
+        return y - comparisonValueHeight
+    }
+    
+    
+    // MARK: - Initializers
+    
+    init(frame: CGRect, graghValue: CGFloat, date: Date, comparisonValue: CGFloat, target graghView: GraghView? = nil) {
+        self.graghView = graghView
+        self.style = graghView?.graghStyle
+        self.graghValue = graghValue
+        self.date = date
+        self.comparisonValue = comparisonValue
+        super.init(frame: frame)
+        self.backgroundColor = LayoutProportion.GraghBackgroundColor
+    }
+    
+    // storyboardで生成する時
     required init?(coder aDecoder: NSCoder) {
-        self.spending = 0
-        self.maxSpendig = 0
+        self.graghValue = 0
         super.init(coder: aDecoder)
 //        fatalError("init(coder:) has not been implemented")
     }
     
     
+    // MARK: - Override
+    
     override func draw(_ rect: CGRect) {
+        guard let style = style else {
+            return
+        }
         
-        // barを表示するための領域の高さを求める -> rect領域を３分割
-        // ここではrect領域の5分の4とする
-        let barAreaHeight = rect.height / 5 * 4
-        
-        // barの高さを求める
-        let barHeigth = barAreaHeight * CGFloat(spending) / CGFloat(maxSpendig)
-        
-        // barの始点のX座標（＝終点のX座標）
-        let x = rect.width / 2
-        
-        // barの始点のY座標（上下に文字列表示用の余白がある）
-        let y = barAreaHeight + (rect.height - barAreaHeight) / 2
-        
-        // barの終点のY座標
-        let toY = y - barHeigth
-        
-        // barを表示
-        drawBar(from: CGPoint(x: x, y: y), to: CGPoint(x: x, y: toY), width: rect.width / 2)
+        if let toY = toY {
+            // Graghを描画
+            switch style {
+            case .bar: drawBar(from: CGPoint(x: x, y: y), to: CGPoint(x: x, y: toY))
+            case .round: drawRound(point: CGPoint(x: x, y: toY))
+            }
+        }
         
         // 上部に支出額を表示
-        let labelHeight = (rect.height - barAreaHeight) / 2
-        drawLabel(centerX: x, centerY: labelHeight / 2, width: rect.width, height: labelHeight, text: String("¥ \(spending)"))
+        drawLabel(centerX: x, centerY: labelHeight / 2, width: rect.width, height: labelHeight, text: String("¥ \(graghValue)"))
         
         // StringをDateに変換するためのFormatterを用意
         let dateFormatter = DateFormatter()
@@ -157,21 +326,29 @@ class Bar: UIView {
             drawLabel(centerX: x, centerY: rect.height - labelHeight / 2, width: rect.width, height: labelHeight, text: dateFormatter.string(from: date))
         }
         
-        let averageHeight = barAreaHeight * CGFloat(average) / CGFloat(maxSpendig)
-        let averageY = y - averageHeight
-        self.averageY = averageY
-        // 基準線を表示
-        drawLine(from: CGPoint(x: 0, y: averageY), to: CGPoint(x: rect.width, y: averageY), width: 1)
-        
     }
     
-    private func drawBar(from: CGPoint, to: CGPoint, width: CGFloat) {
+    
+    // MARK: - Private methods
+    
+    // MARK: Drawing
+    
+    private func drawBar(from startPoint: CGPoint, to endPoint: CGPoint) {
         let BarPath = UIBezierPath()
-        BarPath.move(to: from)
-        BarPath.addLine(to: to)
-        BarPath.lineWidth = width
-        UIColor.orange.setStroke()
+        BarPath.move(to: startPoint)
+        BarPath.addLine(to: endPoint)
+        BarPath.lineWidth = barWidth
+        LayoutProportion.barColor.setStroke()
         BarPath.stroke()
+    }
+    
+    private func drawRound(point: CGPoint) {
+        let origin = CGPoint(x: point.x - LayoutProportion.roundSize / 2, y: point.y - LayoutProportion.roundSize / 2)
+        let size = CGSize(width: LayoutProportion.roundSize, height: LayoutProportion.roundSize)
+        let round = UIBezierPath(ovalIn: CGRect(origin: origin, size: size))
+        LayoutProportion.roundColor.setFill()
+        round.fill()
+        
     }
     
     private func drawLabel(centerX x: CGFloat, centerY y: CGFloat, width: CGFloat, height: CGFloat, text: String) {
@@ -181,20 +358,55 @@ class Bar: UIView {
         label.text = text
         label.textAlignment = .center
         label.font = label.font.withSize(10)
-        label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
-        self.addSubview(label)
+        label.backgroundColor = LayoutProportion.labelBackgroundColor
+        addSubview(label)
     }
     
-    private func drawLine(from: CGPoint, to: CGPoint, width: CGFloat) {
-        let LinePath = UIBezierPath()
-        LinePath.lineCapStyle = .round
-        LinePath.move(to: from)
-        LinePath.addLine(to: to)
-        LinePath.lineWidth = width
-        UIColor.red.withAlphaComponent(0.6).setStroke()
-        LinePath.stroke()
+    
+    // MARK: - Struct
+    
+    // Barのレイアウトを決定するためのデータ
+    fileprivate struct LayoutProportion {
+        // MARK: Shared
+        
+        // barAreaHeight / frame.height
+        static var barAreaHeightRate: CGFloat = 0.8
+        // maxGraghValueRate / maxBarAreaHeight
+        static var maxGraghValueRate: CGFloat = 0.8
+        
+        // MARK: Only Bar
+        
+        // bar.width / rect.width
+        static var barWidthRate: CGFloat = 0.5
+        // Bar Color
+        static var barColor = UIColor.blue.withAlphaComponent(0.8)
+        // Label backgroundColor
+        static var labelBackgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+        // Gragh backgroundColor
+        static var GraghBackgroundColor = UIColor.orange.withAlphaComponent(0.5)
+        
+        // MARK: Only Round
+        
+        // round size
+        static var roundSize: CGFloat = 10
+        // round color
+        static var roundColor = UIColor.red.withAlphaComponent(0.8)
     }
+    
+    
+    // MARK: - Enumeration
+    
+    enum GraghStyle { case bar, round }
+    
 }
+
+
+
+
+
+
+
+
 
 
 
