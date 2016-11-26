@@ -75,8 +75,6 @@ class GraghViewController: UIViewController {
         // グラフを生成
         graghView.loadGraghView()
         
-        graghView.delegate = self
-        
         view.addSubview(graghView)
     }
     
@@ -123,18 +121,6 @@ extension GraghViewController: UITextFieldDelegate {
         view.frame.origin.y = -200
         return true
     }
-    
-}
-
-
-// MARK: - UIScrollViewDelegate method
-
-extension GraghViewController: UIScrollViewDelegate {
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        // 設定額のラベルをスクロールとともに追従させる
-//        barGraghView?.redrawComparisonValue()
-//    }
     
 }
 
