@@ -65,7 +65,7 @@ class GraghViewController: UIViewController {
             graghView.minimumDate = mostOldDate
         }
         // グラフレイアウトデータをセット
-        graghView.graghStyle = .round
+        graghView.graghStyle = .bar
         graghView.setBarWidth(rate: 0.9)
         graghView.setBarAreaHeight(rate: 0.9)
         graghView.setMaxGraghValue(rate: 0.6)
