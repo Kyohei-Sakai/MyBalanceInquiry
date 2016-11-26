@@ -22,7 +22,8 @@ class MyBankViewController: UIViewController {
         
         navigationItem.title = "残高照会"
         
-        bankStatementTableView.register(UINib(nibName: "BankStatementCell", bundle: nil), forCellReuseIdentifier: "StatementCell")
+//        bankStatementTableView.register(UINib(nibName: "BankStatementCell", bundle: nil), forCellReuseIdentifier: "StatementCell")
+        bankStatementTableView.register(UINib(nibName: "BankStatementCell", bundle: nil), forCellReuseIdentifier: "BankStatementCell")
         
         bankStatementTableView.delegate = self
         bankStatementTableView.dataSource = self
@@ -60,7 +61,7 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {
         // カスタムセルを定義
-        guard let statementCell = tableView.dequeueReusableCell(withIdentifier: "StatementCell", for: indexPath) as? BankStatementCell else {
+        guard let statementCell = tableView.dequeueReusableCell(withIdentifier: "BankStatementCell", for: indexPath) as? BankStatementCell else {
             return UITableViewCell()
         }
         
