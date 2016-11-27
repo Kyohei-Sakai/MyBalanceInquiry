@@ -13,6 +13,11 @@ import UIKit
 enum GraghStyle: Int {
     case bar, round
 }
+
+enum GraghViewDateStyle: Int {
+    case year, month, day
+}
+
 // MARK: - GraghView Class
 
 @IBDesignable final class GraghView: UIScrollView {
@@ -28,7 +33,6 @@ enum GraghStyle: Int {
     private let comparisonValueX: CGFloat = 0
     private var comparisonValueY: CGFloat?
     
-    
     // MARK: - Public properties
     
     // データ配列
@@ -37,6 +41,9 @@ enum GraghStyle: Int {
     var minimumDate: Date?
     
     var graghStyle: GraghStyle = .bar
+    
+    // labelに表示するDate間隔
+    var dateStyle: GraghViewDateStyle = .month
     
     // MARK: Setting ComparisonValue
     
@@ -87,6 +94,14 @@ enum GraghStyle: Int {
     
     // MARK: - Private methods
     
+    private func dateToMinimumDate(addComponentValue index: Int) -> DateComponents {
+        switch dateStyle {
+        case .year: return DateComponents(year: index)
+        case .month: return DateComponents(month: index)
+        case .day: return DateComponents(day: index)
+        }
+    }
+    
     // MARK: Drawing
     
     private func drawComparisonValue() {
@@ -134,10 +149,12 @@ enum GraghStyle: Int {
         let calendar = Calendar(identifier: .gregorian)
         contentSize.height = frame.height
         
+        
+        
         for index in 0..<graghValues.count {
             contentSize.width += GraghLayoutData.barAreaWidth
             
-            if let minimumDate = minimumDate, let date = calendar.date(byAdding: DateComponents(month: index), to: minimumDate) {
+            if let minimumDate = minimumDate, let date = calendar.date(byAdding: dateToMinimumDate(addComponentValue: index), to: minimumDate) {
                 // barの表示をずらしていく
                 let rect = CGRect(origin: CGPoint(x: CGFloat(index) * GraghLayoutData.barAreaWidth, y: 0), size: CGSize(width: GraghLayoutData.barAreaWidth, height: frame.height))
                 
