@@ -8,6 +8,11 @@
 
 import UIKit
 
+// MARK: - Enumeration
+
+enum GraghStyle: Int {
+    case bar, round
+}
 // MARK: - GraghView Class
 
 @IBDesignable final class GraghView: UIScrollView {
@@ -31,7 +36,7 @@ import UIKit
     // グラフのラベルに表示する情報
     var minimumDate: Date?
     
-    var graghStyle: GraghViewCell.GraghStyle = .bar
+    var graghStyle: GraghStyle = .bar
     
     // MARK: Setting ComparisonValue
     
@@ -54,7 +59,7 @@ import UIKit
         super.init(frame: frame)
     }
     
-    convenience init(frame: CGRect, graghValues: [CGFloat], minimumDate: Date, style: GraghViewCell.GraghStyle = .bar) {
+    convenience init(frame: CGRect, graghValues: [CGFloat], minimumDate: Date, style: GraghStyle = .bar) {
         self.init(frame: frame)
         self.graghValues = graghValues
         self.minimumDate = minimumDate
@@ -392,11 +397,6 @@ class GraghViewCell: UIView {
         // round color
         static var roundColor = UIColor.red.withAlphaComponent(0.8)
     }
-    
-    
-    // MARK: - Enumeration
-    
-    enum GraghStyle { case bar, round }
     
 }
 
