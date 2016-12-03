@@ -65,6 +65,7 @@ class GraghViewController: UIViewController {
         // optional setting
 //        graghView.graghStyle = .jaggy   // default is bar
 //        graghView.dateStyle = .day    // default is month
+        graghView.dataType = .yen
         graghView.contentOffsetControll = .atMaximizeDate
         
         graghView.setBarWidth(rate: 0.9)
