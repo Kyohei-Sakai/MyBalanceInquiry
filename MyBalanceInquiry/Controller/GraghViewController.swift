@@ -57,24 +57,27 @@ class GraghViewController: UIViewController {
     }
     
     fileprivate func configureBarGragh() {
-//        let graghView = GraghView(frame: CGRect(x: 0, y: 97, width: UIScreen.main.bounds.size.width, height: 340))
-        // グラフデータをセット
+        // most setting
         graghView.graghValues = barGraghData
-        // ラベルデータをセット
         if let mostOldDate = superBank?.mostOldDate {
             graghView.minimumDate = mostOldDate
         }
-        // グラフレイアウトデータをセット
-        graghView.graghStyle = .bar
+        // optional setting
+//        graghView.graghStyle = .jaggy   // default is bar
+//        graghView.dateStyle = .day    // default is month
+        graghView.contentOffsetControll = .atMaximizeDate
+        
         graghView.setBarWidth(rate: 0.9)
         graghView.setBarAreaHeight(rate: 0.9)
-        graghView.setMaxGraghValue(rate: 0.6)
-        graghView.setBarArea(width: 100)
-        graghView.setComparisonValueLine(color: .green)
-        graghView.setComparisonValueLabel(backgroundColor: UIColor.yellow.withAlphaComponent(0.7))
-        // グラフを生成
-        graghView.loadGraghView()
+        graghView.setMaxGraghValue(rate: 0.8)
+        graghView.setCellArea(width: 60)
         
+        graghView.comparisonValue = 100000
+        graghView.setComparisonValueLine(color: UIColor.init(red: 0.1, green: 0.1, blue: 0.15, alpha: 1.0))
+        graghView.setComparisonValueLabel(backgroundColor: UIColor.init(red: 0.2, green: 0.8, blue: 0.4,alpha: 0.9))
+        
+        // load Gragh on ScrollView
+        graghView.loadGraghView()
         view.addSubview(graghView)
     }
     
