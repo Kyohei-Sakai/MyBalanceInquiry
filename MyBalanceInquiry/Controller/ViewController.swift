@@ -135,13 +135,13 @@ extension ViewController {
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
-        if let myBankVC = segue.destination as? MyBankViewController, segue.identifier == "toMyBank" {
+        if let myBankVC = segue.destination as? MyBankViewController, segue.identifier ==  SegueType.bank.rawValue {
             // 遷移先にBankの参照先を渡す
             myBankVC.selectedBank = sender as? Bank
-        } else if let newBankVC = segue.destination as? AddNewBankViewController, segue.identifier == "toAddNewBank" {
+        } else if let newBankVC = segue.destination as? AddNewBankViewController, segue.identifier == SegueType.addBank.rawValue {
             // 遷移先にBankManagerの参照先を渡す
             newBankVC.superBank = self.superBank
-        } else if let graghVC = segue.destination as? GraghViewController, segue.identifier == "toGraghView" {
+        } else if let graghVC = segue.destination as? GraghViewController, segue.identifier == SegueType.gragh.rawValue {
             // 遷移先にBankManagerの参照先を渡す
             graghVC.superBank = self.superBank
         }
@@ -151,7 +151,14 @@ extension ViewController {
 }
 
 
-
+enum SegueType: String {
+//    case root = "toRoot"
+    case bank = "toMyBank"
+    case banking = "toBankingViewController"
+    case addBank = "toAddNewBank"
+    case gragh = "toGraghView"
+    case backBank = "fromBankingToBank"
+}
 
 
 
