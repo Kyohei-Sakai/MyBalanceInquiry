@@ -92,7 +92,7 @@ class GraghViewCell: UIView {
         if isHidden {
             return barAreaHeight
         } else {
-            return barAreaHeight + labelHeight / 2
+            return barAreaHeight + labelHeight
         }
         
     }

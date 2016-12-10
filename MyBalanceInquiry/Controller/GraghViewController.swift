@@ -62,6 +62,7 @@ class GraghViewController: UIViewController {
         if let mostOldDate = superBank?.mostOldDate {
             graghView.minimumDate = mostOldDate
         }
+        
         // optional setting
 //        graghView.graghStyle = .jaggy   // default is bar
 //        graghView.dateStyle = .day    // default is month
