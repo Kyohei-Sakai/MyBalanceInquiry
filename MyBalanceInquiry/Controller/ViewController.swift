@@ -39,9 +39,9 @@ class ViewController: UIViewController {
     private func setBanking() {
         
         // 銀行を追加
-        let myBank1 = Bank(name: "みずほ銀行", firstBalance: 100000)
-        let myBank2 = Bank(name: "三菱東京UFJ銀行", firstBalance: 200000)
-        let myBank3 = Bank(name: "多摩信用金庫", firstBalance: 1200000)
+        let myBank1 = Bank(type: .mizuho, firstBalance: 10000)
+        let myBank2 = Bank(type: .mitsubishi, firstBalance: 200000)
+        let myBank3 = Bank(type: .mitsui, firstBalance: 1200000)
         
         // StringをDateに変換するためのFormatterを用意
         let dateFormatter = DateFormatter()
