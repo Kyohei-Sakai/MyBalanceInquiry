@@ -215,7 +215,7 @@ extension BankingViewController {
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
-        if let bankVC = segue.destination as? MyBankViewController, segue.identifier == "fromBankingToBank" {
+        if let bankVC = segue.destination as? MyBankViewController, segue.identifier == SegueType.backBank.rawValue {
             // 遷移先にBankの参照先を渡す
             bankVC.selectedBank = sender as? Bank
         }

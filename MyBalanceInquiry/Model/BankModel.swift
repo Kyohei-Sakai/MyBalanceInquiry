@@ -8,8 +8,17 @@
 
 import Foundation
 
+// MARK: - BankType
 
-// MARK: - Bankクラス
+enum BankType: String {
+    case mizuho = "みずほ銀行"
+    case mitsubishi = "三菱UFJ銀行"
+    case mitsui = "三井住友銀行"
+    case risona = "りそな銀行"
+}
+
+
+// MARK: - Bank クラス
 
 class Bank {
     // 銀行名
@@ -28,6 +37,10 @@ class Bank {
     init(name: String, firstBalance: Int) {
         bankName = name
         self.firstBalance = firstBalance
+    }
+    
+    convenience init(type: BankType, firstBalance: Int) {
+        self.init(name: type.rawValue, firstBalance: firstBalance)
     }
     
     // 取引を追加し、入出金データに格納

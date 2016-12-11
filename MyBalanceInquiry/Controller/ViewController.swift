@@ -39,9 +39,9 @@ class ViewController: UIViewController {
     private func setBanking() {
         
         // 銀行を追加
-        let myBank1 = Bank(name: "みずほ銀行", firstBalance: 100000)
-        let myBank2 = Bank(name: "三菱東京UFJ銀行", firstBalance: 200000)
-        let myBank3 = Bank(name: "多摩信用金庫", firstBalance: 1200000)
+        let myBank1 = Bank(type: .mizuho, firstBalance: 10000)
+        let myBank2 = Bank(type: .mitsubishi, firstBalance: 200000)
+        let myBank3 = Bank(type: .mitsui, firstBalance: 1200000)
         
         // StringをDateに変換するためのFormatterを用意
         let dateFormatter = DateFormatter()
@@ -135,13 +135,13 @@ extension ViewController {
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         
-        if let myBankVC = segue.destination as? MyBankViewController, segue.identifier == "toMyBank" {
+        if let myBankVC = segue.destination as? MyBankViewController, segue.identifier ==  SegueType.bank.rawValue {
             // 遷移先にBankの参照先を渡す
             myBankVC.selectedBank = sender as? Bank
-        } else if let newBankVC = segue.destination as? AddNewBankViewController, segue.identifier == "toAddNewBank" {
+        } else if let newBankVC = segue.destination as? AddNewBankViewController, segue.identifier == SegueType.addBank.rawValue {
             // 遷移先にBankManagerの参照先を渡す
             newBankVC.superBank = self.superBank
-        } else if let graghVC = segue.destination as? GraghViewController, segue.identifier == "toGraghView" {
+        } else if let graghVC = segue.destination as? GraghViewController, segue.identifier == SegueType.gragh.rawValue {
             // 遷移先にBankManagerの参照先を渡す
             graghVC.superBank = self.superBank
         }
@@ -151,7 +151,14 @@ extension ViewController {
 }
 
 
-
+enum SegueType: String {
+//    case root = "toRoot"
+    case bank = "toMyBank"
+    case banking = "toBankingViewController"
+    case addBank = "toAddNewBank"
+    case gragh = "toGraghView"
+    case backBank = "fromBankingToBank"
+}
 
 
 
