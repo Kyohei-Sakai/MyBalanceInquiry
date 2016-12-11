@@ -45,12 +45,12 @@ class Bank {
     
     // 取引を追加し、入出金データに格納
     // StringからDateやIntに変換するため、引数をoptionalで定義
-    func addBanking(date: Date?, banking: BankingData.Banking, amount: Int?) {
+    func addBanking(date: Date?, type: BankingData.BankingType, amount: Int?) {
         guard let date = date, let amount = amount else {
             return
         }
         
-        let data = BankingData(date: date, banking: banking, amount: amount)
+        let data = BankingData(date: date, type: type, amount: amount)
         
         // 日付順にデータを並び替えて格納する
         // 配列が空でなければ
@@ -78,7 +78,7 @@ class Bank {
     // 全ての取引の増減額
     fileprivate var fluctuationAmount: Int {
         return bankStatement.reduce(0) { value, data in
-            switch data.banking {
+            switch data.type {
             case .payment:      return value + data.amount
             case .withdrawal:   return value - data.amount
             }
@@ -96,7 +96,7 @@ class Bank {
         return bankStatement.filter { data in
             fromDate < data.date && data.date < toDate
             }.reduce(0) { totalBalance, data in
-                switch data.banking {
+                switch data.type {
                 case .payment:      return totalBalance! + data.amount
                 case .withdrawal:   return totalBalance! - data.amount
                 }
@@ -106,7 +106,7 @@ class Bank {
     // 取引明細を一覧で表示
     fileprivate func printBankStatement() {
         bankStatement.forEach { data in
-            print("\(data.date), \(data.banking), \(data.amount)")
+            print("\(data.date), \(data.type), \(data.amount)")
         }
     }
     
@@ -114,7 +114,7 @@ class Bank {
     fileprivate func printBankStatement(fromDate: Date) {
         bankStatement.forEach { data in
             if data.date == fromDate {
-                print("\(data.date), \(data.banking), \(data.amount)")
+                print("\(data.date), \(data.type), \(data.amount)")
             }
         }
     }
@@ -130,7 +130,7 @@ class Bank {
         bankStatement.filter { data in
             fromDate < data.date && data.date < toDate
             }.forEach { data in
-                print("\(data.date), \(data.banking), \(data.amount)")
+                print("\(data.date), \(data.type), \(data.amount)")
         }
     }
     
@@ -176,28 +176,27 @@ class Bank {
 
 
 // 銀行取引の詳細をまとめたデータ
-class BankingData {
+struct BankingData {
     let date: Date
-    let banking: Banking
+    let type: BankingType
     let amount: Int
     // 外部からの入金かどうか
     var isIncome = false
     
-    init(date: Date, banking: Banking, amount: Int) {
+    init(date: Date, type: BankingType, amount: Int) {
         self.date = date
-        self.banking = banking
+        self.type = type
         self.amount = amount
     }
     
-    func setIncome() {
-        if case .payment = banking {
+    mutating func setIncome() {
+        if case .payment = type {
             isIncome = true
-//            print("\(date),\(amount)を\(isIncome)")
         }
     }
     
     // 銀行取引の種類
-    enum Banking {
+    enum BankingType {
         // 入金、出金
         case payment, withdrawal
     }

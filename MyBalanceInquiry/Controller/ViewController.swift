@@ -48,37 +48,37 @@ class ViewController: UIViewController {
         dateFormatter.dateFormat = "yyyy/MM/dd"
         
         // 取引を追加
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/04"), banking: .withdrawal, amount: 24000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/10"), banking: .payment, amount: 30000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/20"), banking: .withdrawal, amount: 15000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/25"), banking: .withdrawal, amount: 10000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/04"), type: .withdrawal, amount: 24000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/10"), type: .payment, amount: 30000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/20"), type: .withdrawal, amount: 15000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/25"), type: .withdrawal, amount: 10000)
         
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/04"), banking: .withdrawal, amount: 27000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/10"), banking: .payment, amount: 30000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/23"), banking: .withdrawal, amount: 5000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/30"), banking: .withdrawal, amount: 10000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/04"), type: .withdrawal, amount: 27000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/10"), type: .payment, amount: 30000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/23"), type: .withdrawal, amount: 5000)
+        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/30"), type: .withdrawal, amount: 10000)
         
         // 外部からの収入
         for month in 1...12 {
-            myBank2.addBanking(date: dateFormatter.date(from: "2016/\(month)/04"), banking: .payment, amount: 80000)
+            myBank2.addBanking(date: dateFormatter.date(from: "2016/\(month)/04"), type: .payment, amount: 80000)
         }
         
         for data in myBank2.bankStatement {
             data.setIncome()
         }
         
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/10"), banking: .withdrawal, amount: 50000)
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/13"), banking: .withdrawal, amount: 20000)
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/17"), banking: .withdrawal, amount: 10000)
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/22"), banking: .withdrawal, amount: 20000)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/10"), type: .withdrawal, amount: 50000)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/13"), type: .withdrawal, amount: 20000)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/17"), type: .withdrawal, amount: 10000)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/22"), type: .withdrawal, amount: 20000)
         
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/11"), banking: .withdrawal, amount: 30000)
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/21"), banking: .withdrawal, amount: 20000)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/11"), type: .withdrawal, amount: 30000)
+        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/21"), type: .withdrawal, amount: 20000)
         
-        myBank3.addBanking(date: dateFormatter.date(from: "2015/08/05"), banking: .withdrawal, amount: 10000)
+        myBank3.addBanking(date: dateFormatter.date(from: "2015/08/05"), type: .withdrawal, amount: 10000)
         
-        myBank3.addBanking(date: dateFormatter.date(from: "2016/09/09"), banking: .withdrawal, amount: 13000)
-        myBank3.addBanking(date: dateFormatter.date(from: "2016/09/21"), banking: .withdrawal, amount: 29000)
+        myBank3.addBanking(date: dateFormatter.date(from: "2016/09/09"), type: .withdrawal, amount: 13000)
+        myBank3.addBanking(date: dateFormatter.date(from: "2016/09/21"), type: .withdrawal, amount: 29000)
         
         // 全ての銀行を管理
         let superBank = BankManager(banks: [myBank1, myBank2, myBank3])

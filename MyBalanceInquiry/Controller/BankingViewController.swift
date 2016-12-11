@@ -19,9 +19,9 @@ class BankingViewController: UIViewController {
     
     // PickerViewに設定されている値を格納
     fileprivate var pickDate: String?
-    fileprivate var pickBanking: String?
+    fileprivate var pickBankingType: String?
     
-    fileprivate let bankingTitle = ["未入力", "入金", "出金"]
+    fileprivate let bankingTypeTitle = ["未入力", "入金", "出金"]
     
     
     override func viewDidLoad() {
@@ -62,7 +62,7 @@ class BankingViewController: UIViewController {
     
     // 必要事項を入力した後Addボタンで確定
     @IBAction private func tapAddButton(_ sender: UIButton) {
-        guard let pickDate = pickDate, let pickBanking = pickBanking, let text = amountTextField.text else {
+        guard let pickDate = pickDate, let pickBanking = pickBankingType, let text = amountTextField.text else {
             print("未入力の項目があります。")
             alertError()
             return
@@ -84,9 +84,9 @@ class BankingViewController: UIViewController {
         // String -> Int
         let amount = Int(text)
         
-        if let date = date, let banking = banking, let amount = amount {
+        if let date = date, let type = type, let amount = amount {
             // 入力されたデータより取引明細を追加
-            selectedBank?.addBanking(date: date, banking: banking, amount: amount)
+            selectedBank?.addBanking(date: date, type: type, amount: amount)
             // PickerViewとTextFieldを初期化
                 // do somethig
             backTransition()
@@ -165,7 +165,7 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             
         case (1, 0, _): return "20" + "\(17 - row)"
         case (1, _, _): return "\(row)"
-        case (2, 0, _): return bankingTitle[row]
+        case (2, 0, _): return bankingTypeTitle[row]
             
         default: return nil
         }
@@ -183,12 +183,10 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             let day = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 2), forComponent: 2)
             
             pickDate = "\(year!)/\(month!)/\(day!)"
-//            print(pickDate)
             
         } else if pickerView.tag == 2 {
-            let banking = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 0), forComponent: 0)
-            pickBanking = banking
-//            print(pickBanking)
+            let bankingType = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 0), forComponent: 0)
+            pickBankingType = bankingType
         }
         
     }
