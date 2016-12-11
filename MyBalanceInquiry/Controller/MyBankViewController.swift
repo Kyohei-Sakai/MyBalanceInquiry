@@ -45,7 +45,7 @@ class MyBankViewController: UIViewController {
     // 取引を追加するためのボタンが押された時
     @IBAction private func tapAddButton(_ sender: UIButton) {
         // 遷移先のViewControllerに渡すBankを設定
-        performSegue(withIdentifier: "toBankingViewController", sender: nil)
+        performSegue(withSegueType: .banking, sender: nil)
     }
     
 }
