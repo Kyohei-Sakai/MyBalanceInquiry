@@ -157,7 +157,6 @@ enum SegueType: String {
     case banking = "toBankingViewController"
     case addBank = "toAddNewBank"
     case gragh = "toGraghView"
-    case backBank = "fromBankingToBank"
 }
 
 
