@@ -73,13 +73,8 @@ class BankingViewController: UIViewController {
         dateFormatter.dateFormat = "yyyy/MM/dd"
         let date = dateFormatter.date(from: pickDate)
         
-        // String -> Banking
-        var banking: BankingData.Banking?
-        if pickBanking == bankingTitle[1] {
-            banking = .payment
-        } else if pickBanking == bankingTitle[2] {
-            banking = .withdrawal
-        }
+        // String -> BankingType
+        let type = BankingData.type(withTitle: pickBanking)
         
         // String -> Int
         let amount = Int(text)

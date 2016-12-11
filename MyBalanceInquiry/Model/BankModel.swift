@@ -195,6 +195,16 @@ struct BankingData {
         }
     }
     
+    static func type(withTitle title: String) -> BankingType? {
+        if title == "入金" {
+            return .payment
+        } else if title == "出金" {
+            return .withdrawal
+        }
+        
+        return nil
+    }
+    
     // 銀行取引の種類
     enum BankingType {
         // 入金、出金
