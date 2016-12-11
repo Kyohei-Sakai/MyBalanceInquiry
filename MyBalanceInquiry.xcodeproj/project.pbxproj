@@ -10,10 +10,8 @@
 		77707E36467761AB49043453 /* Pods_MyBalanceInquiryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30154F9F8F3E236AEA8DF6E8 /* Pods_MyBalanceInquiryTests.framework */; };
 		7F2205811DB4903400EF1301 /* BankModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2205801DB4903400EF1301 /* BankModel.swift */; };
 		7F849E771DFD2BDF00E937F8 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F849E761DFD2BDF00E937F8 /* UIViewControllerExtension.swift */; };
-		7F8E80231DF2D53700636CD4 /* GraghViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8E80221DF2D53700636CD4 /* GraghViewCell.swift */; };
 		7F9E85B71DB3C17F009E9BA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E85B61DB3C17F009E9BA3 /* AppDelegate.swift */; };
 		7FE339B11DAB906200E4B9C8 /* BankStatementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FE339AF1DAB906200E4B9C8 /* BankStatementCell.xib */; };
-		7FE339B21DAB906200E4B9C8 /* GraghView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B01DAB906200E4B9C8 /* GraghView.swift */; };
 		7FE339B91DAB926C00E4B9C8 /* AddNewBankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B41DAB926C00E4B9C8 /* AddNewBankViewController.swift */; };
 		7FE339BA1DAB926C00E4B9C8 /* BankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B51DAB926C00E4B9C8 /* BankingViewController.swift */; };
 		7FE339BB1DAB926C00E4B9C8 /* GraghViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE339B61DAB926C00E4B9C8 /* GraghViewController.swift */; };
@@ -55,10 +53,8 @@
 		7E10710D6BFD04532F3D9862 /* Pods-MyBalanceInquiryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBalanceInquiryTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyBalanceInquiryTests/Pods-MyBalanceInquiryTests.release.xcconfig"; sourceTree = "<group>"; };
 		7F2205801DB4903400EF1301 /* BankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankModel.swift; sourceTree = "<group>"; };
 		7F849E761DFD2BDF00E937F8 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
-		7F8E80221DF2D53700636CD4 /* GraghViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraghViewCell.swift; sourceTree = "<group>"; };
 		7F9E85B61DB3C17F009E9BA3 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FE339AF1DAB906200E4B9C8 /* BankStatementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BankStatementCell.xib; sourceTree = "<group>"; };
-		7FE339B01DAB906200E4B9C8 /* GraghView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraghView.swift; sourceTree = "<group>"; };
 		7FE339B41DAB926C00E4B9C8 /* AddNewBankViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewBankViewController.swift; sourceTree = "<group>"; };
 		7FE339B51DAB926C00E4B9C8 /* BankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankingViewController.swift; sourceTree = "<group>"; };
 		7FE339B61DAB926C00E4B9C8 /* GraghViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraghViewController.swift; sourceTree = "<group>"; };
@@ -135,8 +131,6 @@
 			children = (
 				7FE339BE1DAB933000E4B9C8 /* BankStatementCell.swift */,
 				7FE339AF1DAB906200E4B9C8 /* BankStatementCell.xib */,
-				7FE339B01DAB906200E4B9C8 /* GraghView.swift */,
-				7F8E80221DF2D53700636CD4 /* GraghViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -512,13 +506,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F8E80231DF2D53700636CD4 /* GraghViewCell.swift in Sources */,
 				7FE339BD1DAB926C00E4B9C8 /* ViewController.swift in Sources */,
 				7FE339BF1DAB933000E4B9C8 /* BankStatementCell.swift in Sources */,
 				7FE339BB1DAB926C00E4B9C8 /* GraghViewController.swift in Sources */,
 				7F9E85B71DB3C17F009E9BA3 /* AppDelegate.swift in Sources */,
 				7FE339BC1DAB926C00E4B9C8 /* MyBankViewController.swift in Sources */,
-				7FE339B21DAB906200E4B9C8 /* GraghView.swift in Sources */,
 				7FE339B91DAB926C00E4B9C8 /* AddNewBankViewController.swift in Sources */,
 				7F2205811DB4903400EF1301 /* BankModel.swift in Sources */,
 				7F849E771DFD2BDF00E937F8 /* UIViewControllerExtension.swift in Sources */,

@@ -12,24 +12,25 @@ import PlugAndChugChart
 class GraghViewController: UIViewController {
     
     @IBOutlet fileprivate weak var textField: UITextField!
-    @IBOutlet fileprivate weak var graghView: GraghView!
+    
+    let graph = PlugAndChugChart()
     
     var superBank: BankManager?
     
-    fileprivate var barGraghData: [CGFloat] = []
+    fileprivate var graphData: [CGFloat] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "支出管理"
         
-        setBarGraghData()
-        configureBarGragh()
+        setGraphData()
+        configureGraph()
         configureTextField()
         
     }
     
-    fileprivate func setBarGraghData() {
+    fileprivate func setGraphData() {
         let calendar = Calendar(identifier: .gregorian)
         
         if let minimumDate = superBank?.mostOldDate, let newDate = superBank?.mostNewDate {
@@ -48,7 +49,7 @@ class GraghViewController: UIViewController {
                         let fluctuationAmount = superBank?.sumFluctuationAmount(fromDate: date, toDate: nextDate) ?? 0
                         // 月々の収入
                         let income = superBank?.totalIncome(fromDate: date, toDate: nextDate) ?? 0
-                        barGraghData.append(CGFloat(income - fluctuationAmount))
+                        graphData.append(CGFloat(income - fluctuationAmount))
                         
                         date = nextDate
                     }
@@ -57,31 +58,33 @@ class GraghViewController: UIViewController {
         }
     }
     
-    fileprivate func configureBarGragh() {
+    fileprivate func configureGraph() {
         // most setting
-        graghView.graghValues = barGraghData
+        graph.frame = CGRect(x: 0, y: 70, width: view.frame.width, height: 440)
+        graph.chartValues = graphData
+        graph.dataLabelType = .date
         if let mostOldDate = superBank?.mostOldDate {
-            graghView.minimumDate = mostOldDate
+            graph.minimumDate = mostOldDate
         }
         
         // optional setting
-//        graghView.graghStyle = .jaggy   // default is bar
-//        graghView.dateStyle = .day    // default is month
-        graghView.dataType = .yen
-        graghView.contentOffsetControll = .atMaximizeDate
+//        graph.style = .jaggy   // default is bar
+//        graph.dateStyle = .day    // default is month
+        graph.dataType = .yen
+        graph.contentOffsetControll = .maximizeDate
         
-        graghView.setBarWidth(rate: 0.9)
-        graghView.setBarAreaHeight(rate: 0.9)
-        graghView.setMaxGraghValue(rate: 0.8)
-        graghView.setCellArea(width: 60)
+        graph.setBarWidth(rate: 0.9)
+        graph.setBarAreaHeight(rate: 0.9)
+        graph.setMaxChartValue(rate: 0.8)
+        graph.setComponentArea(width: 60)
         
-        graghView.comparisonValue = 100000
-        graghView.setComparisonValueLine(color: UIColor.init(red: 0.1, green: 0.1, blue: 0.15, alpha: 1.0))
-        graghView.setComparisonValueLabel(backgroundColor: UIColor.init(red: 0.2, green: 0.8, blue: 0.4,alpha: 0.9))
+        graph.comparisonValue = 100000
+        graph.setComparisonValueLine(color: UIColor.init(red: 0.1, green: 0.1, blue: 0.15, alpha: 1.0))
+        graph.setComparisonValueLabel(backgroundColor: UIColor.init(red: 0.2, green: 0.8, blue: 0.4,alpha: 0.9))
         
-        // load Gragh on ScrollView
-        graghView.loadGraghView()
-        view.addSubview(graghView)
+        // load Graph on ScrollView
+        graph.loadChart()
+        view.addSubview(graph)
     }
     
     fileprivate func configureTextField() {
@@ -105,10 +108,10 @@ class GraghViewController: UIViewController {
     
     @objc private func doneButtonDidPush(_ sender: UIButton) {
         if let text = textField.text {
-           graghView.comparisonValue = CGFloat(Int(text) ?? 0)
+           graph.comparisonValue = CGFloat(Int(text) ?? 0)
         }
         // 再描画
-        graghView.reloadGraghView()
+        graph.reloadChart()
         // キーボードを閉じる
         textField.resignFirstResponder()
         // 画面位置を元に戻す
