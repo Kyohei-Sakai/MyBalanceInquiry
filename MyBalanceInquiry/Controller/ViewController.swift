@@ -87,11 +87,11 @@ class ViewController: UIViewController {
     
     // My銀行を追加登録するボタンが押された時
     @IBAction private func tapAddNewBankButton(_ sender: UIButton) {
-        performSegue(withIdentifier: "toAddNewBank", sender: nil)
+        performSegue(withIdentifier: SegueType.addBank.rawValue, sender: nil)
     }
     
     @IBAction private func tapGraghViewButton(_ sender: UIButton) {
-        performSegue(withIdentifier: "toGraghView", sender: nil)
+        performSegue(withIdentifier: SegueType.gragh.rawValue, sender: nil)
     }
     
     
@@ -123,7 +123,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         guard let selectedBank = superBank?.banks[indexPath.row] else {
             return
         }
-        performSegue(withIdentifier: "toMyBank", sender: selectedBank)
+        performSegue(withIdentifier: SegueType.bank.rawValue, sender: selectedBank)
     }
     
 }
