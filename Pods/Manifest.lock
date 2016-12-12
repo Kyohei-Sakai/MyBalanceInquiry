@@ -1,0 +1,12 @@
+PODS:
+  - PlugAndChugChart (0.1.0)
+
+DEPENDENCIES:
+  - PlugAndChugChart
+
+SPEC CHECKSUMS:
+  PlugAndChugChart: 004690e15a2db8bbc9dac4299c5fe3cd7ef4479c
+
+PODFILE CHECKSUM: 24423f63502adfd0a4e68012d53ef4f28a86759c
+
+COCOAPODS: 1.2.0.beta.1
