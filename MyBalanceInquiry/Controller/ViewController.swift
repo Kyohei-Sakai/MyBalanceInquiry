@@ -43,42 +43,9 @@ class ViewController: UIViewController {
         let myBank2 = Bank(type: .mitsubishi, firstBalance: 200000)
         let myBank3 = Bank(type: .mitsui, firstBalance: 1200000)
         
-        // StringをDateに変換するためのFormatterを用意
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd"
-        
-        // 取引を追加
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/04"), banking: .withdrawal, amount: 24000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/10"), banking: .payment, amount: 30000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/20"), banking: .withdrawal, amount: 15000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/08/25"), banking: .withdrawal, amount: 10000)
-        
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/04"), banking: .withdrawal, amount: 27000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/10"), banking: .payment, amount: 30000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/23"), banking: .withdrawal, amount: 5000)
-        myBank1.addBanking(date: dateFormatter.date(from: "2016/09/30"), banking: .withdrawal, amount: 10000)
-        
-        // 外部からの収入
-        for month in 1...12 {
-            myBank2.addBanking(date: dateFormatter.date(from: "2016/\(month)/04"), banking: .payment, amount: 80000)
-        }
-        
-        for data in myBank2.bankStatement {
-            data.setIncome()
-        }
-        
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/10"), banking: .withdrawal, amount: 50000)
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/13"), banking: .withdrawal, amount: 20000)
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/17"), banking: .withdrawal, amount: 10000)
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/08/22"), banking: .withdrawal, amount: 20000)
-        
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/11"), banking: .withdrawal, amount: 30000)
-        myBank2.addBanking(date: dateFormatter.date(from: "2016/09/21"), banking: .withdrawal, amount: 20000)
-        
-        myBank3.addBanking(date: dateFormatter.date(from: "2015/08/05"), banking: .withdrawal, amount: 10000)
-        
-        myBank3.addBanking(date: dateFormatter.date(from: "2016/09/09"), banking: .withdrawal, amount: 13000)
-        myBank3.addBanking(date: dateFormatter.date(from: "2016/09/21"), banking: .withdrawal, amount: 29000)
+        setBankingFromCSV(bank: myBank1, path: "mizuho")
+        setBankingFromCSV(bank: myBank2, path: "mitsubishi")
+        setBankingFromCSV(bank: myBank3, path: "mitsui")
         
         // 全ての銀行を管理
         let superBank = BankManager(banks: [myBank1, myBank2, myBank3])
@@ -92,6 +59,67 @@ class ViewController: UIViewController {
     
     @IBAction private func tapGraghViewButton(_ sender: UIButton) {
         performSegue(withSegueType: .gragh, sender: nil)
+    }
+    
+    private func setBankingFromCSV(bank: Bank, path: String) {
+        var csvArray: [String] = []
+        // CSVファイル名を引数にしてloadCSVメソッドを使用し、CSVファイルを読み込む
+        csvArray = loadCSV(path)
+        
+        for index in 1..<csvArray.count - 1 {
+            // csvArrayの任意の行を取り出し、カンマを区切りとしてaryに格納
+            let banking = csvArray[index].removeLineFeed.components(separatedBy: ",")
+            
+            // String -> Date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy/MM/dd"
+            let date = dateFormatter.date(from: banking[0])
+            
+            // String -> Banking
+            var type: BankingData.Banking?
+            
+            switch banking[1] {
+            case "p":
+                type = .payment
+            case "w":
+                type = .withdrawal
+            default:
+                type = nil
+            }
+            
+            // String -> Int
+            let amount = Int(banking[2])
+            
+            if let date = date, let type = type, let amount = amount {
+                // 入力されたデータより取引明細を追加
+                bank.addBanking(date: date, banking: type, amount: amount)
+            }
+            
+        }
+        
+    }
+    
+    //CSVファイルの読み込みメソッド
+    private func loadCSV(_ fileName :String) -> [String] {
+        
+        // CSVファイルのデータを格納するためのString型配列を宣言
+        var csvArray: [String] = []
+        
+        do {
+            // CSVファイルのパスを取得する。
+            let csvPath = Bundle.main.path(forResource: fileName, ofType: "csv")
+            
+            // CSVファイルのデータを取得する。
+            let csvData = try String(contentsOfFile:csvPath!, encoding:String.Encoding.utf8)
+            
+            // 改行区切りでデータを分割して配列に格納する。
+            csvArray = csvData.components(separatedBy: "\n")
+            
+        } catch {
+            print(error)
+        }
+        
+        return csvArray
     }
     
     
@@ -151,6 +179,16 @@ extension ViewController {
     
 }
 
+
+extension String {
+    var removeLineFeed: String {
+        if let lineFeed = self.characters.index(of: "\r") {
+            return String(self.characters.prefix(upTo: lineFeed))
+        }
+        
+        return self
+    }
+}
 
 
 

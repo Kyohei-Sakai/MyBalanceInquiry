@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7F2205811DB4903400EF1301 /* BankModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2205801DB4903400EF1301 /* BankModel.swift */; };
+		7F6DB39E1DFE98E60082D31A /* mitsubishi.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7F6DB39B1DFE98E60082D31A /* mitsubishi.csv */; };
+		7F6DB39F1DFE98E60082D31A /* mitsui.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7F6DB39C1DFE98E60082D31A /* mitsui.csv */; };
+		7F6DB3A01DFE98E60082D31A /* mizuho.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7F6DB39D1DFE98E60082D31A /* mizuho.csv */; };
 		7F849E771DFD2BDF00E937F8 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F849E761DFD2BDF00E937F8 /* UIViewControllerExtension.swift */; };
 		7F8E80231DF2D53700636CD4 /* GraghViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8E80221DF2D53700636CD4 /* GraghViewCell.swift */; };
 		7F9E85B71DB3C17F009E9BA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9E85B61DB3C17F009E9BA3 /* AppDelegate.swift */; };
@@ -45,6 +48,9 @@
 
 /* Begin PBXFileReference section */
 		7F2205801DB4903400EF1301 /* BankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankModel.swift; sourceTree = "<group>"; };
+		7F6DB39B1DFE98E60082D31A /* mitsubishi.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mitsubishi.csv; path = DataSources/mitsubishi.csv; sourceTree = "<group>"; };
+		7F6DB39C1DFE98E60082D31A /* mitsui.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mitsui.csv; path = DataSources/mitsui.csv; sourceTree = "<group>"; };
+		7F6DB39D1DFE98E60082D31A /* mizuho.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mizuho.csv; path = DataSources/mizuho.csv; sourceTree = "<group>"; };
 		7F849E761DFD2BDF00E937F8 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		7F8E80221DF2D53700636CD4 /* GraghViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraghViewCell.swift; sourceTree = "<group>"; };
 		7F9E85B61DB3C17F009E9BA3 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +100,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F6DB39A1DFE98C90082D31A /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				7F6DB39B1DFE98E60082D31A /* mitsubishi.csv */,
+				7F6DB39C1DFE98E60082D31A /* mitsui.csv */,
+				7F6DB39D1DFE98E60082D31A /* mizuho.csv */,
+			);
+			name = DataSources;
+			sourceTree = "<group>";
+		};
 		7F9E85B51DB3C17F009E9BA3 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +173,7 @@
 		7FF8036B1D916039001ACB83 /* MyBalanceInquiry */ = {
 			isa = PBXGroup;
 			children = (
+				7F6DB39A1DFE98C90082D31A /* DataSources */,
 				7F9E85B51DB3C17F009E9BA3 /* Application */,
 				7FE339AE1DAB8F6A00E4B9C8 /* Views */,
 				7FE339B31DAB91F300E4B9C8 /* Controller */,
@@ -298,8 +315,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FF803771D916039001ACB83 /* LaunchScreen.storyboard in Resources */,
+				7F6DB3A01DFE98E60082D31A /* mizuho.csv in Resources */,
+				7F6DB39F1DFE98E60082D31A /* mitsui.csv in Resources */,
 				7FF803741D916039001ACB83 /* Assets.xcassets in Resources */,
 				7FF803721D916039001ACB83 /* Main.storyboard in Resources */,
+				7F6DB39E1DFE98E60082D31A /* mitsubishi.csv in Resources */,
 				7FE339B11DAB906200E4B9C8 /* BankStatementCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
