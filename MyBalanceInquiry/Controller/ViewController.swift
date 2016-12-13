@@ -43,9 +43,9 @@ class ViewController: UIViewController {
         let myBank2 = Bank(type: .mitsubishi, firstBalance: 200000)
         let myBank3 = Bank(type: .mitsui, firstBalance: 1200000)
         
-        setBankingFromCSV(bank: myBank1, path: "mizuho")
-        setBankingFromCSV(bank: myBank2, path: "mitsubishi")
-        setBankingFromCSV(bank: myBank3, path: "mitsui")
+        setupBankingData(bank: myBank1, path: "mizuho")
+        setupBankingData(bank: myBank2, path: "mitsubishi")
+        setupBankingData(bank: myBank3, path: "mitsui")
         
         // 全ての銀行を管理
         let superBank = BankManager(banks: [myBank1, myBank2, myBank3])
