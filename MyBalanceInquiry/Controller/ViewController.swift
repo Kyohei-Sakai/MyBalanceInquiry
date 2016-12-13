@@ -61,7 +61,7 @@ class ViewController: UIViewController {
         performSegue(withSegueType: .gragh, sender: nil)
     }
     
-    private func setBankingFromCSV(bank: Bank, path: String) {
+    private func setupBankingData(bank: Bank, path: String) {
         var csvArray: [String] = []
         // CSVファイル名を引数にしてloadCSVメソッドを使用し、CSVファイルを読み込む
         csvArray = loadCSV(path)
