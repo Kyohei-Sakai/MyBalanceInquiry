@@ -111,6 +111,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+<<<<<<< HEAD
+		7F6DB39A1DFE98C90082D31A /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				7F6DB39B1DFE98E60082D31A /* mitsubishi.csv */,
+				7F6DB39C1DFE98E60082D31A /* mitsui.csv */,
+				7F6DB39D1DFE98E60082D31A /* mizuho.csv */,
+			);
+			name = DataSources;
+=======
 		03FCC59AD03935158091CD0E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,16 +132,7 @@
 				963BCD0210387B45DBC85DF6 /* Pods-MyBalanceInquiryUITests.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		7F6DB39A1DFE98C90082D31A /* DataSources */ = {
-			isa = PBXGroup;
-			children = (
-				7F6DB39B1DFE98E60082D31A /* mitsubishi.csv */,
-				7F6DB39C1DFE98E60082D31A /* mitsui.csv */,
-				7F6DB39D1DFE98E60082D31A /* mizuho.csv */,
-			);
-			name = DataSources;
+>>>>>>> master
 			sourceTree = "<group>";
 		};
 		7F9E85B51DB3C17F009E9BA3 /* Application */ = {

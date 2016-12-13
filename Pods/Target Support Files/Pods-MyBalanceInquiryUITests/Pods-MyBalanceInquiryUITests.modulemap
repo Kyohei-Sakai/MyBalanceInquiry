@@ -1,0 +1,6 @@
+framework module Pods_MyBalanceInquiryUITests {
+  umbrella header "Pods-MyBalanceInquiryUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
