@@ -18,13 +18,19 @@ enum BankType: String {
 }
 
 
-// MARK: - Bank クラス
+// MARK: - Bank Class
 
 class Bank {
-    // 銀行名
-    let bankName: String
+    
+    // MARK: Private Properties
+    
     // 初期残高を記録
     private let firstBalance: Int
+    
+    // MARK: Public Properties
+    
+    // 銀行名
+    let bankName: String
     // 入出金データ
     var bankStatement: [BankingData] = []
     
@@ -33,6 +39,7 @@ class Bank {
         return firstBalance + fluctuationAmount
     }
     
+    // MARK: Initializers
     
     init(name: String, firstBalance: Int) {
         bankName = name
@@ -42,6 +49,8 @@ class Bank {
     convenience init(type: BankType, firstBalance: Int) {
         self.init(name: type.rawValue, firstBalance: firstBalance)
     }
+    
+    // MARK: Public Methods
     
     // 取引を追加し、入出金データに格納
     // StringからDateやIntに変換するため、引数をoptionalで定義
@@ -75,6 +84,10 @@ class Bank {
         }
     }
     
+    // MARK: Fileprivate
+    
+    // MARK: Fluctuation Amount
+    
     // 全ての取引の増減額
     fileprivate var fluctuationAmount: Int {
         return bankStatement.reduce(0) { value, data in
@@ -102,6 +115,8 @@ class Bank {
                 }
         }
     }
+    
+    // MARK: Print
     
     // 取引明細を一覧で表示
     fileprivate func printBankStatement() {
@@ -134,6 +149,8 @@ class Bank {
         }
     }
     
+    // MARK: Date
+    
     // 取引日の最新を得る
     fileprivate var newDate: Date? {
         if bankStatement.isEmpty {
@@ -151,6 +168,8 @@ class Bank {
             return bankStatement.first?.date
         }
     }
+    
+    // MARK: Income
     
     // 指定した期間内での外部からの収入を得る
     fileprivate func income(fromDate: Date, toDate: Date) -> Int? {
@@ -172,10 +191,30 @@ class Bank {
                 }
         }
     }
+    
+    // MARK: Deposit
+    
+    // 指定した期間内での入金合計額
+    fileprivate func deposit(fromDate: Date, toDate: Date) -> Int? {
+        // fromData < toDateでなかった場合は強制終了
+        guard fromDate < toDate else {
+            print("期間設定に誤りがあります。")
+            return nil
+        }
+        
+        return bankStatement.filter { data in
+            fromDate < data.date && data.date < toDate
+            }.reduce(0) { value, data in
+                guard let value = value else { return nil }
+                return value + data.amount
+        }
+    }
+    
 }
 
 
-// 銀行取引の詳細をまとめたデータ
+// MARK: - BankingData
+
 class BankingData {
     let date: Date
     let banking: Banking
@@ -205,28 +244,18 @@ class BankingData {
 }
 
 
-// MARK: - Bankクラスをまとめて扱うクラス
+// MARK: - BankManager Class
 
 class BankManager {
     var banks: [Bank] = []
     
-    // 総残高
-    fileprivate var totalBalance: Int {
-        return banks.flatMap { $0.balance }.reduce(0, +)
-    }
-    // 取引期間の最新の日付
-    var mostNewDate: Date? {
-        return datePeriod.last
-    }
-    // 取引期間の最古の日付
-    var mostOldDate: Date? {
-        return datePeriod.first
-    }
-    
+    // MARK: Initializers
     
     init(banks: [Bank]) {
         self.banks = banks
     }
+    
+    // MARK: Add and Remove Bank
     
     // 銀行を追加
     func add(bank: Bank) {
@@ -245,14 +274,49 @@ class BankManager {
         }
     }
     
-    // 全ての取引の総増減額
+    // MARK: Balance
+    
+    // 総残高
+    var totalBalance: Int {
+        return banks.flatMap { $0.balance }.reduce(0, +)
+    }
+    
+    // MARK: Income
+    
+    // 指定した期間内での収入
+    func totalIncome(fromDate: Date, toDate: Date) -> Int? {
+        return banks.flatMap { $0.income(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
+    }
+    
+    // MARK: Deposit
+    
+    // 指定した期間内での入金
+    func totalDeposit(fromDate: Date, toDate: Date) -> Int? {
+        return banks.flatMap { $0.deposit(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
+    }
+    
+    
+    // MARK: Fluctuation Amount
+    
+    // 全ての取引の総増減額（収支）
     fileprivate var sumFluctuationAmount: Int {
         return banks.flatMap { $0.fluctuationAmount }.reduce(0, +)
     }
     
-    // 指定期間の収支バランスを求める
+    // 指定した期間内での収支
     func sumFluctuationAmount(fromDate: Date, toDate: Date) -> Int? {
         return banks.flatMap { $0.fluctuationAmount(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
+    }
+    
+    // MARK: Date
+    
+    // 取引期間の最新の日付
+    var mostNewDate: Date? {
+        return datePeriod.last
+    }
+    // 取引期間の最古の日付
+    var mostOldDate: Date? {
+        return datePeriod.first
     }
     
     // 全ての取引期間の最新値と最古値の候補を返す
@@ -270,11 +334,6 @@ class BankManager {
         return period.flatMap { $0 }.sorted(by: { (date1: Date, date2: Date) -> Bool in
             return date1 < date2
         })
-    }
-    
-    // 指定した期間内での外部からの収入を得る
-    func totalIncome(fromDate: Date, toDate: Date) -> Int? {
-        return banks.flatMap { $0.income(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
     }
     
 }
