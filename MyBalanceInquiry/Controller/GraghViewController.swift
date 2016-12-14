@@ -43,11 +43,16 @@ class GraghViewController: UIViewController {
                 while date <= finalDate {
                     // dateの１ヶ月後
                     if let nextDate = calendar.date(byAdding: DateComponents(month: 1), to: date) {
-                        // 月々の総増減額
+                        // 月々の収支
                         let fluctuationAmount = superBank?.sumFluctuationAmount(fromDate: date, toDate: nextDate) ?? 0
+                        // 月々の入金
+                        let deposit = superBank?.totalDeposit(fromDate: date, toDate: nextDate) ?? 0
                         // 月々の収入
                         let income = superBank?.totalIncome(fromDate: date, toDate: nextDate) ?? 0
-                        barGraghData.append(CGFloat(income - fluctuationAmount))
+                        // 収入でない入金
+                        let notIncome = income - deposit
+                        
+                        barGraghData.append(CGFloat((deposit - notIncome) - fluctuationAmount))
                         
                         date = nextDate
                     }
