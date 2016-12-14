@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         
         for index in 1..<csvArray.count - 1 {
             // csvArrayの任意の行を取り出し、カンマを区切りとしてaryに格納
-            let banking = csvArray[index].removed(text: "/r").components(separatedBy: ",")
+            let banking = csvArray[index].removed(text: "\r").components(separatedBy: ",")
             print(banking)
             
             // String -> Date
