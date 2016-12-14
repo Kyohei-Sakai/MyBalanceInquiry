@@ -68,7 +68,8 @@ class ViewController: UIViewController {
         
         for index in 1..<csvArray.count - 1 {
             // csvArrayの任意の行を取り出し、カンマを区切りとしてaryに格納
-            let banking = csvArray[index].removeLineFeed.components(separatedBy: ",")
+            let banking = csvArray[index].removed(text: "/r").components(separatedBy: ",")
+            print(banking)
             
             // String -> Date
             let dateFormatter = DateFormatter()
@@ -187,6 +188,26 @@ extension String {
         }
         
         return self
+    }
+    
+    // 指定した文字列があれば、それを取り除いて返す
+    func removed(text: String) -> String {
+        var string = self
+        
+        while let range = string.range(of: text) {
+            
+            let substringStartIndex = range.lowerBound
+            let substringEndIndex = range.upperBound
+            
+            let selfStartIndex = string.startIndex
+            let beforeString = string.substring(with: selfStartIndex..<substringStartIndex)
+            
+            let afterString = string.substring(from: substringEndIndex)
+            
+            string = beforeString + afterString
+        }
+        
+        return string
     }
 }
 
