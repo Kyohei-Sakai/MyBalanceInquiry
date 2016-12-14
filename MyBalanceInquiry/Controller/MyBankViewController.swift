@@ -76,7 +76,7 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セルが選択された時の処理
     func tableView(_ table: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let count = selectedBank?.bankStatement.count, let statement = selectedBank?.bankStatement[count - (1 + indexPath.row)], statement.banking == .payment {
+        if let count = selectedBank?.bankStatement.count, let statement = selectedBank?.bankStatement[count - (1 + indexPath.row)], statement.banking == .deposit {
             // 最後の要素から順にセルに格納されている
             // 入金データであるかどうか
             alertIsIncome(data: statement, at: indexPath)

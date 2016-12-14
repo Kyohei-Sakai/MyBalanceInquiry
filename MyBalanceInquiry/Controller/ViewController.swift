@@ -80,7 +80,7 @@ class ViewController: UIViewController {
             
             switch banking[1] {
             case "p":
-                type = .payment
+                type = .deposit
             case "w":
                 type = .withdrawal
             default:

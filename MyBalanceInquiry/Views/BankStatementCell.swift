@@ -37,7 +37,7 @@ class BankStatementCell: UITableViewCell {
         
         // 入金 or 出金を表示
         switch data.banking {
-        case .payment:
+        case .deposit:
             bankingLabel.text = "入"
             bankingLabel.textColor = UIColor.blue
         case .withdrawal:

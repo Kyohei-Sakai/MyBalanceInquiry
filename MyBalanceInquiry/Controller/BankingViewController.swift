@@ -76,7 +76,7 @@ class BankingViewController: UIViewController {
         // String -> Banking
         var banking: BankingData.Banking?
         if pickBanking == bankingTitle[1] {
-            banking = .payment
+            banking = .deposit
         } else if pickBanking == bankingTitle[2] {
             banking = .withdrawal
         }

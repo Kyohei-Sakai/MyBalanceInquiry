@@ -92,7 +92,7 @@ class Bank {
     fileprivate var fluctuationAmount: Int {
         return bankStatement.reduce(0) { value, data in
             switch data.banking {
-            case .payment:      return value + data.amount
+            case .deposit:      return value + data.amount
             case .withdrawal:   return value - data.amount
             }
         }
@@ -110,8 +110,8 @@ class Bank {
             fromDate < data.date && data.date < toDate
             }.reduce(0) { totalBalance, data in
                 switch data.banking {
-                case .payment:      return totalBalance! + data.amount
-                case .withdrawal:   return totalBalance! - data.amount
+                case .deposit:      print(totalBalance! + data.amount); return totalBalance! + data.amount
+                case .withdrawal:   print(totalBalance! - data.amount); return totalBalance! - data.amount
                 }
         }
     }
@@ -207,7 +207,30 @@ class Bank {
             }.reduce(0) { value, data in
                 guard let value = value else { return nil }
                 
-                if case .payment = data.banking {
+                if case .deposit = data.banking {
+                    return value + data.amount
+                } else {
+                    return value
+                }
+        }
+    }
+    
+    // MARK: Withdrawal
+    
+    // 指定した期間内での出金合計額
+    fileprivate func withdrawal(fromDate: Date, toDate: Date) -> Int? {
+        // fromData < toDateでなかった場合は強制終了
+        guard fromDate < toDate else {
+            print("期間設定に誤りがあります。")
+            return nil
+        }
+        
+        return bankStatement.filter { data in
+            fromDate < data.date && data.date < toDate
+            }.reduce(0) { value, data in
+                guard let value = value else { return nil }
+                
+                if case .withdrawal = data.banking {
                     return value + data.amount
                 } else {
                     return value
@@ -234,7 +257,7 @@ class BankingData {
     }
     
     func setIncome() {
-        if case .payment = banking {
+        if case .deposit = banking {
             isIncome = true
 //            print("\(date),\(amount)を\(isIncome)")
         }
@@ -243,7 +266,7 @@ class BankingData {
     // 銀行取引の種類
     enum Banking {
         // 入金、出金
-        case payment, withdrawal
+        case deposit, withdrawal
     }
     
 }
