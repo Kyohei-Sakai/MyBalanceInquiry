@@ -172,6 +172,25 @@ class Bank {
                 }
         }
     }
+    
+    // MARK: Deposit
+    
+    // 指定した期間内での入金合計額
+    fileprivate func deposit(fromDate: Date, toDate: Date) -> Int? {
+        // fromData < toDateでなかった場合は強制終了
+        guard fromDate < toDate else {
+            print("期間設定に誤りがあります。")
+            return nil
+        }
+        
+        return bankStatement.filter { data in
+            fromDate < data.date && data.date < toDate
+            }.reduce(0) { value, data in
+                guard let value = value else { return nil }
+                return value + data.amount
+        }
+    }
+    
 }
 
 
@@ -246,6 +265,12 @@ class BankManager {
     }
     
     // 全ての取引の総増減額
+    // MARK: Deposit
+    
+    // 指定した期間内での入金
+    func totalDeposit(fromDate: Date, toDate: Date) -> Int? {
+        return banks.flatMap { $0.deposit(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
+    }
     fileprivate var sumFluctuationAmount: Int {
         return banks.flatMap { $0.fluctuationAmount }.reduce(0, +)
     }
