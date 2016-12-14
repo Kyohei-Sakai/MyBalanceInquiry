@@ -206,7 +206,12 @@ class Bank {
             fromDate < data.date && data.date < toDate
             }.reduce(0) { value, data in
                 guard let value = value else { return nil }
-                return value + data.amount
+                
+                if case .payment = data.banking {
+                    return value + data.amount
+                } else {
+                    return value
+                }
         }
     }
     

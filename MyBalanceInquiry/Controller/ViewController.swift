@@ -40,8 +40,8 @@ class ViewController: UIViewController {
         
         // 銀行を追加
         let myBank1 = Bank(type: .mizuho, firstBalance: 10000)
-        let myBank2 = Bank(type: .mitsubishi, firstBalance: 200000)
-        let myBank3 = Bank(type: .mitsui, firstBalance: 1200000)
+        let myBank2 = Bank(type: .mitsubishi, firstBalance: 10000)
+        let myBank3 = Bank(type: .mitsui, firstBalance: 10000)
         
         setupBankingData(bank: myBank1, path: "mizuho")
         setupBankingData(bank: myBank2, path: "mitsubishi")
@@ -69,7 +69,6 @@ class ViewController: UIViewController {
         for index in 1..<csvArray.count - 1 {
             // csvArrayの任意の行を取り出し、カンマを区切りとしてaryに格納
             let banking = csvArray[index].removed(text: "\r").components(separatedBy: ",")
-            print(banking)
             
             // String -> Date
             let dateFormatter = DateFormatter()
