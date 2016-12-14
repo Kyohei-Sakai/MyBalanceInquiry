@@ -65,6 +65,8 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
+        statementCell.backgroundColor = UIColor.white
+        
         if let count = selectedBank?.bankStatement.count, let statement = selectedBank?.bankStatement[count - (1 + indexPath.row)] {
             // 最後の要素から順に呼び出す
             statementCell.setCell(data: statement)
