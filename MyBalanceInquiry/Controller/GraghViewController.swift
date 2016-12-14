@@ -51,7 +51,7 @@ class GraghViewController: UIViewController {
                         let income = superBank?.totalIncome(fromDate: date, toDate: nextDate) ?? 0
                         // 収入でない入金
                         let notIncome = income - deposit
-                        
+                        // 支出を渡す
                         barGraghData.append(CGFloat((deposit - notIncome) - fluctuationAmount))
                         
                         date = nextDate
