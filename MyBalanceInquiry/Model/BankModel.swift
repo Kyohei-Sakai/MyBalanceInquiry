@@ -247,7 +247,7 @@ class BankingData {
     let date: Date
     let banking: Banking
     let amount: Int
-    // 外部からの入金かどうか
+    // 外部からの入金(収入)かどうか
     var isIncome = false
     
     init(date: Date, banking: Banking, amount: Int) {
@@ -256,10 +256,10 @@ class BankingData {
         self.amount = amount
     }
     
-    func setIncome() {
+    func setIncome(_ bool: Bool) {
         if case .deposit = banking {
-            isIncome = true
-//            print("\(date),\(amount)を\(isIncome)")
+            isIncome = bool
+            print("\(date),\(amount)を\(isIncome)")
         }
     }
     
