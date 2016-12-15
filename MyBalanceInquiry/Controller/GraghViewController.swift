@@ -53,8 +53,11 @@ class GraghViewController: UIViewController {
                         let income = superBank?.totalIncome(fromDate: date, toDate: nextDate) ?? 0
                         // 収入でない入金
                         let notIncome = deposit - income
+                        // 月々の出金
+                        let withdrawal = superBank?.totalWithdrawal(fromDate: date, toDate: nextDate) ?? 0
                         // 支出を渡す
-                        graphData.append(CGFloat((deposit - notIncome) - fluctuationAmount))
+//                        graphData.append(CGFloat((deposit - notIncome) - fluctuationAmount))
+                        graphData.append(CGFloat(withdrawal - notIncome))
                         
                         date = nextDate
                     }

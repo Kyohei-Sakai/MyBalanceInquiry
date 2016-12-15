@@ -323,6 +323,13 @@ class BankManager {
         return banks.flatMap { $0.deposit(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
     }
     
+    // MARK: Withdrawal
+    
+    // 指定した期間内での入金
+    func totalWithdrawal(fromDate: Date, toDate: Date) -> Int? {
+        return banks.flatMap { $0.withdrawal(fromDate: fromDate, toDate: toDate) }.reduce(0, +)
+    }
+    
     
     // MARK: Fluctuation Amount
     
