@@ -87,21 +87,21 @@ extension MyBankViewController: UITableViewDelegate, UITableViewDataSource {
     private func alertIsIncome(data: BankingData, at indexPath: IndexPath) {
         
         let alertController = UIAlertController(
-            title: "取引の設定",
-            message: "この取引を外部からの収入として扱いますか？",
+            title: "入金取引の設定",
+            message: "入金の種類を変更しますか？",
             preferredStyle: .actionSheet)
         
-        let otherAction = UIAlertAction(title: "はい", style: .default, handler: { action in
+        let mainAction = UIAlertAction(title: "はい", style: .default, handler: { action in
             print("\(action.title)が押されました")
-            data.setIncome()
+            data.setIncome(!data.isIncome)
             self.bankStatementTableView.reloadRows(at: [indexPath], with: .none)
         })
         
-        let cancelAction = UIAlertAction(title: "いいえ", style: .cancel, handler: { action in
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: { action in
             print("\(action.title)が押されました")
         })
         
-        alertController.addAction(otherAction)
+        alertController.addAction(mainAction)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
