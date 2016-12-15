@@ -79,7 +79,7 @@ class ViewController: UIViewController {
             var type: BankingData.Banking?
             
             switch banking[1] {
-            case "p":
+            case "d":
                 type = .deposit
             case "w":
                 type = .withdrawal
