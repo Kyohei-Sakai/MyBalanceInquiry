@@ -81,14 +81,18 @@ class GraghViewController: UIViewController {
         graph.dataType = .yen
         graph.contentOffsetControll = .maximizeDate
         
-        graph.setBarWidth(rate: 0.9)
-        graph.setBarAreaHeight(rate: 0.9)
+        graph.setBarWidth(rate: 0.8)
+        graph.setBarAreaHeight(rate: 0.85)
         graph.setMaxChartValue(rate: 0.8)
         graph.setComponentArea(width: 60)
         
+        graph.setChart(backgroundcolor: UIColor.init(white: 0.2, alpha: 1))
+        graph.setBar(color: UIColor.init(red: 0.2, green: 0.7, blue: 0.25, alpha: 1))
+        graph.setLabel(backgroundcolor: UIColor.init(white: 0.9, alpha: 1))
+        
         graph.comparisonValue = 100000
-        graph.setComparisonValueLine(color: UIColor.init(red: 0.1, green: 0.1, blue: 0.15, alpha: 1.0))
-        graph.setComparisonValueLabel(backgroundColor: UIColor.init(red: 0.2, green: 0.8, blue: 0.4,alpha: 0.9))
+        graph.setComparisonValueLine(color: UIColor.init(white: 0.9, alpha: 1))
+        graph.setComparisonValueLabel(backgroundColor: UIColor.init(red: 0.6, green: 0.3, blue: 0.4,alpha: 0.8))
         
         // load Graph on ScrollView
         graph.loadChart()
