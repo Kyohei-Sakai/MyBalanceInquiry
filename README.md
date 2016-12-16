@@ -2,6 +2,8 @@
 
 複数の銀行の残高照会や月々の支出を確認できるアプリのデモ。
 
+<p align="center"><img src="./ScreenShot/MyBalanceInquiry_demo.gif" width="300"></p>
+
 ## 機能
 
 各ViewController(画面)での役割について
@@ -16,10 +18,14 @@
 
 ・支出閲覧ページへの遷移
 
+<p align="center"><img src="./ScreenShot/screenshot1.png" width="300"></p>
+
 
 ### AddNewBankViewController
 
 ・銀行名と初期残高を入力して管理する銀行を追加
+
+<p align="center"><img src="./ScreenShot/screenshot5.png" width="300">  <img src="./ScreenShot/screenshot6.png" width="300"></p>
 
 ### MyBankViewController
 
@@ -28,6 +34,8 @@
 ・取引明細は新しい順に上から表示され、過去全てを閲覧可能
 
 ・取引追加ページへの遷移
+
+<p align="center"><img src="./ScreenShot/screenshot2.png" width="300">  <img src="./ScreenShot/screenshot3.png" width="300"></p>
 
 
 ### BankingViewController
@@ -38,14 +46,18 @@
 
 ・入力データが適切でないと、エラーメッセージを出し再入力を求める
 
+<p align="center"><img src="./ScreenShot/screenshot4.png" width="300"></p>
 
-### GraghViewController
+
+### GraphViewController
 
 ・全ての銀行の取引データより、月々の支出を割り出しグラフで表示
 
 ・表示される期間は、最も古い取引が行われた年月から最も新しい取引が行われた年月まで
 
 ・任意に基準額を設定でき、グラフに表示し比較できる
+
+<p align="center"><img src="./ScreenShot/screenshot7.png" width="300"></p>
 
 
 ## 特徴
