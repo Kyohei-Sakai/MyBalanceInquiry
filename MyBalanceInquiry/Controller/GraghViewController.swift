@@ -55,6 +55,15 @@ class GraghViewController: UIViewController {
                         let notIncome = deposit - income
                         // 月々の出金
                         let withdrawal = superBank?.totalWithdrawal(fromDate: date, toDate: nextDate) ?? 0
+                        
+                        print("入金:\(deposit)")
+                        print("出金:\(withdrawal)")
+                        print("収入:\(income)")
+                        print("収入でない：\(notIncome)")
+                        print("収支：\(fluctuationAmount)")
+                        print("支出：\(CGFloat((deposit - notIncome) - fluctuationAmount))")
+                        
+                        
                         // 支出を渡す
 //                        graphData.append(CGFloat((deposit - notIncome) - fluctuationAmount))
                         graphData.append(CGFloat(withdrawal - notIncome))
@@ -89,6 +98,8 @@ class GraghViewController: UIViewController {
         graph.setChart(backgroundcolor: UIColor.init(white: 0.2, alpha: 1))
         graph.setBar(color: UIColor.init(red: 0.2, green: 0.7, blue: 0.25, alpha: 1))
         graph.setLabel(backgroundcolor: UIColor.init(white: 0.9, alpha: 1))
+        
+        graph.averageValueIsHidden = true
         
         graph.comparisonValue = 100000
         graph.setComparisonValueLine(color: UIColor.init(white: 0.9, alpha: 1))

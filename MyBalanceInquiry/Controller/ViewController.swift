@@ -47,6 +47,23 @@ class ViewController: UIViewController {
         setupBankingData(bank: myBank2, path: "mitsubishi")
         setupBankingData(bank: myBank3, path: "mitsui")
         
+        myBank1.bankStatement.forEach { data in
+            if data.banking == .deposit {
+                data.setIncome(!data.isIncome)
+            }
+        }
+        myBank2.bankStatement.forEach { data in
+            if data.banking == .deposit {
+                data.setIncome(!data.isIncome)
+            }
+        }
+        myBank3.bankStatement.forEach { data in
+            if data.banking == .deposit {
+                data.setIncome(!data.isIncome)
+            }
+        }
+        
+        
         // 全ての銀行を管理
         let superBank = BankManager(banks: [myBank1, myBank2, myBank3])
         self.superBank = superBank
