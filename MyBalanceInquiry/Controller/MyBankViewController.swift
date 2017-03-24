@@ -25,7 +25,7 @@ class MyBankViewController: UIViewController {
 //        bankStatementTableView.register(UINib(nibName: "BankStatementCell", bundle: nil), forCellReuseIdentifier: "StatementCell")
         bankStatementTableView.register(UINib(nibName: "BankStatementCell", bundle: nil), forCellReuseIdentifier: "BankStatementCell")
         
-        bankStatementTableView.delegate = self
+        bankStatementTableView.delegate   = self
         bankStatementTableView.dataSource = self
     }
     

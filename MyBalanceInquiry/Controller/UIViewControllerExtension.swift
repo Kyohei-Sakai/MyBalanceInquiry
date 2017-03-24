@@ -19,10 +19,10 @@ extension UIViewController {
 
 
 enum SegueType: String {
-    //    case root = "toRoot"
-    case bank = "toMyBank"
+//    case root = "toRoot"
+    case bank    = "toMyBank"
     case banking = "toBankingViewController"
     case addBank = "toAddNewBank"
-    case gragh = "toGraghView"
+    case gragh   = "toGraghView"
     
 }

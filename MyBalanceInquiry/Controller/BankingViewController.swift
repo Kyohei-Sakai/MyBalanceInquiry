@@ -34,13 +34,13 @@ class BankingViewController: UIViewController {
     }
     
     private func configurePickerView() {
-        datePicker.delegate = self
+        datePicker.delegate   = self
         datePicker.dataSource = self
-        datePicker.tag = 1
+        datePicker.tag        = 1
         
-        bankingPicker.delegate = self
+        bankingPicker.delegate   = self
         bankingPicker.dataSource = self
-        bankingPicker.tag = 2
+        bankingPicker.tag        = 2
     }
     
     private func configureTextField() {
@@ -127,10 +127,10 @@ class BankingViewController: UIViewController {
 extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     private struct DateCount {
-        static let year = 6     // 2012~2016年
-        static let month = 13   // 1~12年
-        static let day = 32     // 1~31日
-        static let components = 3     // year, month, dayの3つのコンポーネント
+        static let year       =  6  // 2012~2016年
+        static let month      = 13  // 1~12年
+        static let day        = 32  // 1~31日
+        static let components =  3  // year, month, dayの3つのコンポーネント
     }
     
     //コンポーネントの個数を返すメソッド
@@ -183,12 +183,10 @@ extension BankingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             let day = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 2), forComponent: 2)
             
             pickDate = "\(year!)/\(month!)/\(day!)"
-//            print(pickDate)
             
         } else if pickerView.tag == 2 {
             let banking = self.pickerView(pickerView, titleForRow: pickerView.selectedRow(inComponent: 0), forComponent: 0)
             pickBanking = banking
-//            print(pickBanking)
         }
         
     }

@@ -111,11 +111,11 @@ class GraghViewController: UIViewController {
     }
     
     fileprivate func configureTextField() {
-        textField.placeholder = "100000"
-        textField.textAlignment = .right
-        textField.keyboardType = .numberPad
+        textField.placeholder     = "100000"
+        textField.textAlignment   = .right
+        textField.keyboardType    = .numberPad
         textField.clearButtonMode = .whileEditing
-        textField.delegate = self
+        textField.delegate        = self
         
         // ツールバーを生成
         let accessoryBar = UIToolbar()

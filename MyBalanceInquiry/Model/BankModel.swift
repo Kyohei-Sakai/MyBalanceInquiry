@@ -11,10 +11,10 @@ import Foundation
 // MARK: - BankType
 
 enum BankType: String {
-    case mizuho = "みずほ銀行"
+    case mizuho     = "みずほ銀行"
     case mitsubishi = "三菱UFJ銀行"
-    case mitsui = "三井住友銀行"
-    case risona = "りそな銀行"
+    case mitsui     = "三井住友銀行"
+    case risona     = "りそな銀行"
 }
 
 
@@ -251,9 +251,9 @@ class BankingData {
     var isIncome = false
     
     init(date: Date, banking: Banking, amount: Int) {
-        self.date = date
+        self.date    = date
         self.banking = banking
-        self.amount = amount
+        self.amount  = amount
     }
     
     func setIncome(_ bool: Bool) {
@@ -372,20 +372,4 @@ class BankManager {
     }
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -39,9 +39,9 @@ class ViewController: UIViewController {
     private func setBanking() {
         
         // 銀行を追加
-        let myBank1 = Bank(type: .mizuho, firstBalance: 10000)
+        let myBank1 = Bank(type: .mizuho,     firstBalance: 10000)
         let myBank2 = Bank(type: .mitsubishi, firstBalance: 10000)
-        let myBank3 = Bank(type: .mitsui, firstBalance: 10000)
+        let myBank3 = Bank(type: .mitsui,     firstBalance: 10000)
         
         setupBankingData(bank: myBank1, path: "mizuho")
         setupBankingData(bank: myBank2, path: "mitsubishi")
@@ -96,12 +96,9 @@ class ViewController: UIViewController {
             var type: BankingData.Banking?
             
             switch banking[1] {
-            case "d":
-                type = .deposit
-            case "w":
-                type = .withdrawal
-            default:
-                type = nil
+            case "d": type = .deposit
+            case "w": type = .withdrawal
+            default : type = nil
             }
             
             // String -> Int

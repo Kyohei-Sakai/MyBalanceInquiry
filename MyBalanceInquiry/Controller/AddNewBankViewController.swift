@@ -28,15 +28,15 @@ class AddNewBankViewController: UIViewController {
     }
     
     private func configurebankTextFeid() {
-        bankTextField.placeholder = "◯◯銀行"
-        bankTextField.returnKeyType = .done
+        bankTextField.placeholder     = "◯◯銀行"
+        bankTextField.returnKeyType   = .done
         bankTextField.clearButtonMode = .whileEditing
-        bankTextField.delegate = self
+        bankTextField.delegate        = self
     }
     
     private func configurebalanceTextFeid() {
-        balanceTextField.placeholder = "0"
-        balanceTextField.keyboardType = .numberPad
+        balanceTextField.placeholder     = "0"
+        balanceTextField.keyboardType    = .numberPad
         balanceTextField.clearButtonMode = .whileEditing
         
         // ツールバーを生成
