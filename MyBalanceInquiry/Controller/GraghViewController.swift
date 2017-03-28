@@ -116,17 +116,8 @@ class GraghViewController: UIViewController {
         textField.keyboardType    = .numberPad
         textField.clearButtonMode = .whileEditing
         textField.delegate        = self
-        
-        // ツールバーを生成
-        let accessoryBar = UIToolbar()
-        accessoryBar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidPush(_:)))
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        accessoryBar.setItems([spacer, doneButton], animated: true)
-        
         // ツールバーをtextViewのアクセサリViewに設定する
-        textField.inputAccessoryView = accessoryBar
+        textField.inputAccessoryView = CustomToolbar(target: self, action: #selector(doneButtonDidPush(_:)))
     }
     
     @objc private func doneButtonDidPush(_ sender: UIButton) {

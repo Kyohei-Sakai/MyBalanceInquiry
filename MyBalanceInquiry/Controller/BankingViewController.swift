@@ -48,16 +48,8 @@ class BankingViewController: UIViewController {
         amountTextField.keyboardType = .numberPad
         amountTextField.clearButtonMode = .whileEditing
         
-        // ツールバーを生成
-        let accessoryBar = UIToolbar()
-        accessoryBar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidPush(_:)))
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        accessoryBar.setItems([spacer, doneButton], animated: true)
-        
         // ツールバーをtextViewのアクセサリViewに設定する
-        amountTextField.inputAccessoryView = accessoryBar
+        amountTextField.inputAccessoryView = CustomToolbar(target: self, action: #selector(doneButtonDidPush(_:)))
     }
     
     // 必要事項を入力した後Addボタンで確定

@@ -32,23 +32,15 @@ class AddNewBankViewController: UIViewController {
         bankTextField.returnKeyType   = .done
         bankTextField.clearButtonMode = .whileEditing
         bankTextField.delegate        = self
+        bankTextField.inputAccessoryView = CustomToolbar(target: self, action: #selector(textDoneButtonDidPush(_:)))
     }
     
     private func configurebalanceTextFeid() {
         balanceTextField.placeholder     = "0"
         balanceTextField.keyboardType    = .numberPad
         balanceTextField.clearButtonMode = .whileEditing
-        
-        // ツールバーを生成
-        let accessoryBar = UIToolbar()
-        accessoryBar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidPush(_:)))
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        accessoryBar.setItems([spacer, doneButton], animated: true)
-        
         // ツールバーをtextViewのアクセサリViewに設定する
-        balanceTextField.inputAccessoryView = accessoryBar
+        balanceTextField.inputAccessoryView = CustomToolbar(target: self, action: #selector(numberDoneButtonDidPush(_:)))
     }
     
     
@@ -82,7 +74,12 @@ class AddNewBankViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    @objc private func doneButtonDidPush(_ sender: UIButton) {
+    @objc private func textDoneButtonDidPush(_ sender: UIButton) {
+        // キーボードを閉じる
+        bankTextField.resignFirstResponder()
+    }
+    
+    @objc private func numberDoneButtonDidPush(_ sender: UIButton) {
         // キーボードを閉じる
         balanceTextField.resignFirstResponder()
     }
