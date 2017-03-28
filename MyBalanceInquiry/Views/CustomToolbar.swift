@@ -14,17 +14,16 @@ class CustomToolbar: UIToolbar {
         super.init(frame: frame)
     }
     
-    convenience init(target viewController: Any?, action selecter: Selector?) {
+    convenience init(target: Any?, action: Selector?) {
         self.init()
-        self.sizeToFit()
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: viewController, action: selecter)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: target, action: action)
         let spacer     = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         self.setItems([spacer, doneButton], animated: true)
+        self.sizeToFit()
         
     }
     
     required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
         super.init(coder: aDecoder)
     }
     
